@@ -23,3 +23,20 @@ document.addEventListener('click', function(evento) {
         menuDesplegable.classList.remove('activo');
     }
 });
+
+const svgMovil = document.querySelector('.svg-movil');
+let posicionX = -100;
+const velocidad = 2;
+
+function moverSVG() {
+    posicionX += velocidad;
+    
+    if (posicionX > window.innerWidth) {
+        posicionX = -100;
+    }
+    
+    svgMovil.style.left = posicionX + 'px';
+    requestAnimationFrame(moverSVG);
+}
+
+moverSVG();
