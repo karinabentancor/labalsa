@@ -26,7 +26,7 @@ document.addEventListener('click', function(evento) {
 
 const svgMovil = document.querySelector('.svg-movil');
 let posicionX = -100;
-const velocidad = 2;
+const velocidad = 1;
 
 function moverSVG() {
     posicionX += velocidad;
