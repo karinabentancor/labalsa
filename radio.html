@@ -5,292 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio – LA BALSA</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* ══════════════════════════════════
-           BASE
-        ══════════════════════════════════ */
-        body.radio-page {
-            overflow-x: hidden;
-            overflow-y: auto;
-            min-height: 100vh;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* fondo claro sobre el video */
-        body.radio-page::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: rgba(230, 240, 248, 0.93);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* ══════════════════════════════════
-           ENCABEZADO
-        ══════════════════════════════════ */
-        .radio-header {
-            position: relative;
-            z-index: 2;
-            padding: 160px 48px 0;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .radio-eyebrow {
-            font-size: 10px;
-            letter-spacing: 4px;
-            color: #0077b6;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .radio-header h1 {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: clamp(32px, 5vw, 62px);
-            color: #0a1628;
-            line-height: 1.05;
-            margin: 0;
-            letter-spacing: -1px;
-        }
-
-        .radio-header h1 em {
-            font-style: normal;
-            color: #0077b6;
-        }
-
-        .radio-meta {
-            margin-top: 16px;
-            font-size: 11px;
-            color: #7a8fa6;
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .radio-meta::before {
-            content: '';
-            display: inline-block;
-            width: 32px;
-            height: 1px;
-            background: #0077b6;
-            flex-shrink: 0;
-        }
-
-        /* ══════════════════════════════════
-           ACORDEONES
-        ══════════════════════════════════ */
-        .acordeones {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            margin: 48px auto 100px;
-            padding: 0 48px;
-        }
-
-        .mes-acordeon {
-            border-top: 1px solid #c5d5e8;
-        }
-
-        .mes-acordeon:last-child {
-            border-bottom: 1px solid #c5d5e8;
-        }
-
-        .mes-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 22px 0;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .mes-header:hover .mes-nombre {
-            color: #0077b6;
-        }
-
-        .mes-nombre {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: clamp(20px, 3vw, 30px);
-            color: #0a1628;
-            letter-spacing: -0.5px;
-            transition: color 0.2s ease;
-        }
-
-        .mes-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .mes-count {
-            font-size: 10px;
-            letter-spacing: 3px;
-            color: #7a8fa6;
-            text-transform: uppercase;
-        }
-
-        .mes-flecha {
-            width: 22px;
-            height: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
-            color: #0077b6;
-            font-size: 20px;
-            font-weight: 300;
-            line-height: 1;
-        }
-
-        .mes-acordeon.abierto .mes-flecha {
-            transform: rotate(45deg);
-        }
-
-        /* cuerpo desplegable con grid trick */
-        .mes-cuerpo {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.45s cubic-bezier(0.23,1,0.32,1);
-        }
-
-        .mes-acordeon.abierto .mes-cuerpo {
-            grid-template-rows: 1fr;
-        }
-
-        .mes-cuerpo-inner {
-            overflow: hidden;
-        }
-
-        /* ══════════════════════════════════
-           LISTA DE EPISODIOS
-        ══════════════════════════════════ */
-        .ep-lista {
-            padding-bottom: 28px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .ep-fila {
-            display: grid;
-            grid-template-columns: 90px 1fr 210px;
-            align-items: start;
-            gap: 24px;
-            padding: 13px 12px;
-            border-radius: 3px;
-            transition: background 0.18s ease;
-            border-top: 1px solid rgba(197,213,232,0.45);
-        }
-
-        .ep-fila:first-child {
-            border-top: none;
-        }
-
-        .ep-fila:hover {
-            background: rgba(0,119,182,0.05);
-        }
-
-        .ep-izq {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            padding-top: 1px;
-        }
-
-        .ep-num {
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: #0077b6;
-            font-weight: 600;
-        }
-
-        .ep-fecha {
-            font-size: 12px;
-            color: #3a4f63;
-            font-weight: 400;
-        }
-
-        .ep-dia {
-            font-size: 10px;
-            color: #aabccc;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        .ep-desc {
-            font-size: 12px;
-            font-weight: 300;
-            color: #3a4f63;
-            line-height: 1.65;
-            padding-top: 2px;
-        }
-
-        .ep-audio-wrap {
-            display: flex;
-            align-items: flex-start;
-            padding-top: 4px;
-        }
-
-        .ep-audio {
-            width: 100%;
-            height: 26px;
-            accent-color: #0077b6;
-        }
-
-        /* ── animación de entrada ── */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .mes-acordeon.abierto .ep-fila {
-            opacity: 0;
-            animation: slideIn 0.3s ease forwards;
-        }
-
-        .mes-acordeon.abierto .ep-fila:nth-child(1)  { animation-delay: 0.03s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(2)  { animation-delay: 0.06s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(3)  { animation-delay: 0.09s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(4)  { animation-delay: 0.12s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(5)  { animation-delay: 0.15s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(6)  { animation-delay: 0.18s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(7)  { animation-delay: 0.21s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(8)  { animation-delay: 0.24s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(9)  { animation-delay: 0.27s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(10) { animation-delay: 0.30s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(11) { animation-delay: 0.33s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(12) { animation-delay: 0.36s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(13) { animation-delay: 0.39s; }
-        .mes-acordeon.abierto .ep-fila:nth-child(14) { animation-delay: 0.42s; }
-
-        /* ══════════════════════════════════
-           RESPONSIVE
-        ══════════════════════════════════ */
-        @media (max-width: 700px) {
-            .radio-header,
-            .acordeones {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-
-            .ep-fila {
-                grid-template-columns: 70px 1fr;
-                grid-template-rows: auto auto;
-                gap: 10px;
-            }
-
-            .ep-audio-wrap {
-                grid-column: 1 / -1;
-            }
-
-            .mes-count { display: none; }
-        }
-    </style>
 </head>
 
 <body class="radio-page">
@@ -301,7 +15,7 @@
 
     <nav class="navbar">
         <a href="index.html">
-            <img src="media/logo-labalsa.svg" alt="Logo" class="logo">
+            <img src="media/balsaA.svg" alt="Logo" class="logo">
         </a>
         <div class="menu-hamburguesa" id="menuHamburguesa">
             <div class="linea"></div>
@@ -322,114 +36,114 @@
     </div>
 
     <div class="radio-header">
-        <p class="radio-eyebrow">Archivo · 2025</p>
         <h1>La Balsa<br><em>Radio</em></h1>
         <p class="radio-meta">Programas emitidos · lun / mié / vie</p>
+        <p class="radio-meta">94.3 El Camino FM</p>
     </div>
 
     <div class="acordeones">
 
-        <!-- AGOSTO -->
-        <div class="mes-acordeon">
-            <div class="mes-header">
-                <span class="mes-nombre">Agosto</span>
-                <div class="mes-info">
-                    <span class="mes-count">13 programas</span>
-                    <span class="mes-flecha">+</span>
-                </div>
-            </div>
-            <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#01</span><span class="ep-fecha">01/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep01.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#02</span><span class="ep-fecha">04/08</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep02.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#03</span><span class="ep-fecha">06/08</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep03.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#04</span><span class="ep-fecha">08/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep04.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#05</span><span class="ep-fecha">11/08</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep05.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#06</span><span class="ep-fecha">13/08</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep06.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#07</span><span class="ep-fecha">15/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep07.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#08</span><span class="ep-fecha">18/08</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep08.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#09</span><span class="ep-fecha">20/08</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep09.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#10</span><span class="ep-fecha">22/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep10.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#11</span><span class="ep-fecha">25/08</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep11.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#12</span><span class="ep-fecha">27/08</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep12.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#13</span><span class="ep-fecha">29/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep13.mp3"></audio></div></div>
-            </div></div></div>
-        </div>
-
-        <!-- SEPTIEMBRE -->
-        <div class="mes-acordeon">
-            <div class="mes-header">
-                <span class="mes-nombre">Septiembre</span>
-                <div class="mes-info">
-                    <span class="mes-count">13 programas</span>
-                    <span class="mes-flecha">+</span>
-                </div>
-            </div>
-            <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#14</span><span class="ep-fecha">01/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep14.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#15</span><span class="ep-fecha">03/09</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep15.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#16</span><span class="ep-fecha">05/09</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep16.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#17</span><span class="ep-fecha">08/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep17.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#18</span><span class="ep-fecha">10/09</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep18.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#19</span><span class="ep-fecha">12/09</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep19.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#20</span><span class="ep-fecha">15/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep20.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#21</span><span class="ep-fecha">17/09</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep21.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#22</span><span class="ep-fecha">19/09</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep22.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#23</span><span class="ep-fecha">22/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep23.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#24</span><span class="ep-fecha">24/09</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep24.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#25</span><span class="ep-fecha">26/09</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep25.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#26</span><span class="ep-fecha">29/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep26.mp3"></audio></div></div>
-            </div></div></div>
-        </div>
-
-        <!-- OCTUBRE -->
-        <div class="mes-acordeon">
-            <div class="mes-header">
-                <span class="mes-nombre">Octubre</span>
-                <div class="mes-info">
-                    <span class="mes-count">14 programas</span>
-                    <span class="mes-flecha">+</span>
-                </div>
-            </div>
-            <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#27</span><span class="ep-fecha">01/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep27.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#28</span><span class="ep-fecha">03/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep28.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#29</span><span class="ep-fecha">06/10</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep29.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#30</span><span class="ep-fecha">08/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep30.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#31</span><span class="ep-fecha">10/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep31.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#32</span><span class="ep-fecha">13/10</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep32.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#33</span><span class="ep-fecha">15/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep33.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#34</span><span class="ep-fecha">17/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep34.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#35</span><span class="ep-fecha">20/10</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep35.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#36</span><span class="ep-fecha">22/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep36.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#37</span><span class="ep-fecha">24/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep37.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#38</span><span class="ep-fecha">27/10</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep38.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#39</span><span class="ep-fecha">29/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep39.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#40</span><span class="ep-fecha">31/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep40.mp3"></audio></div></div>
-            </div></div></div>
-        </div>
-
         <!-- NOVIEMBRE -->
-        <div class="mes-acordeon">
+        <div class="mes-acordeon abierto">
             <div class="mes-header">
-                <span class="mes-nombre">Noviembre</span>
+                <span class="mes-nombre">Noviembre 2025</span>
                 <div class="mes-info">
                     <span class="mes-count">12 programas</span>
                     <span class="mes-flecha">+</span>
                 </div>
             </div>
             <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#41</span><span class="ep-fecha">03/11</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep41.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#42</span><span class="ep-fecha">05/11</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep42.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#43</span><span class="ep-fecha">07/11</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep43.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#44</span><span class="ep-fecha">10/11</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep44.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#45</span><span class="ep-fecha">12/11</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep45.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#46</span><span class="ep-fecha">14/11</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep46.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#47</span><span class="ep-fecha">17/11</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep47.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#48</span><span class="ep-fecha">19/11</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep48.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#49</span><span class="ep-fecha">21/11</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep49.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#50</span><span class="ep-fecha">24/11</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep50.mp3"></audio></div></div>
-                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#51</span><span class="ep-fecha">26/11</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep51.mp3"></audio></div></div>
                 <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#52</span><span class="ep-fecha">28/11</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep52.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#51</span><span class="ep-fecha">26/11</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep51.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#50</span><span class="ep-fecha">24/11</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep50.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#49</span><span class="ep-fecha">21/11</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep49.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#48</span><span class="ep-fecha">19/11</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep48.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#47</span><span class="ep-fecha">17/11</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep47.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#46</span><span class="ep-fecha">14/11</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep46.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#45</span><span class="ep-fecha">12/11</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep45.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#44</span><span class="ep-fecha">10/11</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep44.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#43</span><span class="ep-fecha">07/11</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep43.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#42</span><span class="ep-fecha">05/11</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep42.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#41</span><span class="ep-fecha">03/11</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep41.mp3"></audio></div></div>
+            </div></div></div>
+        </div>
+
+        <!-- OCTUBRE -->
+        <div class="mes-acordeon">
+            <div class="mes-header">
+                <span class="mes-nombre">Octubre 2025</span>
+                <div class="mes-info">
+                    <span class="mes-count">14 programas</span>
+                    <span class="mes-flecha">+</span>
+                </div>
+            </div>
+            <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#40</span><span class="ep-fecha">31/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep40.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#39</span><span class="ep-fecha">29/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep39.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#38</span><span class="ep-fecha">27/10</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep38.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#37</span><span class="ep-fecha">24/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep37.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#36</span><span class="ep-fecha">22/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep36.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#35</span><span class="ep-fecha">20/10</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep35.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#34</span><span class="ep-fecha">17/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep34.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#33</span><span class="ep-fecha">15/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep33.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#32</span><span class="ep-fecha">13/10</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep32.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#31</span><span class="ep-fecha">10/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep31.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#30</span><span class="ep-fecha">08/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep30.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#29</span><span class="ep-fecha">06/10</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep29.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#28</span><span class="ep-fecha">03/10</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep28.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#27</span><span class="ep-fecha">01/10</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep27.mp3"></audio></div></div>
+            </div></div></div>
+        </div>
+
+        <!-- SEPTIEMBRE -->
+        <div class="mes-acordeon">
+            <div class="mes-header">
+                <span class="mes-nombre">Septiembre 2025</span>
+                <div class="mes-info">
+                    <span class="mes-count">13 programas</span>
+                    <span class="mes-flecha">+</span>
+                </div>
+            </div>
+            <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#26</span><span class="ep-fecha">29/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep26.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#25</span><span class="ep-fecha">26/09</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep25.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#24</span><span class="ep-fecha">24/09</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep24.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#23</span><span class="ep-fecha">22/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep23.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#22</span><span class="ep-fecha">19/09</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep22.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#21</span><span class="ep-fecha">17/09</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep21.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#20</span><span class="ep-fecha">15/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep20.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#19</span><span class="ep-fecha">12/09</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep19.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#18</span><span class="ep-fecha">10/09</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep18.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#17</span><span class="ep-fecha">08/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep17.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#16</span><span class="ep-fecha">05/09</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep16.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#15</span><span class="ep-fecha">03/09</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep15.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#14</span><span class="ep-fecha">01/09</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep14.mp3"></audio></div></div>
+            </div></div></div>
+        </div>
+
+        <!-- AGOSTO -->
+        <div class="mes-acordeon">
+            <div class="mes-header">
+                <span class="mes-nombre">Agosto 2025</span>
+                <div class="mes-info">
+                    <span class="mes-count">13 programas</span>
+                    <span class="mes-flecha">+</span>
+                </div>
+            </div>
+            <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#13</span><span class="ep-fecha">29/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep13.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#12</span><span class="ep-fecha">27/08</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep12.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#11</span><span class="ep-fecha">25/08</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep11.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#10</span><span class="ep-fecha">22/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep10.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#09</span><span class="ep-fecha">20/08</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep09.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#08</span><span class="ep-fecha">18/08</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep08.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#07</span><span class="ep-fecha">15/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep07.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#06</span><span class="ep-fecha">13/08</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep06.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#05</span><span class="ep-fecha">11/08</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep05.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#04</span><span class="ep-fecha">08/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep04.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#03</span><span class="ep-fecha">06/08</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep03.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#02</span><span class="ep-fecha">04/08</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep02.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#01</span><span class="ep-fecha">01/08</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep01.mp3"></audio></div></div>
             </div></div></div>
         </div>
 
