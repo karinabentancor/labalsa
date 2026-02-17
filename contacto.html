@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto – LA BALSA</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ══════════════════════════════════
+           CONTACTO PAGE
+        ══════════════════════════════════ */
+        body.contacto-page {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body.contacto-page::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(230, 240, 248, 0.72);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Layout principal ── */
+        .contacto-wrap {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 160px 48px 100px;
+        }
+
+        /* ── Header ── */
+        .contacto-header {
+            margin-bottom: 56px;
+        }
+
+        .contacto-header h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: clamp(32px, 5vw, 62px);
+            color: #0a1628;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .contacto-header h1 em {
+            font-style: normal;
+            color: #0077b6;
+        }
+
+        .contacto-invitacion {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 300;
+            font-size: 13px;
+            color: #3a4f63;
+            line-height: 1.9;
+            max-width: 560px;
+            border-left: 3px solid #0077b6;
+            padding-left: 20px;
+            margin-top: 24px;
+        }
+
+        /* ── Para qué ── */
+        .contacto-destinos {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .destino-tag {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #0077b6;
+            border: 1px solid #c5d5e8;
+            padding: 6px 14px;
+            border-radius: 2px;
+            background: rgba(0, 119, 182, 0.04);
+        }
+
+        /* ── Formulario ── */
+        .contacto-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .campo label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #7a8fa6;
+        }
+
+        .campo input,
+        .campo textarea,
+        .campo select {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 400;
+            color: #0a1628;
+            background: #fff;
+            border: 1px solid #c5d5e8;
+            border-radius: 3px;
+            padding: 14px 16px;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            -webkit-appearance: none;
+        }
+
+        .campo input:focus,
+        .campo textarea:focus,
+        .campo select:focus {
+            border-color: #0077b6;
+            box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.08);
+        }
+
+        .campo input::placeholder,
+        .campo textarea::placeholder {
+            color: #aabccc;
+        }
+
+        .campo textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.7;
+        }
+
+        /* Select custom arrow */
+        .campo select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230077b6' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        /* ── Botón zarpar ── */
+        .btn-zarpar {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 42px;
+            background: linear-gradient(90deg, #0a1628, #0077b6);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 4px 20px rgba(0, 119, 182, 0.3);
+            align-self: flex-start;
+        }
+
+        .btn-zarpar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(0, 119, 182, 0.4);
+        }
+
+        .btn-zarpar .flecha {
+            font-size: 16px;
+            transition: transform 0.25s ease;
+        }
+
+        .btn-zarpar:hover .flecha {
+            transform: translateX(5px);
+        }
+
+        /* ── Divisor ── */
+        .contacto-divisor {
+            width: 100%;
+            height: 1px;
+            background: #c5d5e8;
+            margin: 8px 0;
+        }
+
+        /* ── Confirmación ── */
+        .confirmacion {
+            display: none;
+            text-align: center;
+            padding: 48px 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .confirmacion.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .confirm-emoji {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .confirm-titulo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 22px;
+            color: #0a1628;
+            margin-bottom: 10px;
+        }
+
+        .confirm-texto {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 300;
+            font-size: 12px;
+            color: #7a8fa6;
+        }
+
+        /* ══════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════ */
+        @media (max-width: 768px) {
+            .contacto-wrap {
+                padding: 140px 20px 80px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-zarpar {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="contacto-page">
+
+    <video autoplay muted loop playsinline class="video-fondo">
+        <source src="media/video1.mp4" type="video/mp4">
+    </video>
+
+    <nav class="navbar">
+        <a href="index.html">
+            <img src="media/balsaA.svg" alt="Logo" class="logo">
+        </a>
+        <div class="menu-hamburguesa" id="menuHamburguesa">
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+        </div>
+    </nav>
+
+    <div class="menu-desplegable" id="menuDesplegable">
+        <ul>
+            <li><a href="radio.html">Radio</a></li>
+            <li><a href="revista.html">Revista</a></li>
+            <li><a href="all.html">Cruces</a></li>
+            <li><a href="tripulantes.html">Tripulantes</a></li>
+            <li><a href="all.html">Participá</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+    </div>
+
+    <div class="contacto-wrap">
+
+        <!-- Header -->
+        <div class="contacto-header">
+            <h1>Sumate a<br>navegar <em>con nosotros.</em></h1>
+            <p class="contacto-invitacion">
+                Escribí, hablá, dibujá, leé, contá algo, proponé algo.<br>
+                La Balsa se construye con lo que trae cada tripulante.<br>
+                No importa si tenés una idea terminada o apenas una intuición: acá tiene cabida.
+            </p>
+            <div class="contacto-destinos">
+                <span class="destino-tag">La Balsa Radio</span>
+                <span class="destino-tag">La Balsa Revista</span>
+                <span class="destino-tag">Lo que sea</span>
+            </div>
+        </div>
+
+        <div class="contacto-divisor"></div>
+
+        <!-- Formulario -->
+        <form class="contacto-form" id="contactoForm" novalidate>
+
+            <div class="form-row">
+                <div class="campo">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="¿Cómo te llamás?">
+                </div>
+                <div class="campo">
+                    <label for="celular">Celular</label>
+                    <input type="tel" id="celular" name="celular" placeholder="+54 9 ...">
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="mail">Mail</label>
+                <input type="email" id="mail" name="mail" placeholder="tu@mail.com">
+            </div>
+
+            <div class="campo">
+                <label for="destino">¿Para qué parte de La Balsa?</label>
+                <select id="destino" name="destino">
+                    <option value="" disabled selected>Elegí una opción</option>
+                    <option value="radio">La Balsa Radio</option>
+                    <option value="revista">La Balsa Revista</option>
+                    <option value="ambos">Ambas</option>
+                    <option value="otro">Otro / no sé todavía</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="mensaje" placeholder="Contanos lo que tenés ganas de contar…"></textarea>
+            </div>
+
+            <button type="submit" class="btn-zarpar">
+                Zarpar <span class="flecha">→</span>
+            </button>
+
+        </form>
+
+        <!-- Confirmación -->
+        <div class="confirmacion" id="confirmacion">
+            <div class="confirm-emoji">🚣</div>
+            <p class="confirm-titulo">¡Mensaje enviado!</p>
+            <p class="confirm-texto">Nos ponemos en contacto pronto.<br>Bienvenido a bordo.</p>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // MENÚ
+        const hamburguesa = document.getElementById('menuHamburguesa');
+        const menuDesplegable = document.getElementById('menuDesplegable');
+        hamburguesa.addEventListener('click', () => {
+            hamburguesa.classList.toggle('activo');
+            menuDesplegable.classList.toggle('activo');
+        });
+
+        // FORMULARIO — confirmación visual
+        document.getElementById('contactoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.opacity = '0';
+            this.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                this.style.display = 'none';
+                const conf = document.getElementById('confirmacion');
+                conf.style.display = 'block';
+                setTimeout(() => conf.classList.add('visible'), 10);
+            }, 300);
+        });
+    </script>
+
+</body>
+</html>

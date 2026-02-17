@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cruces – LA BALSA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+
+        body.cruces-page {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body.cruces-page::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(230, 240, 248, 0.72);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Header ── */
+        .cruces-header {
+            position: relative;
+            z-index: 2;
+            padding: 160px 48px 0;
+            max-width: 1080px;
+            margin: 0 auto 56px;
+        }
+
+        .cruces-header h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: clamp(32px, 5vw, 62px);
+            color: #0a1628;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .cruces-header h1 em {
+            font-style: normal;
+            color: #0077b6;
+        }
+
+        .cruces-bajada {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 300;
+            font-size: 13px;
+            color: #3a4f63;
+            line-height: 1.9;
+            max-width: 520px;
+            border-left: 3px solid #0077b6;
+            padding-left: 20px;
+        }
+
+        /* ══════════════════════════════════
+           DAMERO
+        ══════════════════════════════════ */
+        .damero {
+            position: relative;
+            z-index: 2;
+            max-width: 1080px;
+            margin: 0 auto 100px;
+            padding: 0 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Cada celda del damero */
+        .cruce {
+            position: relative;
+            min-height: 380px;
+            padding: 48px 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        /* Blanco y celeste alternados como damero */
+        .cruce:nth-child(4n+1) { background: #ffffff; }
+        .cruce:nth-child(4n+2) { background: #d6eaf8; }
+        .cruce:nth-child(4n+3) { background: #d6eaf8; }
+        .cruce:nth-child(4n+4) { background: #ffffff; }
+
+        .cruce:nth-child(1) { animation-delay: 0.05s; }
+        .cruce:nth-child(2) { animation-delay: 0.10s; }
+        .cruce:nth-child(3) { animation-delay: 0.15s; }
+        .cruce:nth-child(4) { animation-delay: 0.20s; }
+        .cruce:nth-child(5) { animation-delay: 0.25s; }
+        .cruce:nth-child(6) { animation-delay: 0.30s; }
+
+        /* Número de cruce decorativo */
+        .cruce-num {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 80px;
+            color: rgba(0, 119, 182, 0.07);
+            line-height: 1;
+            letter-spacing: -4px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Resultado — lo que nació del cruce */
+        .cruce-resultado {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cruce-etiqueta {
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #0077b6;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cruce-etiqueta::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: #0077b6;
+        }
+
+        .cruce-titulo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: clamp(18px, 2.2vw, 26px);
+            color: #0a1628;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+
+        .cruce-extracto {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 300;
+            font-size: 12px;
+            color: #3a4f63;
+            line-height: 1.85;
+        }
+
+        /* Pie: quiénes se cruzaron */
+        .cruce-pie {
+            position: relative;
+            z-index: 1;
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 119, 182, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .cruce-tripulantes {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        /* Avatares apilados */
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #0077b6;
+            border: 2px solid #fff;
+            overflow: hidden;
+            margin-left: -8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .avatar:first-child { margin-left: 0; }
+
+        .avatar svg {
+            width: 70%;
+            opacity: 0.5;
+        }
+
+        .avatar.av2 { background: #1a3a5c; }
+        .avatar.av3 { background: #005a8e; }
+
+        .cruce-nombres {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            color: #0a1628;
+            letter-spacing: 1px;
+            margin-left: 10px;
+        }
+
+        .cruce-nombres span {
+            color: #7a8fa6;
+            font-weight: 300;
+        }
+
+        .cruce-tipo {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #aabccc;
+            white-space: nowrap;
+        }
+
+        /* Línea de acento inferior al hacer hover */
+        .cruce::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0077b6, #00b4d8);
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .cruce:hover::after { width: 100%; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .cruces-header { padding: 140px 20px 0; }
+            .damero {
+                grid-template-columns: 1fr;
+                padding: 0;
+            }
+            /* En mobile el damero alterna fila a fila */
+            .cruce:nth-child(odd)  { background: #ffffff; }
+            .cruce:nth-child(even) { background: #d6eaf8; }
+            .cruce { padding: 36px 24px; min-height: auto; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="cruces-page">
+
+    <video autoplay muted loop playsinline class="video-fondo">
+        <source src="media/video1.mp4" type="video/mp4">
+    </video>
+
+    <nav class="navbar">
+        <a href="index.html">
+            <img src="media/balsaA.svg" alt="Logo" class="logo">
+        </a>
+        <div class="menu-hamburguesa" id="menuHamburguesa">
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+        </div>
+    </nav>
+
+    <div class="menu-desplegable" id="menuDesplegable">
+        <ul>
+            <li><a href="radio.html">Radio</a></li>
+            <li><a href="revista.html">Revista</a></li>
+            <li><a href="cruces.html">Cruces</a></li>
+            <li><a href="tripulantes.html">Tripulantes</a></li>
+            <li><a href="all.html">Participá</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- SVG silueta reutilizable -->
+    <svg style="display:none">
+        <symbol id="sil" viewBox="0 0 200 220">
+            <circle cx="100" cy="65" r="45" fill="white"/>
+            <path d="M10 220 C10 150 190 150 190 220Z" fill="white"/>
+        </symbol>
+    </svg>
+
+    <!-- Header -->
+    <div class="cruces-header">
+        <h1>La Balsa<br><em>Cruces</em></h1>
+        <p class="cruces-bajada">Dos tripulantes se encuentran y crean algo que ninguno hubiera hecho solo. Escritura, imagen, sonido, conversación — lo que nazca del encuentro.</p>
+    </div>
+
+    <!-- Damero de cruces -->
+    <div class="damero">
+
+        <!-- Cruce 1 -->
+        <div class="cruce">
+            <span class="cruce-num">01</span>
+            <div class="cruce-resultado">
+                <p class="cruce-etiqueta">Texto + Fotografía</p>
+                <h2 class="cruce-titulo">Lo que queda cuando<br>se va el agua</h2>
+                <p class="cruce-extracto">«Ella traía las palabras. Yo traía la cámara. Nos fuimos al río un martes sin avisar a nadie y volvimos con esto: una cosa que no es un poema ni una foto sino las dos cosas al mismo tiempo.»</p>
+            </div>
+            <div class="cruce-pie">
+                <div class="cruce-tripulantes">
+                    <div class="avatar"><svg><use href="#sil"/></svg></div>
+                    <div class="avatar av2"><svg><use href="#sil"/></svg></div>
+                    <p class="cruce-nombres">Nombre A <span>×</span> Nombre B</p>
+                </div>
+                <span class="cruce-tipo">Nov 2025</span>
+            </div>
+        </div>
+
+        <!-- Cruce 2 -->
+        <div class="cruce">
+            <span class="cruce-num">02</span>
+            <div class="cruce-resultado">
+                <p class="cruce-etiqueta">Radio + Ilustración</p>
+                <h2 class="cruce-titulo">Frecuencia de color:<br>dibujando el sonido</h2>
+                <p class="cruce-extracto">«Le pedí que dibujara mientras yo hablaba al micrófono. Sin parar, sin borrar. Al final del programa teníamos doce hojas y ni idea de qué habíamos hecho, pero era hermoso.»</p>
+            </div>
+            <div class="cruce-pie">
+                <div class="cruce-tripulantes">
+                    <div class="avatar av3"><svg><use href="#sil"/></svg></div>
+                    <div class="avatar"><svg><use href="#sil"/></svg></div>
+                    <p class="cruce-nombres">Nombre C <span>×</span> Nombre D</p>
+                </div>
+                <span class="cruce-tipo">Oct 2025</span>
+            </div>
+        </div>
+
+        <!-- Cruce 3 -->
+        <div class="cruce">
+            <span class="cruce-num">03</span>
+            <div class="cruce-resultado">
+                <p class="cruce-etiqueta">Ensayo + Música</p>
+                <h2 class="cruce-titulo">Tres acordes para<br>entender una ciudad</h2>
+                <p class="cruce-extracto">«Él escribía. Yo tocaba. Ninguno veía lo que hacía el otro. Al final lo juntamos y era exactamente la misma cosa dicha de dos maneras distintas. Eso fue el cruce.»</p>
+            </div>
+            <div class="cruce-pie">
+                <div class="cruce-tripulantes">
+                    <div class="avatar av2"><svg><use href="#sil"/></svg></div>
+                    <div class="avatar av3"><svg><use href="#sil"/></svg></div>
+                    <p class="cruce-nombres">Nombre E <span>×</span> Nombre F</p>
+                </div>
+                <span class="cruce-tipo">Sep 2025</span>
+            </div>
+        </div>
+
+        <!-- Cruce 4 -->
+        <div class="cruce">
+            <span class="cruce-num">04</span>
+            <div class="cruce-resultado">
+                <p class="cruce-etiqueta">Conversación + Video</p>
+                <h2 class="cruce-titulo">Dos horas hablando<br>sin grabar nada</h2>
+                <p class="cruce-extracto">«La primera hora fue sin cámara, para no actuar. La segunda hora encendimos todo. Lo que quedó registrado ya era otra cosa: más honesto, más raro, más nuestro.»</p>
+            </div>
+            <div class="cruce-pie">
+                <div class="cruce-tripulantes">
+                    <div class="avatar"><svg><use href="#sil"/></svg></div>
+                    <div class="avatar av2"><svg><use href="#sil"/></svg></div>
+                    <p class="cruce-nombres">Nombre G <span>×</span> Nombre H</p>
+                </div>
+                <span class="cruce-tipo">Ago 2025</span>
+            </div>
+        </div>
+
+        <!-- Cruce 5 -->
+        <div class="cruce">
+            <span class="cruce-num">05</span>
+            <div class="cruce-resultado">
+                <p class="cruce-etiqueta">Poesía + Cerámica</p>
+                <h2 class="cruce-titulo">Las manos también<br>saben escribir</h2>
+                <p class="cruce-extracto">«Cada verso mío se volvió una forma en barro. No ilustración — transformación. Leés con los ojos, tocás con las manos, y son dos poemas distintos que dicen lo mismo.»</p>
+            </div>
+            <div class="cruce-pie">
+                <div class="cruce-tripulantes">
+                    <div class="avatar av3"><svg><use href="#sil"/></svg></div>
+                    <div class="avatar"><svg><use href="#sil"/></svg></div>
+                    <p class="cruce-nombres">Nombre I <span>×</span> Nombre J</p>
+                </div>
+                <span class="cruce-tipo">Jul 2025</span>
+            </div>
+        </div>
+
+        <!-- Cruce 6 -->
+        <div class="cruce">
+            <span class="cruce-num">06</span>
+            <div class="cruce-resultado">
+                <p class="cruce-etiqueta">Crónica + Danza</p>
+                <h2 class="cruce-titulo">Cuerpo como archivo:<br>memoria que se mueve</h2>
+                <p class="cruce-extracto">«Yo escribía lo que ella bailaba. Ella bailaba lo que yo escribía. Empezamos por la mañana y cuando terminamos era de noche y habíamos hecho algo que ninguna de las dos sabría clasificar.»</p>
+            </div>
+            <div class="cruce-pie">
+                <div class="cruce-tripulantes">
+                    <div class="avatar av2"><svg><use href="#sil"/></svg></div>
+                    <div class="avatar av3"><svg><use href="#sil"/></svg></div>
+                    <p class="cruce-nombres">Nombre K <span>×</span> Nombre L</p>
+                </div>
+                <span class="cruce-tipo">Jun 2025</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const hamburguesa = document.getElementById('menuHamburguesa');
+        const menuDesplegable = document.getElementById('menuDesplegable');
+        hamburguesa.addEventListener('click', () => {
+            hamburguesa.classList.toggle('activo');
+            menuDesplegable.classList.toggle('activo');
+        });
+    </script>
+
+</body>
+</html>
