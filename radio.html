@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio – LA BALSA</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .radio-fm-link {
+            display: block;
+            margin-top: 16px;
+            text-align: right;
+        }
+
+        .radio-fm-link img {
+            height: 80px;
+            width: auto;
+            filter: brightness(0) saturate(100%) invert(30%) sepia(90%) saturate(800%) hue-rotate(180deg);
+            transition: filter 0.2s ease, transform 0.2s ease;
+        }
+
+        .radio-fm-link:hover img {
+            filter: brightness(0);
+            transform: translateY(-1px);
+        }
+    </style>
 </head>
 
 <body class="radio-page">
@@ -15,7 +34,7 @@
 
     <nav class="navbar">
         <a href="index.html">
-            <img src="media/balsaA.svg" alt="Logo" class="logo">
+            <img src="media/balsaC.svg" alt="Logo" class="logo">
         </a>
         <div class="menu-hamburguesa" id="menuHamburguesa">
             <div class="linea"></div>
@@ -27,18 +46,20 @@
     <div class="menu-desplegable" id="menuDesplegable">
         <ul>
             <li><a href="radio.html">Radio</a></li>
-            <li><a href="all.html">Revista</a></li>
+            <li><a href="revista.html">Revista</a></li>
             <li><a href="all.html">Cruces</a></li>
             <li><a href="tripulantes.html">Tripulantes</a></li>
-            <li><a href="all.html">Participá</a></li>
-            <li><a href="all.html">Contacto</a></li>
+            <li><a href="contacto.html">Participá</a></li>
         </ul>
     </div>
 
     <div class="radio-header">
         <h1>La Balsa<br><em>Radio</em></h1>
-        <p class="radio-meta">Programas emitidos · lun / mié / vie</p>
-        <p class="radio-meta">94.3 El Camino FM</p>
+        <p class="radio-meta">Programas emitidos</p>
+        <p class="radio-meta">lunes, miércoles y viernes · 08:00 a 10:00 hs</p>
+        <a href="https://zeno.fm/radio/el-camino-fm-94-3/" target="_blank" rel="noopener" class="radio-fm-link">
+            <img src="media/fmN.svg" alt="94.3 El Camino FM">
+        </a>
     </div>
 
     <div class="acordeones">
@@ -95,10 +116,10 @@
             </div></div></div>
         </div>
 
-        <!-- SEPTIEMBRE -->
+        <!-- SETIEMBRE -->
         <div class="mes-acordeon">
             <div class="mes-header">
-                <span class="mes-nombre">Septiembre 2025</span>
+                <span class="mes-nombre">Setiembre 2025</span>
                 <div class="mes-info">
                     <span class="mes-count">13 programas</span>
                     <span class="mes-flecha">+</span>

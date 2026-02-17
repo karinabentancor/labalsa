@@ -119,16 +119,24 @@
             pointer-events: none;
         }
 
+        /* ── PLACEHOLDER PERSONA ── */
         .foto-placeholder {
             width: 100%;
             height: 100%;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
-            background: linear-gradient(135deg, #3a0d2e, #7a1f1f);
-            font-size: 64px;
-            color: rgba(255,255,255,0.3);
+            background: linear-gradient(160deg, #1a2a3a 0%, #0d1e30 100%);
+            overflow: hidden;
             user-select: none;
+        }
+
+        .foto-placeholder svg {
+            width: 72%;
+            height: auto;
+            display: block;
+            opacity: 0.28;
+            margin-bottom: -4px;
         }
 
         .card-info {
@@ -196,13 +204,11 @@
         }
 
         .foto-placeholder-vos {
-            display: flex !important;
-            background: linear-gradient(135deg, #5a1a00, #c96100);
-            font-size: 96px;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            color: rgba(255, 216, 19, 0.5);
-            letter-spacing: -4px;
+            background: linear-gradient(135deg, #5a1a00, #c96100) !important;
+        }
+
+        .foto-placeholder-vos svg {
+            opacity: 0.35;
         }
 
         .card-nombre-vos {
@@ -244,7 +250,6 @@
                 padding: 0 18px;
                 margin-top: 40px;
             }
-
             .seccion-titulo { padding-top: 130px; }
         }
 
@@ -277,13 +282,21 @@
     <div class="menu-desplegable" id="menuDesplegable">
         <ul>
             <li><a href="radio.html">Radio</a></li>
-            <li><a href="all.html">Revista</a></li>
+            <li><a href="revista.html">Revista</a></li>
             <li><a href="all.html">Cruces</a></li>
             <li><a href="tripulantes.html">Tripulantes</a></li>
             <li><a href="all.html">Participá</a></li>
-            <li><a href="all.html">Contacto</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
         </ul>
     </div>
+
+    <!-- SVG reutilizable de silueta persona -->
+    <svg style="display:none">
+        <symbol id="silueta" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="65" r="45" fill="white"/>
+            <path d="M10 220 C10 150 190 150 190 220Z" fill="white"/>
+        </symbol>
+    </svg>
 
     <div class="seccion-titulo">
         <h1>Tripulantes</h1>
@@ -296,8 +309,10 @@
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante1.jpg" alt="Tripulante 1"
-                     onerror="this.style.display='none'; this.parentNode.querySelector('.foto-placeholder').style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">⚓</div>
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="foto-placeholder" style="display:none;">
+                    <svg><use href="#silueta"/></svg>
+                </div>
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -309,8 +324,10 @@
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante2.jpg" alt="Tripulante 2"
-                     onerror="this.style.display='none'; this.parentNode.querySelector('.foto-placeholder').style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">⚓</div>
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="foto-placeholder" style="display:none;">
+                    <svg><use href="#silueta"/></svg>
+                </div>
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -322,8 +339,10 @@
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante3.jpg" alt="Tripulante 3"
-                     onerror="this.style.display='none'; this.parentNode.querySelector('.foto-placeholder').style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">⚓</div>
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="foto-placeholder" style="display:none;">
+                    <svg><use href="#silueta"/></svg>
+                </div>
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -335,8 +354,10 @@
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante4.jpg" alt="Tripulante 4"
-                     onerror="this.style.display='none'; this.parentNode.querySelector('.foto-placeholder').style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">⚓</div>
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="foto-placeholder" style="display:none;">
+                    <svg><use href="#silueta"/></svg>
+                </div>
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -348,8 +369,10 @@
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante5.jpg" alt="Tripulante 5"
-                     onerror="this.style.display='none'; this.parentNode.querySelector('.foto-placeholder').style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">⚓</div>
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="foto-placeholder" style="display:none;">
+                    <svg><use href="#silueta"/></svg>
+                </div>
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -360,12 +383,14 @@
 
         <div class="card card-vos">
             <div class="card-foto-wrap">
-                <div class="foto-placeholder foto-placeholder-vos">?</div>
+                <div class="foto-placeholder foto-placeholder-vos" style="display:flex;">
+                    <svg><use href="#silueta"/></svg>
+                </div>
             </div>
             <div class="card-info">
                 <p class="card-nombre card-nombre-vos">VOS</p>
                 <p class="card-descripcion">¿Querés ser parte de La Balsa? Escribinos y subite a bordo.</p>
-                <a href="all.html" class="btn-subite">SUBITE</a>
+                <a href="contacto.html" class="btn-subite">SUBITE</a>
             </div>
             <div class="card-linea"></div>
         </div>
@@ -373,5 +398,13 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        const hamburguesa = document.getElementById('menuHamburguesa');
+        const menuDesplegable = document.getElementById('menuDesplegable');
+        hamburguesa.addEventListener('click', () => {
+            hamburguesa.classList.toggle('activo');
+            menuDesplegable.classList.toggle('activo');
+        });
+    </script>
 </body>
 </html>

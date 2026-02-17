@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revista – LA BALSA</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ══════════════════════════════════
+           REVISTA PAGE
+        ══════════════════════════════════ */
+        body.revista-page {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body.revista-page::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(230, 240, 248, 0.72);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Header ── */
+        .revista-header {
+            position: relative;
+            z-index: 2;
+            padding: 160px 48px 0;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .revista-header h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: clamp(32px, 5vw, 62px);
+            color: #0a1628;
+            line-height: 1.05;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .revista-header h1 em {
+            font-style: normal;
+            color: #0077b6;
+        }
+
+        .revista-meta {
+            margin-top: 16px;
+            font-size: 11px;
+            color: #7a8fa6;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .revista-meta::before {
+            content: '';
+            display: inline-block;
+            width: 32px;
+            height: 1px;
+            background: #0077b6;
+            flex-shrink: 0;
+        }
+
+        /* ── Grid de tomos ── */
+        .revista-grid {
+            position: relative;
+            z-index: 2;
+            max-width: 1080px;
+            margin: 56px auto 0;
+            padding: 0 48px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 36px;
+        }
+
+        .tomo-card {
+            background: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(10, 22, 40, 0.10);
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.35s ease;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            cursor: pointer;
+        }
+
+        .tomo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(10, 22, 40, 0.18);
+        }
+
+        .tomo-card:nth-child(1) { animation-delay: 0.08s; }
+        .tomo-card:nth-child(2) { animation-delay: 0.16s; }
+        .tomo-card:nth-child(3) { animation-delay: 0.24s; }
+        .tomo-card:nth-child(4) { animation-delay: 0.32s; }
+
+        /* Imagen */
+        .tomo-img-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: #c5d5e8;
+        }
+
+        .tomo-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .tomo-card:hover .tomo-img-wrap img {
+            transform: scale(1.04);
+        }
+
+        /* Placeholder cuando no hay imagen */
+        .tomo-img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #c5d5e8, #a8c0d6);
+            color: rgba(10, 22, 40, 0.18);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: clamp(40px, 6vw, 80px);
+            letter-spacing: -2px;
+            user-select: none;
+        }
+
+        /* Etiqueta de número de tomo sobre la imagen */
+        .tomo-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #0077b6;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 2px;
+        }
+
+        /* Cuerpo de la card */
+        .tomo-body {
+            padding: 28px 30px 30px;
+            border-top: 3px solid #0077b6;
+        }
+
+        .tomo-seccion {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: #0077b6;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .tomo-titulo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: clamp(18px, 2.2vw, 24px);
+            color: #0a1628;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
+
+        .tomo-sumario {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 300;
+            font-size: 11.5px;
+            color: #3a4f63;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Temas / etiquetas del tomo */
+        .tomo-temas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+
+        .tomo-tema {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #0077b6;
+            border: 1px solid #c5d5e8;
+            padding: 4px 10px;
+            border-radius: 2px;
+        }
+
+        /* Footer de card */
+        .tomo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e4edf5;
+            padding-top: 18px;
+        }
+
+        .tomo-fecha {
+            font-size: 10px;
+            color: #aabccc;
+            letter-spacing: 2px;
+        }
+
+        .tomo-leer {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #0077b6;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.25s ease, color 0.25s ease;
+        }
+
+        .tomo-leer::after {
+            content: '→';
+            transition: transform 0.25s ease;
+        }
+
+        .tomo-leer:hover {
+            gap: 14px;
+            color: #005a8e;
+        }
+
+        .tomo-leer:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* ══════════════════════════════════
+           ZONA SUSCRIPCIÓN
+        ══════════════════════════════════ */
+        .suscripcion-wrap {
+            position: relative;
+            z-index: 2;
+            margin: 72px 48px 80px;
+            max-width: 1080px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 72px;
+            margin-bottom: 80px;
+            background: linear-gradient(135deg, #0a1628 0%, #0077b6 100%);
+            border-radius: 8px;
+            padding: 64px 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            box-shadow: 0 12px 48px rgba(0, 119, 182, 0.25);
+            overflow: hidden;
+        }
+
+        .suscripcion-wrap::before {
+            display: none;
+        }
+
+        .suscripcion-texto {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .sus-eyebrow {
+            font-size: 9px;
+            letter-spacing: 5px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .sus-titulo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: clamp(22px, 3vw, 36px);
+            color: #fff;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            margin-bottom: 14px;
+        }
+
+        .sus-titulo em {
+            font-style: normal;
+            color: #ffd813;
+        }
+
+        .sus-desc {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 300;
+            font-size: 12px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.8;
+            max-width: 420px;
+        }
+
+        .suscripcion-cta {
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn-suscribirse {
+            display: inline-block;
+            padding: 16px 42px;
+            background: linear-gradient(90deg, #ffd813, #c96100);
+            color: #1a0800;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 4px 24px rgba(201, 97, 0, 0.5);
+            white-space: nowrap;
+        }
+
+        .btn-suscribirse:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 36px rgba(255, 216, 19, 0.5);
+        }
+
+        .sus-nota {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+        }
+
+        /* ══════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════ */
+        @media (max-width: 768px) {
+            .revista-header,
+            .revista-grid {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .revista-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .suscripcion-wrap {
+                margin: 48px 20px 60px;
+                padding: 44px 30px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 32px;
+            }
+
+            .suscripcion-wrap::before { display: none; }
+
+            .suscripcion-cta {
+                width: 100%;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body class="revista-page">
+
+    <video autoplay muted loop playsinline class="video-fondo">
+        <source src="media/video1.mp4" type="video/mp4">
+    </video>
+
+    <nav class="navbar">
+        <a href="index.html">
+            <img src="media/balsaA.svg" alt="Logo" class="logo">
+        </a>
+        <div class="menu-hamburguesa" id="menuHamburguesa">
+            <div class="linea"></div>
+            <div class="linea"></div>
+            <div class="linea"></div>
+        </div>
+    </nav>
+
+    <div class="menu-desplegable" id="menuDesplegable">
+        <ul>
+            <li><a href="radio.html">Radio</a></li>
+            <li><a href="revista.html">Revista</a></li>
+            <li><a href="all.html">Cruces</a></li>
+            <li><a href="tripulantes.html">Tripulantes</a></li>
+            <li><a href="all.html">Participá</a></li>
+            <li><a href="all.html">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- HEADER -->
+    <div class="revista-header">
+        <h1>La Balsa<br><em>Revista</em></h1>
+        <p class="revista-meta">Publicación en papel · edición mensual</p>
+    </div>
+
+    <!-- GRID DE TOMOS -->
+    <div class="revista-grid">
+
+        <!-- Abril 2026 -->
+        <div class="tomo-card">
+            <div class="tomo-img-wrap">
+                <img src="media/revista/abr2026.jpg" alt="Abril 2026" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="tomo-img-placeholder" style="display:none;">ABR</div>
+                <span class="tomo-badge">Abril 2026</span>
+            </div>
+            <div class="tomo-body">
+                <p class="tomo-seccion">Fragmento · Edición actual</p>
+                <h2 class="tomo-titulo">Fronteras del cuerpo</h2>
+                <p class="tomo-sumario">«Nadie elige dónde empieza su piel. Pero todos decidimos, tarde o temprano, hasta dónde dejar entrar al mundo. Esa frontera —invisible, porosa, disputada— es el territorio más político que habitamos.»</p>
+                <div class="tomo-temas">
+                    <span class="tomo-tema">Cuerpo</span>
+                    <span class="tomo-tema">Política</span>
+                    <span class="tomo-tema">Identidad</span>
+                </div>
+                <div class="tomo-footer">
+                    <span class="tomo-fecha">Revista en papel · abr 2026</span>
+                    <a href="#" class="tomo-leer">Ver edición</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marzo 2026 -->
+        <div class="tomo-card">
+            <div class="tomo-img-wrap">
+                <img src="media/revista/mar2026.jpg" alt="Marzo 2026" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="tomo-img-placeholder" style="display:none;">MAR</div>
+                <span class="tomo-badge">Marzo 2026</span>
+            </div>
+            <div class="tomo-body">
+                <p class="tomo-seccion">Fragmento · Marzo 2026</p>
+                <h2 class="tomo-titulo">El ruido como lenguaje</h2>
+                <p class="tomo-sumario">«La ciudad no hace silencio. Aprende a escucharla y vas a descubrir que cada bocina, cada obra, cada cumbia a las tres de la mañana es alguien diciéndote: acá estoy, existo, no me ignores.»</p>
+                <div class="tomo-temas">
+                    <span class="tomo-tema">Sonido</span>
+                    <span class="tomo-tema">Ciudad</span>
+                    <span class="tomo-tema">Resistencia</span>
+                </div>
+                <div class="tomo-footer">
+                    <span class="tomo-fecha">Revista en papel · mar 2026</span>
+                    <a href="#" class="tomo-leer">Ver edición</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ZONA SUSCRIPCIÓN -->
+    <div class="suscripcion-wrap">
+        <div class="suscripcion-texto">
+            <p class="sus-eyebrow">Revista La Balsa</p>
+            <h2 class="sus-titulo">La revista en papel,<br><em>cada mes en tu puerta.</em></h2>
+            <p class="sus-desc">La Balsa Revista se imprime y distribuye todos los meses. Suscribite y te la hacemos llegar.</p>
+        </div>
+        <div class="suscripcion-cta">
+            <a href="#" class="btn-suscribirse">Suscribirme</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // MENÚ HAMBURGUESA
+        const hamburguesa = document.getElementById('menuHamburguesa');
+        const menuDesplegable = document.getElementById('menuDesplegable');
+
+        hamburguesa.addEventListener('click', () => {
+            hamburguesa.classList.toggle('activo');
+            menuDesplegable.classList.toggle('activo');
+        });
+    </script>
+
+</body>
+</html>
