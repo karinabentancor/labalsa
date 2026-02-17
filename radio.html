@@ -9,11 +9,15 @@
         .radio-fm-link {
             display: block;
             margin-top: 16px;
-            text-align: right;
+            text-align: left;
+        }
+
+        .radio-meta::before {
+            display: none;
         }
 
         .radio-fm-link img {
-            height: 80px;
+            height: 52px;
             width: auto;
             filter: brightness(0) saturate(100%) invert(30%) sepia(90%) saturate(800%) hue-rotate(180deg);
             transition: filter 0.2s ease, transform 0.2s ease;
@@ -22,6 +26,18 @@
         .radio-fm-link:hover img {
             filter: brightness(0);
             transform: translateY(-1px);
+        }
+
+        .radio-page .linea {
+            background: #0077b6;
+        }
+
+        .radio-page .menu-desplegable a {
+            color: #0077b6;
+        }
+
+        .radio-page .menu-desplegable a:hover {
+            color: #005a8e;
         }
     </style>
 </head>
@@ -34,7 +50,7 @@
 
     <nav class="navbar">
         <a href="index.html">
-            <img src="media/balsaC.svg" alt="Logo" class="logo">
+            <img src="media/balsaC2.svg" alt="Logo" class="logo">
         </a>
         <div class="menu-hamburguesa" id="menuHamburguesa">
             <div class="linea"></div>
@@ -53,7 +69,7 @@
         </ul>
     </div>
 
-    <div class="radio-header">
+    <div class="radio-header" style="padding-top: 200px;">
         <h1>La Balsa<br><em>Radio</em></h1>
         <p class="radio-meta">Programas emitidos</p>
         <p class="radio-meta">lunes, miércoles y viernes · 08:00 a 10:00 hs</p>
