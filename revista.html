@@ -58,12 +58,19 @@
         }
 
         .revista-meta::before {
-            content: '';
-            display: inline-block;
-            width: 32px;
-            height: 1px;
+            display: none;
+        }
+
+        .revista-page .linea {
             background: #0077b6;
-            flex-shrink: 0;
+        }
+
+        .revista-page .menu-desplegable a {
+            color: #0077b6;
+        }
+
+        .revista-page .menu-desplegable a:hover {
+            color: #005a8e;
         }
 
         /* ── Grid de tomos ── */
@@ -392,7 +399,7 @@
 
     <nav class="navbar">
         <a href="index.html">
-            <img src="media/balsaA.svg" alt="Logo" class="logo">
+            <img src="media/balsaC2.svg" alt="Logo" class="logo">
         </a>
         <div class="menu-hamburguesa" id="menuHamburguesa">
             <div class="linea"></div>
@@ -407,13 +414,12 @@
             <li><a href="revista.html">Revista</a></li>
             <li><a href="all.html">Cruces</a></li>
             <li><a href="tripulantes.html">Tripulantes</a></li>
-            <li><a href="all.html">Participá</a></li>
-            <li><a href="all.html">Contacto</a></li>
+            <li><a href="contacto.html">Participá</a></li>
         </ul>
     </div>
 
     <!-- HEADER -->
-    <div class="revista-header">
+    <div class="revista-header" style="padding-top: 200px;">
         <h1>La Balsa<br><em>Revista</em></h1>
         <p class="revista-meta">Publicación en papel · edición mensual</p>
     </div>
@@ -482,16 +488,6 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // MENÚ HAMBURGUESA
-        const hamburguesa = document.getElementById('menuHamburguesa');
-        const menuDesplegable = document.getElementById('menuDesplegable');
-
-        hamburguesa.addEventListener('click', () => {
-            hamburguesa.classList.toggle('activo');
-            menuDesplegable.classList.toggle('activo');
-        });
-    </script>
 
 </body>
 </html>
