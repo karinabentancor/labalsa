@@ -6,9 +6,6 @@
     <title>Revista – LA BALSA</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* ══════════════════════════════════
-           REVISTA PAGE
-        ══════════════════════════════════ */
         body.revista-page {
             overflow-x: hidden;
             overflow-y: auto;
@@ -23,7 +20,6 @@
             pointer-events: none;
         }
 
-        /* ── Header ── */
         .revista-header {
             position: relative;
             z-index: 2;
@@ -50,15 +46,8 @@
         .revista-meta {
             margin-top: 16px;
             font-size: 11px;
-            color: #7a8fa6;
+            color: #3a4f63;
             letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .revista-meta::before {
-            display: none;
         }
 
         .revista-page .linea {
@@ -73,16 +62,13 @@
             color: #005a8e;
         }
 
-        /* ── Grid de tomos ── */
+        /* ── Grid ── */
         .revista-grid {
             position: relative;
             z-index: 2;
-            max-width: 1080px;
+            max-width: 600px;
             margin: 56px auto 0;
             padding: 0 48px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 36px;
         }
 
         .tomo-card {
@@ -90,11 +76,13 @@
             border-radius: 6px;
             overflow: hidden;
             box-shadow: 0 4px 24px rgba(10, 22, 40, 0.10);
-            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
-                        box-shadow 0.35s ease;
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s ease;
             opacity: 0;
             animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.08s;
             cursor: pointer;
+            display: block;
+            text-decoration: none;
         }
 
         .tomo-card:hover {
@@ -102,12 +90,6 @@
             box-shadow: 0 16px 48px rgba(10, 22, 40, 0.18);
         }
 
-        .tomo-card:nth-child(1) { animation-delay: 0.08s; }
-        .tomo-card:nth-child(2) { animation-delay: 0.16s; }
-        .tomo-card:nth-child(3) { animation-delay: 0.24s; }
-        .tomo-card:nth-child(4) { animation-delay: 0.32s; }
-
-        /* Imagen */
         .tomo-img-wrap {
             position: relative;
             width: 100%;
@@ -128,7 +110,6 @@
             transform: scale(1.04);
         }
 
-        /* Placeholder cuando no hay imagen */
         .tomo-img-placeholder {
             width: 100%;
             height: 100%;
@@ -144,7 +125,6 @@
             user-select: none;
         }
 
-        /* Etiqueta de número de tomo sobre la imagen */
         .tomo-badge {
             position: absolute;
             top: 16px;
@@ -160,7 +140,6 @@
             border-radius: 2px;
         }
 
-        /* Cuerpo de la card */
         .tomo-body {
             padding: 28px 30px 30px;
             border-top: 3px solid #0077b6;
@@ -186,14 +165,13 @@
 
         .tomo-sumario {
             font-family: 'JetBrains Mono', monospace;
-            font-weight: 300;
-            font-size: 11.5px;
-            color: #3a4f63;
+            font-weight: 400;
+            font-size: 12px;
+            color: #1e2f3e;
             line-height: 1.8;
             margin-bottom: 20px;
         }
 
-        /* Temas / etiquetas del tomo */
         .tomo-temas {
             display: flex;
             flex-wrap: wrap;
@@ -211,7 +189,6 @@
             border-radius: 2px;
         }
 
-        /* Footer de card */
         .tomo-footer {
             display: flex;
             justify-content: space-between;
@@ -222,7 +199,7 @@
 
         .tomo-fecha {
             font-size: 10px;
-            color: #aabccc;
+            color: #3a4f63;
             letter-spacing: 2px;
         }
 
@@ -245,27 +222,19 @@
             transition: transform 0.25s ease;
         }
 
-        .tomo-leer:hover {
-            gap: 14px;
-            color: #005a8e;
-        }
+        .tomo-leer:hover { gap: 14px; color: #005a8e; }
+        .tomo-leer:hover::after { transform: translateX(4px); }
 
-        .tomo-leer:hover::after {
-            transform: translateX(4px);
-        }
-
-        /* ══════════════════════════════════
-           ZONA SUSCRIPCIÓN
-        ══════════════════════════════════ */
+        /* ── Suscripción ── */
         .suscripcion-wrap {
             position: relative;
             z-index: 2;
-            margin: 72px 48px 80px;
             max-width: 1080px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 72px;
-            margin-bottom: 80px;
+            margin: 72px auto 80px;
+            padding: 0 48px;
+        }
+
+        .suscripcion-inner {
             background: linear-gradient(135deg, #0a1628 0%, #0077b6 100%);
             border-radius: 8px;
             padding: 64px 72px;
@@ -274,18 +243,9 @@
             justify-content: space-between;
             gap: 40px;
             box-shadow: 0 12px 48px rgba(0, 119, 182, 0.25);
-            overflow: hidden;
         }
 
-        .suscripcion-wrap::before {
-            display: none;
-        }
-
-        .suscripcion-texto {
-            position: relative;
-            z-index: 1;
-            flex: 1;
-        }
+        .suscripcion-texto { flex: 1; }
 
         .sus-eyebrow {
             font-size: 9px;
@@ -305,10 +265,7 @@
             margin-bottom: 14px;
         }
 
-        .sus-titulo em {
-            font-style: normal;
-            color: #ffd813;
-        }
+        .sus-titulo em { font-style: normal; color: #ffd813; }
 
         .sus-desc {
             font-family: 'JetBrains Mono', monospace;
@@ -320,8 +277,6 @@
         }
 
         .suscripcion-cta {
-            position: relative;
-            z-index: 1;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
@@ -351,42 +306,20 @@
             box-shadow: 0 10px 36px rgba(255, 216, 19, 0.5);
         }
 
-        .sus-nota {
-            font-size: 9px;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.35);
-            text-transform: uppercase;
-        }
-
-        /* ══════════════════════════════════
-           RESPONSIVE
-        ══════════════════════════════════ */
+        /* ── Responsive ── */
         @media (max-width: 768px) {
             .revista-header,
-            .revista-grid {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
+            .revista-grid,
+            .suscripcion-wrap { padding-left: 20px; padding-right: 20px; }
 
-            .revista-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-
-            .suscripcion-wrap {
-                margin: 48px 20px 60px;
+            .suscripcion-inner {
                 padding: 44px 30px;
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 32px;
             }
 
-            .suscripcion-wrap::before { display: none; }
-
-            .suscripcion-cta {
-                width: 100%;
-                align-items: flex-start;
-            }
+            .suscripcion-cta { width: 100%; align-items: flex-start; }
         }
     </style>
 </head>
@@ -418,76 +351,48 @@
         </ul>
     </div>
 
-    <!-- HEADER -->
     <div class="revista-header" style="padding-top: 200px;">
         <h1>La Balsa<br><em>Revista</em></h1>
         <p class="revista-meta">Publicación en papel · edición mensual</p>
     </div>
 
-    <!-- GRID DE TOMOS -->
     <div class="revista-grid">
-
-        <!-- Abril 2026 -->
-        <div class="tomo-card">
-            <div class="tomo-img-wrap">
-                <img src="media/revista/abr2026.jpg" alt="Abril 2026" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                <div class="tomo-img-placeholder" style="display:none;">ABR</div>
-                <span class="tomo-badge">Abril 2026</span>
-            </div>
-            <div class="tomo-body">
-                <p class="tomo-seccion">Fragmento · Edición actual</p>
-                <h2 class="tomo-titulo">Fronteras del cuerpo</h2>
-                <p class="tomo-sumario">«Nadie elige dónde empieza su piel. Pero todos decidimos, tarde o temprano, hasta dónde dejar entrar al mundo. Esa frontera —invisible, porosa, disputada— es el territorio más político que habitamos.»</p>
-                <div class="tomo-temas">
-                    <span class="tomo-tema">Cuerpo</span>
-                    <span class="tomo-tema">Política</span>
-                    <span class="tomo-tema">Identidad</span>
-                </div>
-                <div class="tomo-footer">
-                    <span class="tomo-fecha">Revista en papel · abr 2026</span>
-                    <a href="#" class="tomo-leer">Ver edición</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Marzo 2026 -->
-        <div class="tomo-card">
+        <a href="marzo2026.html" class="tomo-card">
             <div class="tomo-img-wrap">
                 <img src="media/revista/mar2026.jpg" alt="Marzo 2026" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                 <div class="tomo-img-placeholder" style="display:none;">MAR</div>
                 <span class="tomo-badge">Marzo 2026</span>
             </div>
             <div class="tomo-body">
-                <p class="tomo-seccion">Fragmento · Marzo 2026</p>
-                <h2 class="tomo-titulo">El ruido como lenguaje</h2>
-                <p class="tomo-sumario">«La ciudad no hace silencio. Aprende a escucharla y vas a descubrir que cada bocina, cada obra, cada cumbia a las tres de la mañana es alguien diciéndote: acá estoy, existo, no me ignores.»</p>
+                <p class="tomo-seccion">Edición actual</p>
+                <h2 class="tomo-titulo">Número de marzo</h2>
+                <p class="tomo-sumario">Adelantos de la edición de marzo. Textos, imágenes y voces que componen esta entrega de La Balsa Revista.</p>
                 <div class="tomo-temas">
-                    <span class="tomo-tema">Sonido</span>
-                    <span class="tomo-tema">Ciudad</span>
-                    <span class="tomo-tema">Resistencia</span>
+                    <span class="tomo-tema">Cultura</span>
+                    <span class="tomo-tema">Territorio</span>
+                    <span class="tomo-tema">Comunidad</span>
                 </div>
                 <div class="tomo-footer">
                     <span class="tomo-fecha">Revista en papel · mar 2026</span>
-                    <a href="#" class="tomo-leer">Ver edición</a>
+                    <span class="tomo-leer">Ver edición</span>
                 </div>
             </div>
-        </div>
-
+        </a>
     </div>
 
-    <!-- ZONA SUSCRIPCIÓN -->
     <div class="suscripcion-wrap">
-        <div class="suscripcion-texto">
-            <p class="sus-eyebrow">Revista La Balsa</p>
-            <h2 class="sus-titulo">La revista en papel,<br><em>cada mes en tu puerta.</em></h2>
-            <p class="sus-desc">La Balsa Revista se imprime y distribuye todos los meses. Suscribite y te la hacemos llegar.</p>
-        </div>
-        <div class="suscripcion-cta">
-            <a href="#" class="btn-suscribirse">Suscribirme</a>
+        <div class="suscripcion-inner">
+            <div class="suscripcion-texto">
+                <p class="sus-eyebrow">Revista La Balsa</p>
+                <h2 class="sus-titulo">La revista en papel,<br><em>cada mes en tu puerta.</em></h2>
+                <p class="sus-desc">La Balsa Revista se imprime y distribuye todos los meses. Suscribite y te la hacemos llegar.</p>
+            </div>
+            <div class="suscripcion-cta">
+                <a href="contacto.html" class="btn-suscribirse">Suscribirme</a>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>

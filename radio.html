@@ -80,8 +80,29 @@
 
     <div class="acordeones">
 
-        <!-- NOVIEMBRE -->
+        <!-- DICIEMBRE -->
         <div class="mes-acordeon abierto">
+            <div class="mes-header">
+                <span class="mes-nombre">Diciembre 2025</span>
+                <div class="mes-info">
+                    <span class="mes-count">8 programas</span>
+                    <span class="mes-flecha">+</span>
+                </div>
+            </div>
+            <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#60</span><span class="ep-fecha">19/12</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep60.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#59</span><span class="ep-fecha">17/12</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep59.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#58</span><span class="ep-fecha">15/12</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep58.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#57</span><span class="ep-fecha">12/12</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep57.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#56</span><span class="ep-fecha">10/12</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep56.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#55</span><span class="ep-fecha">08/12</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep55.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#54</span><span class="ep-fecha">05/12</span><span class="ep-dia">Viernes</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep54.mp3"></audio></div></div>
+                <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#53</span><span class="ep-fecha">03/12</span><span class="ep-dia">Miércoles</span></div><p class="ep-desc">Descripción del programa. Temas, invitados y destacados del día.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/audio/ep53.mp3"></audio></div></div>
+            </div></div></div>
+        </div>
+
+        <!-- NOVIEMBRE -->
+        <div class="mes-acordeon">
             <div class="mes-header">
                 <span class="mes-nombre">Noviembre 2025</span>
                 <div class="mes-info">
@@ -187,25 +208,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // ACORDEONES
-        document.querySelectorAll('.mes-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const acordeon = header.parentElement;
-                const estaAbierto = acordeon.classList.contains('abierto');
-                document.querySelectorAll('.mes-acordeon').forEach(a => a.classList.remove('abierto'));
-                if (!estaAbierto) acordeon.classList.add('abierto');
-            });
-        });
-
-        // PAUSA OTROS AUDIOS
-        document.querySelectorAll('.ep-audio').forEach(audio => {
-            audio.addEventListener('play', () => {
-                document.querySelectorAll('.ep-audio').forEach(other => {
-                    if (other !== audio) other.pause();
-                });
-            });
-        });
-    </script>
 </body>
 </html>
