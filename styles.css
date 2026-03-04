@@ -11,7 +11,6 @@ body {
     overflow: hidden;
     min-height: 100vh;
     position: relative;
-    /* Evita flash de contenido sin estilos */
     visibility: hidden;
 }
 
@@ -29,9 +28,6 @@ body.listo {
     z-index: -1;
 }
 
-/* ══════════════════════════════════
-   NAVBAR
-══════════════════════════════════ */
 .navbar {
     position: fixed;
     top: 0;
@@ -66,7 +62,7 @@ body.listo {
 .linea {
     width: 100%;
     height: 3px;
-    background: #ffd813; /* ✅ Amarillo igual al logo */
+    background: #ffd813;
     border-radius: 10px;
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -84,16 +80,13 @@ body.listo {
     transform: rotate(-45deg) translate(10px, -10px);
 }
 
-/* ══════════════════════════════════
-   MENÚ DESPLEGABLE — fix mobile
-══════════════════════════════════ */
 .menu-desplegable {
     position: fixed;
     top: 0;
     right: -100%;
-    width: min(400px, 100vw); /* ✅ Nunca supera el ancho de pantalla */
-    height: 100dvh; /* ✅ Respeta barras del navegador mobile */
-    background: rgba(10, 10, 10, 0.85);
+    width: min(400px, 100vw);
+    height: 100dvh;
+    background: rgba(20, 60, 90, 0.45);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 140px 40px 50px;
@@ -133,40 +126,26 @@ body.listo {
 
 .menu-desplegable a {
     text-decoration: none;
-    color: #ffffff;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(22px, 5vw, 28px);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.3s ease;
     display: block;
-    position: relative;
-}
-
-.menu-desplegable a::before {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #ffd813, #c96100);
-    transition: width 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .menu-desplegable a:hover {
-    color: #ffd813;
     transform: translateX(10px);
 }
 
-.menu-desplegable a:hover::before {
-    width: 100%;
+.menu-svg {
+    height: 36px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+    transition: filter 0.3s ease;
 }
 
-/* ══════════════════════════════════
-   CONTENIDO CENTRAL
-══════════════════════════════════ */
+.menu-desplegable a:hover .menu-svg {
+    filter: brightness(0) saturate(100%) invert(83%) sepia(60%) saturate(400%) hue-rotate(5deg);
+}
+
 .contenido {
     position: fixed;
     top: 0;
@@ -210,9 +189,6 @@ body.listo {
     font-weight: 700;
 }
 
-/* ══════════════════════════════════
-   RADIO PAGE — OVERLAY CLARO
-══════════════════════════════════ */
 body.radio-page {
     overflow-x: hidden;
     overflow-y: auto;
@@ -222,7 +198,7 @@ body.radio-page::after {
     content: '';
     position: fixed;
     inset: 0;
-    background: rgba(230, 240, 248, 0.93);
+    background: rgba(230, 240, 248, 0.72);
     z-index: 0;
     pointer-events: none;
 }
@@ -277,7 +253,6 @@ body.radio-page::after {
     flex-shrink: 0;
 }
 
-/* ── Acordeones ── */
 .acordeones {
     position: relative;
     z-index: 2;
@@ -360,7 +335,6 @@ body.radio-page::after {
     overflow: hidden;
 }
 
-/* ── Episodios ── */
 .ep-lista {
     padding-bottom: 28px;
     display: flex;
@@ -370,8 +344,9 @@ body.radio-page::after {
 .ep-fila {
     display: grid;
     grid-template-columns: 90px 1fr 210px;
-    align-items: start;
-    gap: 24px;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 12px 24px;
     padding: 18px 12px;
     border-radius: 3px;
     transition: background 0.18s ease;
@@ -382,44 +357,50 @@ body.radio-page::after {
 .ep-fila:hover { background: rgba(0, 119, 182, 0.05); }
 
 .ep-izq {
+    grid-column: 1;
+    grid-row: 1;
     display: flex;
     flex-direction: column;
     gap: 3px;
-    padding-top: 1px;
 }
 
 .ep-num {
-    font-size: 10px;
+    font-size: 13px;
     letter-spacing: 2px;
     color: #0a1628;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .ep-fecha {
-    font-size: 12px;
+    font-size: 15px;
     color: #0077b6;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .ep-dia {
-    font-size: 10px;
-    color: #aabccc;
-    font-weight: 300;
+    font-size: 11px;
+    color: #0a1628;
+    font-weight: 400;
     letter-spacing: 1px;
 }
 
 .ep-desc {
+    grid-column: 1 / -1;
+    grid-row: 2;
     font-size: 13px;
     font-weight: 400;
     color: #1e2f3e;
     line-height: 1.65;
-    padding-top: 2px;
+    text-align: justify;
+    padding-top: 0;
 }
 
 .ep-audio-wrap {
+    grid-column: 3;
+    grid-row: 1;
     display: flex;
-    align-items: flex-start;
-    padding-top: 4px;
+    align-items: center;
+    padding-top: 0;
 }
 
 .ep-audio {
@@ -453,9 +434,6 @@ body.radio-page::after {
 .mes-acordeon.abierto .ep-fila:nth-child(13) { animation-delay: 0.39s; }
 .mes-acordeon.abierto .ep-fila:nth-child(14) { animation-delay: 0.42s; }
 
-/* ══════════════════════════════════
-   TRIPULANTES PAGE
-══════════════════════════════════ */
 body.tripulantes-page {
     overflow: auto;
 }
@@ -671,17 +649,11 @@ body.tripulantes-page {
     opacity: 0.92;
 }
 
-/* ══════════════════════════════════
-   ANIMACIONES
-══════════════════════════════════ */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ══════════════════════════════════
-   LEGACY
-══════════════════════════════════ */
 .imagen-centro {
     position: fixed;
     top: 50%;
@@ -718,28 +690,34 @@ body.tripulantes-page {
     z-index: 1;
 }
 
-/* ══════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════ */
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
-        background: rgba(230, 240, 248, 0.95);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: none;
     }
 
-    /* En index no queremos fondo en la navbar */
-    body:not(.radio-page):not(.revista-page):not(.tripulantes-page) .navbar {
-        background: none;
-        backdrop-filter: none;
-        box-shadow: none;
+    body:not(.radio-page):not(.revista-page):not(.tripulantes-page):not(.cruces-page) .navbar {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     .menu-desplegable {
         width: 100%;
         padding: 120px 30px 40px;
+    }
+
+    .menu-desplegable ul {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .menu-desplegable a:hover {
+        transform: translateX(-10px);
     }
 
     .logo { height: 70px; }
@@ -752,19 +730,34 @@ body.tripulantes-page {
     .imagen-centro img { width: 250px; }
     .text { font-size: 16px; }
 
-    .radio-header,
-    .acordeones { padding-left: 20px; padding-right: 20px; }
+    .radio-header { padding-top: 140px; }
+    .radio-header, .acordeones { padding-left: 20px; padding-right: 20px; }
+    .revista-header { padding-top: 140px; }
+    .cruces-header { padding-top: 140px; }
+    .seccion-titulo { padding-top: 130px; }
 
     .ep-fila {
-        grid-template-columns: 70px 1fr;
-        grid-template-rows: auto auto;
-        gap: 10px;
+        grid-template-columns: 80px 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 10px 16px;
     }
 
-    .ep-audio-wrap { grid-column: 1 / -1; }
-    .mes-count { display: none; }
+    .ep-izq {
+        grid-column: 1;
+        grid-row: 1;
+    }
 
-    .seccion-titulo { padding-top: 130px; }
+    .ep-audio-wrap {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+    .ep-desc {
+        grid-column: 1 / -1;
+        grid-row: 3;
+    }
+
+    .mes-count { display: none; }
 
     .grid-tripulantes {
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -779,4 +772,8 @@ body.tripulantes-page {
     .text { font-size: 14px; }
     .grid-tripulantes { grid-template-columns: 1fr; max-width: 360px; }
     .menu-desplegable a { font-size: 22px; }
+    .radio-header { padding-top: 120px; }
+    .revista-header { padding-top: 120px; }
+    .cruces-header { padding-top: 120px; }
+    .seccion-titulo { padding-top: 110px; }
 }
