@@ -23,18 +23,28 @@
         </div>
     </nav>
 
-    <div class="menu-desplegable" id="menuDesplegable">
-        <ul>
-            <li><a href="radio.html"><img src="media/radio.svg" alt="Radio" class="menu-svg"></a></li>
-            <li><a href="revista.html"><img src="media/revista.svg" alt="Revista" class="menu-svg"></a></li>
-            <li><a href="cruces.html"><img src="media/cruces.svg" alt="Cruces" class="menu-svg"></a></li>
-            <li><a href="tripulantes.html"><img src="media/tripulantes.svg" alt="Tripulantes" class="menu-svg"></a></li>
-            <li><a href="contacto.html"><img src="media/participa.svg" alt="Participá" class="menu-svg"></a></li>
+    <div class="menu-desplegable" id="menuDesplegable" style="overflow: hidden;">
+        <ul style="
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            box-sizing: border-box;
+        ">
+            <li><a href="radio.html"><img src="media/radio.svg" alt="Radio" class="menu-svg" style="width: 7vw; min-width: 50px; max-width: 95px; height: auto; display: block;"></a></li>
+            <li><a href="revista.html"><img src="media/revista.svg" alt="Revista" class="menu-svg" style="width: 9vw; min-width: 65px; max-width: 120px; height: auto; display: block;"></a></li>
+            <li><a href="cruces.html"><img src="media/cruces.svg" alt="Cruces" class="menu-svg" style="width: 9vw; min-width: 65px; max-width: 120px; height: auto; display: block;"></a></li>
+            <li style="display: flex; justify-content: center;"><a href="tripulantes.html"><img src="media/tripulantes.svg" alt="Tripulantes" class="menu-svg" style="width: 13vw; min-width: 90px; max-width: 165px; height: auto; display: block; margin: 0 auto;"></a></li>
+            <li><a href="contacto.html"><img src="media/participá.svg" alt="Participá" class="menu-svg" style="width: 9vw; min-width: 65px; max-width: 120px; height: auto; display: block;"></a></li>
         </ul>
     </div>
 
     <div class="contenido">
-        <img src="media/calmagrueso.svg" alt="La Balsa" style="max-width: clamp(280px, 55vw, 720px); width: 100%; height: auto;">
+        <img src="media/calmab.svg" alt="La Balsa" style="max-width: clamp(180px, 30vw, 400px); width: 100%; height: auto;">
     </div>
 
     <script src="script.js"></script>
