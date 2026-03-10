@@ -124,19 +124,18 @@
             width: 100%;
             height: 100%;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
             background: linear-gradient(160deg, #1a2a3a 0%, #0d1e30 100%);
             overflow: hidden;
             user-select: none;
         }
 
-        .foto-placeholder svg {
-            width: 72%;
-            height: auto;
-            display: block;
-            opacity: 0.28;
-            margin-bottom: -4px;
+        .foto-placeholder span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 48px;
+            color: rgba(255,255,255,0.2);
+            font-weight: 700;
         }
 
         .card-info {
@@ -194,7 +193,9 @@
         /* ── CARD VOS ── */
         .card-vos {
             border: 1px solid rgba(255, 216, 19, 0.35);
-            background: rgba(255, 216, 19, 0.07);
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
         }
 
         .card-vos:hover {
@@ -203,12 +204,18 @@
                         0 0 60px rgba(255,216,19,0.25);
         }
 
-        .foto-placeholder-vos {
-            background: linear-gradient(135deg, #5a1a00, #c96100) !important;
+        /* Zona de foto VOS: transparente, sin overlay, sin blur */
+        .card-vos .card-foto-wrap {
+            background: transparent;
+            overflow: visible;
         }
 
-        .foto-placeholder-vos svg {
-            opacity: 0.35;
+        .card-vos .card-foto-wrap::after {
+            display: none;
+        }
+
+        .foto-placeholder-vos {
+            background: transparent !important;
         }
 
         .card-nombre-vos {
@@ -290,14 +297,6 @@
         </ul>
     </div>
 
-    <!-- SVG reutilizable de silueta persona -->
-    <svg style="display:none">
-        <symbol id="silueta" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="100" cy="65" r="45" fill="white"/>
-            <path d="M10 220 C10 150 190 150 190 220Z" fill="white"/>
-        </symbol>
-    </svg>
-
     <div class="seccion-titulo">
         <h1>Tripulantes</h1>
         <p class="subtitulo">El equipo que mueve la balsa</p>
@@ -306,13 +305,22 @@
 
     <div class="grid-tripulantes">
 
+        <!-- EDUARDO -->
         <div class="card">
             <div class="card-foto-wrap">
-                <img src="media/tripulante1.jpg" alt="Tripulante 1"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">
-                    <svg><use href="#silueta"/></svg>
-                </div>
+                <img src="media/tripulante-eduardo.jpeg" alt="Eduardo">
+            </div>
+            <div class="card-info">
+                <p class="card-nombre">Eduardo Curto</p>
+                <p class="card-descripcion">Profe de matemática, gestor cultural y buscador de decires. Vive en la Santísima Trinidad de los Porongos y sabe encontrar allí y en todos lados gente talentosa, creativa y comprometida con sus comunidades. Al igual que uno de sus héroes, solo le teme a que el cielo caiga sobre su cabeza, y así le va.</p>
+            </div>
+            <div class="card-linea"></div>
+        </div>
+
+        <!-- TRIPULANTE 2 -->
+        <div class="card">
+            <div class="card-foto-wrap">
+                <img src="media/tripulante-2.jpg" alt="Tripulante 2">
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -321,13 +329,10 @@
             <div class="card-linea"></div>
         </div>
 
+        <!-- TRIPULANTE 3 -->
         <div class="card">
             <div class="card-foto-wrap">
-                <img src="media/tripulante2.jpg" alt="Tripulante 2"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">
-                    <svg><use href="#silueta"/></svg>
-                </div>
+                <img src="media/tripulante-3.jpg" alt="Tripulante 3">
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -336,13 +341,10 @@
             <div class="card-linea"></div>
         </div>
 
+        <!-- TRIPULANTE 4 -->
         <div class="card">
             <div class="card-foto-wrap">
-                <img src="media/tripulante3.jpg" alt="Tripulante 3"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">
-                    <svg><use href="#silueta"/></svg>
-                </div>
+                <img src="media/tripulante-4.jpg" alt="Tripulante 4">
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -351,13 +353,10 @@
             <div class="card-linea"></div>
         </div>
 
+        <!-- TRIPULANTE 5 -->
         <div class="card">
             <div class="card-foto-wrap">
-                <img src="media/tripulante4.jpg" alt="Tripulante 4"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">
-                    <svg><use href="#silueta"/></svg>
-                </div>
+                <img src="media/tripulante-5.jpg" alt="Tripulante 5">
             </div>
             <div class="card-info">
                 <p class="card-nombre">Nombre Apellido</p>
@@ -366,26 +365,10 @@
             <div class="card-linea"></div>
         </div>
 
-        <div class="card">
-            <div class="card-foto-wrap">
-                <img src="media/tripulante5.jpg" alt="Tripulante 5"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="foto-placeholder" style="display:none;">
-                    <svg><use href="#silueta"/></svg>
-                </div>
-            </div>
-            <div class="card-info">
-                <p class="card-nombre">Nombre Apellido</p>
-                <p class="card-descripcion">Descripción breve del tripulante. Su rol, qué hace, qué lo mueve.</p>
-            </div>
-            <div class="card-linea"></div>
-        </div>
-
+        <!-- VOS -->
         <div class="card card-vos">
             <div class="card-foto-wrap">
-                <div class="foto-placeholder foto-placeholder-vos" style="display:flex;">
-                    <svg><use href="#silueta"/></svg>
-                </div>
+                <div class="foto-placeholder foto-placeholder-vos"></div>
             </div>
             <div class="card-info">
                 <p class="card-nombre card-nombre-vos">VOS</p>
