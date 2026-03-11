@@ -54,15 +54,6 @@
             background: #0077b6;
         }
 
-        .revista-page .menu-desplegable a {
-            color: #0077b6;
-        }
-
-        .revista-page .menu-desplegable a:hover {
-            color: #005a8e;
-        }
-
-        /* ── Grid ── */
         .revista-grid {
             position: relative;
             z-index: 2;
@@ -225,7 +216,6 @@
         .tomo-leer:hover { gap: 14px; color: #005a8e; }
         .tomo-leer:hover::after { transform: translateX(4px); }
 
-        /* ── Suscripción ── */
         .suscripcion-wrap {
             position: relative;
             z-index: 2;
@@ -306,7 +296,6 @@
             box-shadow: 0 10px 36px rgba(255, 216, 19, 0.5);
         }
 
-        /* ── Responsive ── */
         @media (max-width: 768px) {
             .revista-header,
             .revista-grid,
@@ -320,6 +309,11 @@
             }
 
             .suscripcion-cta { width: 100%; align-items: flex-start; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -343,11 +337,11 @@
 
     <div class="menu-desplegable" id="menuDesplegable">
         <ul>
-            <li><a href="radio.html">Radio</a></li>
-            <li><a href="revista.html">Revista</a></li>
-            <li><a href="all.html">Cruces</a></li>
-            <li><a href="tripulantes.html">Tripulantes</a></li>
-            <li><a href="contacto.html">Participá</a></li>
+            <li><a href="radio.html">RADIO</a></li>
+            <li><a href="revista.html">REVISTA</a></li>
+            <li><a href="cruces.html">CRUCES</a></li>
+            <li><a href="tripulantes.html">TRIPULANTES</a></li>
+            <li><a href="contacto.html">PARTICIPÁ</a></li>
         </ul>
     </div>
 
