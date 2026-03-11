@@ -12,6 +12,7 @@
             overflow: auto;
             min-height: 100vh;
         }
+
         .seccion-titulo {
             text-align: center;
             padding-top: 160px;
@@ -32,7 +33,7 @@
 
         .seccion-titulo .subtitulo {
             font-family: 'JetBrains Mono', monospace;
-            font-weight: 300;
+            font-weight: 600;
             font-size: clamp(10px, 1.5vw, 13px);
             color: rgba(255,255,255,0.65);
             letter-spacing: 5px;
@@ -48,7 +49,6 @@
             border-radius: 2px;
         }
 
-        /* ── GRID DE CARDS ── */
         .grid-tripulantes {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -60,7 +60,6 @@
             z-index: 2;
         }
 
-        /* ── CARD ── */
         .card {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(18px);
@@ -69,9 +68,10 @@
             border-radius: 20px;
             overflow: hidden;
             position: relative;
-            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
-                        box-shadow 0.35s ease;
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s ease;
             cursor: default;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
         }
 
         .card::before {
@@ -92,6 +92,13 @@
         }
 
         .card:hover::before { opacity: 1; }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
 
         .card-foto-wrap {
             position: relative;
@@ -119,7 +126,6 @@
             pointer-events: none;
         }
 
-        /* ── PLACEHOLDER PERSONA ── */
         .foto-placeholder {
             width: 100%;
             height: 100%;
@@ -172,25 +178,6 @@
 
         .card:hover .card-linea { transform: scaleX(1); }
 
-        /* ── ANIMACIÓN DE ENTRADA ── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .card {
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-        }
-
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
-
-        /* ── CARD VOS ── */
         .card-vos {
             border: 1px solid rgba(255, 216, 19, 0.35);
             background: transparent;
@@ -204,19 +191,9 @@
                         0 0 60px rgba(255,216,19,0.25);
         }
 
-        /* Zona de foto VOS: transparente, sin overlay, sin blur */
-        .card-vos .card-foto-wrap {
-            background: transparent;
-            overflow: visible;
-        }
-
-        .card-vos .card-foto-wrap::after {
-            display: none;
-        }
-
-        .foto-placeholder-vos {
-            background: transparent !important;
-        }
+        .card-vos .card-foto-wrap { background: transparent; overflow: visible; }
+        .card-vos .card-foto-wrap::after { display: none; }
+        .foto-placeholder-vos { background: transparent !important; }
 
         .card-nombre-vos {
             font-size: 30px;
@@ -249,7 +226,11 @@
             opacity: 0.92;
         }
 
-        /* ── RESPONSIVE ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             .grid-tripulantes {
                 grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -269,16 +250,13 @@
     </style>
 </head>
 
-<body class="tripulantes-page">
+<body class="tripulantes-page listo">
 
     <video autoplay muted loop playsinline class="video-fondo">
         <source src="media/video1.mp4" type="video/mp4">
     </video>
 
     <nav class="navbar">
-        <a href="index.html">
-            <img src="media/balsaA.svg" alt="Logo" class="logo">
-        </a>
         <div class="menu-hamburguesa" id="menuHamburguesa">
             <div class="linea"></div>
             <div class="linea"></div>
@@ -305,7 +283,6 @@
 
     <div class="grid-tripulantes">
 
-        <!-- EDUARDO -->
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante-eduardo.jpeg" alt="Eduardo">
@@ -317,19 +294,17 @@
             <div class="card-linea"></div>
         </div>
 
-        <!-- TRIPULANTE 2 -->
         <div class="card">
             <div class="card-foto-wrap">
-                <img src="media/tripulante-2.jpg" alt="Tripulante 2">
+                <img src="media/tripulante-mario.jpeg" alt="Mario">
             </div>
             <div class="card-info">
-                <p class="card-nombre">Nombre Apellido</p>
-                <p class="card-descripcion">Descripción breve del tripulante. Su rol, qué hace, qué lo mueve.</p>
+                <p class="card-nombre">Mario Fontes</p>
+                <p class="card-descripcion">Soy todo y nada a la vez, remo y remo de forma porfiada, como el hombre común, distinto a todos, igual. Empeñado en largas luchas, con el tiempo, que el tiempo, a su tiempo, me va prestando. Y así ya esta bien. No es triste la verdad, la vida, es para morirla, sin camuflaje. Porque los que siembran entre lágrimas, cantando cosecharan. Salú.</p>
             </div>
             <div class="card-linea"></div>
         </div>
 
-        <!-- TRIPULANTE 3 -->
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante-3.jpg" alt="Tripulante 3">
@@ -341,7 +316,6 @@
             <div class="card-linea"></div>
         </div>
 
-        <!-- TRIPULANTE 4 -->
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante-4.jpg" alt="Tripulante 4">
@@ -353,7 +327,6 @@
             <div class="card-linea"></div>
         </div>
 
-        <!-- TRIPULANTE 5 -->
         <div class="card">
             <div class="card-foto-wrap">
                 <img src="media/tripulante-5.jpg" alt="Tripulante 5">
@@ -365,7 +338,6 @@
             <div class="card-linea"></div>
         </div>
 
-        <!-- VOS -->
         <div class="card card-vos">
             <div class="card-foto-wrap">
                 <div class="foto-placeholder foto-placeholder-vos"></div>
@@ -380,13 +352,28 @@
 
     </div>
 
-    <script src="script.js"></script>
     <script>
         const hamburguesa = document.getElementById('menuHamburguesa');
         const menuDesplegable = document.getElementById('menuDesplegable');
-        hamburguesa.addEventListener('click', () => {
+
+        hamburguesa.addEventListener('click', (e) => {
+            e.stopPropagation();
             hamburguesa.classList.toggle('activo');
             menuDesplegable.classList.toggle('activo');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!menuDesplegable.contains(e.target)) {
+                hamburguesa.classList.remove('activo');
+                menuDesplegable.classList.remove('activo');
+            }
+        });
+
+        document.querySelectorAll('.menu-desplegable a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburguesa.classList.remove('activo');
+                menuDesplegable.classList.remove('activo');
+            });
         });
     </script>
 </body>

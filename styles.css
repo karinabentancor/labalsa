@@ -28,26 +28,32 @@ body.listo {
     z-index: -1;
 }
 
+/* ── NAVBAR ── */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 50px;
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: none;
     z-index: 1000;
-    transition: all 0.3s ease;
 }
 
 .logo {
-    height: 120px;
+    height: 80px;
     width: auto;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    transition: opacity 0.2s ease;
 }
 
+.logo:hover {
+    opacity: 0.85;
+}
+
+/* ── HAMBURGUESA ── */
 .menu-hamburguesa {
     cursor: pointer;
     display: flex;
@@ -80,16 +86,17 @@ body.listo {
     transform: rotate(-45deg) translate(10px, -10px);
 }
 
+/* ── MENÚ DESPLEGABLE ── */
 .menu-desplegable {
     position: fixed;
     top: 0;
     right: -100%;
-    width: min(400px, 100vw);
+    width: min(360px, 100vw);
     height: 100dvh;
     background: rgba(20, 60, 90, 0.45);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 140px 40px 50px;
+    padding: 120px 40px 50px;
     transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     z-index: 999;
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4);
@@ -146,6 +153,7 @@ body.listo {
     filter: brightness(0) saturate(100%) invert(83%) sepia(60%) saturate(400%) hue-rotate(5deg);
 }
 
+/* ── CONTENIDO INDEX ── */
 .contenido {
     position: fixed;
     top: 0;
@@ -182,13 +190,50 @@ body.listo {
 }
 
 .linea-desktop { display: inline; }
-
 .linea-mobile {
     display: none;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
 }
 
+/* ── IMAGEN CENTRO (INDEX) ── */
+.imagen-centro {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imagen-centro img {
+    width: 200px;
+    height: auto;
+    filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.4));
+}
+
+.text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    margin-top: 2em;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.svg-movil {
+    position: fixed;
+    bottom: 80px;
+    left: -100px;
+    width: 80px;
+    height: auto;
+    z-index: 1;
+}
+
+/* ── RADIO PAGE ── */
 body.radio-page {
     overflow-x: hidden;
     overflow-y: auto;
@@ -201,6 +246,10 @@ body.radio-page::after {
     background: rgba(230, 240, 248, 0.72);
     z-index: 0;
     pointer-events: none;
+}
+
+.radio-page .linea {
+    background: #0077b6;
 }
 
 .radio-header {
@@ -239,20 +288,27 @@ body.radio-page::after {
     font-size: 11px;
     color: #7a8fa6;
     letter-spacing: 2px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
 }
 
-.radio-meta::before {
-    content: '';
-    display: inline-block;
-    width: 32px;
-    height: 1px;
-    background: #0077b6;
-    flex-shrink: 0;
+.radio-fm-link {
+    display: block;
+    margin-top: 16px;
+    text-align: left;
 }
 
+.radio-fm-link img {
+    height: 52px;
+    width: auto;
+    filter: brightness(0) saturate(100%) invert(30%) sepia(90%) saturate(800%) hue-rotate(180deg);
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.radio-fm-link:hover img {
+    filter: brightness(0);
+    transform: translateY(-1px);
+}
+
+/* ── ACORDEONES ── */
 .acordeones {
     position: relative;
     z-index: 2;
@@ -434,8 +490,10 @@ body.radio-page::after {
 .mes-acordeon.abierto .ep-fila:nth-child(13) { animation-delay: 0.39s; }
 .mes-acordeon.abierto .ep-fila:nth-child(14) { animation-delay: 0.42s; }
 
+/* ── TRIPULANTES PAGE ── */
 body.tripulantes-page {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .seccion-titulo {
@@ -458,7 +516,7 @@ body.tripulantes-page {
 
 .seccion-titulo .subtitulo {
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 300;
+    font-weight: 600;
     font-size: clamp(10px, 1.5vw, 13px);
     color: rgba(255,255,255,0.65);
     letter-spacing: 5px;
@@ -654,73 +712,19 @@ body.tripulantes-page {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-.imagen-centro {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.imagen-centro img {
-    width: 200px;
-    height: auto;
-    filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.4));
-}
-
-.text {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 20px;
-    margin-top: 2em;
-    font-weight: bold;
-    color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.svg-movil {
-    position: fixed;
-    bottom: 80px;
-    left: -100px;
-    width: 80px;
-    height: auto;
-    z-index: 1;
-}
-
+/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        box-shadow: none;
     }
 
-    body:not(.radio-page):not(.revista-page):not(.tripulantes-page):not(.cruces-page) .navbar {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-    }
+    .logo { height: 60px; }
 
     .menu-desplegable {
         width: 100%;
-        padding: 120px 30px 40px;
+        padding: 100px 30px 40px;
     }
 
-    .menu-desplegable ul {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    .menu-desplegable a:hover {
-        transform: translateX(-10px);
-    }
-
-    .logo { height: 70px; }
     .svg-movil { bottom: 60px; width: 60px; }
 
     .linea-desktop { display: none; }
@@ -730,11 +734,9 @@ body.tripulantes-page {
     .imagen-centro img { width: 250px; }
     .text { font-size: 16px; }
 
-    .radio-header { padding-top: 140px; }
+    .radio-header { padding-top: 120px; }
     .radio-header, .acordeones { padding-left: 20px; padding-right: 20px; }
-    .revista-header { padding-top: 140px; }
-    .cruces-header { padding-top: 140px; }
-    .seccion-titulo { padding-top: 130px; }
+    .seccion-titulo { padding-top: 110px; }
 
     .ep-fila {
         grid-template-columns: 80px 1fr;
@@ -742,20 +744,9 @@ body.tripulantes-page {
         gap: 10px 16px;
     }
 
-    .ep-izq {
-        grid-column: 1;
-        grid-row: 1;
-    }
-
-    .ep-audio-wrap {
-        grid-column: 1 / -1;
-        grid-row: 2;
-    }
-
-    .ep-desc {
-        grid-column: 1 / -1;
-        grid-row: 3;
-    }
+    .ep-izq { grid-column: 1; grid-row: 1; }
+    .ep-audio-wrap { grid-column: 1 / -1; grid-row: 2; }
+    .ep-desc { grid-column: 1 / -1; grid-row: 3; }
 
     .mes-count { display: none; }
 
@@ -771,9 +762,6 @@ body.tripulantes-page {
     .imagen-centro img { width: 180px; }
     .text { font-size: 14px; }
     .grid-tripulantes { grid-template-columns: 1fr; max-width: 360px; }
-    .menu-desplegable a { font-size: 22px; }
-    .radio-header { padding-top: 120px; }
-    .revista-header { padding-top: 120px; }
-    .cruces-header { padding-top: 120px; }
-    .seccion-titulo { padding-top: 110px; }
+    .radio-header { padding-top: 100px; }
+    .seccion-titulo { padding-top: 100px; }
 }
