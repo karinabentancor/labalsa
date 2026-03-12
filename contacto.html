@@ -4,7 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sumate a navegar – LA BALSA</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"></noscript>
+
     <link rel="stylesheet" href="styles.css">
+
+    <link rel="prefetch" href="radio.html">
+    <link rel="prefetch" href="revista.html">
+    <link rel="prefetch" href="cruces.html">
+    <link rel="prefetch" href="tripulantes.html">
+    <link rel="preload" as="image" href="media/balsaA.svg">
+
     <style>
         body.contacto-page {
             overflow-x: hidden;
@@ -220,7 +233,7 @@
 
 <body class="contacto-page">
 
-    <video autoplay muted loop playsinline class="video-fondo">
+    <video autoplay muted loop playsinline preload="metadata" class="video-fondo">
         <source src="media/video1.mp4" type="video/mp4">
     </video>
 
@@ -228,12 +241,13 @@
         <a href="index.html">
             <img src="media/balsaA.svg" alt="Logo" class="logo">
         </a>
-        <div class="menu-hamburguesa" id="menuHamburguesa">
-            <div class="linea"></div>
-            <div class="linea"></div>
-            <div class="linea"></div>
-        </div>
     </nav>
+
+    <div class="menu-hamburguesa" id="menuHamburguesa">
+        <div class="linea"></div>
+        <div class="linea"></div>
+        <div class="linea"></div>
+    </div>
 
     <div class="menu-desplegable" id="menuDesplegable">
         <ul>
@@ -311,7 +325,7 @@
 
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script>
         document.getElementById('contactoForm').addEventListener('submit', function(e) {
             e.preventDefault();

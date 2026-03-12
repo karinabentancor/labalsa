@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap');
-
 * {
     margin: 0;
     padding: 0;
@@ -11,11 +9,12 @@ body {
     overflow: hidden;
     min-height: 100vh;
     position: relative;
-    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 body.listo {
-    visibility: visible;
+    opacity: 1;
 }
 
 .video-fondo {
@@ -44,7 +43,9 @@ body.listo {
 }
 
 .navbar.con-scroll {
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(20, 60, 90, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 /* LOGO: bastante más grande (80 → 120px) */
@@ -60,16 +61,19 @@ body.listo {
     transform: scale(1.04);
 }
 
-/* ── HAMBURGUESA: levemente más grande (45×40 → 50×44) ── */
+/* ── HAMBURGUESA ── */
 .menu-hamburguesa {
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    z-index: 1001;
-    padding: 6px;
-    width: 50px;
-    height: 44px;
+    position: fixed;
+    top: 50px;
+    right: 44px;
+    z-index: 1100;
+    padding: 5px;
+    width: 45px;
+    height: 40px;
     border-radius: 8px;
     transition: background 0.2s ease;
 }
@@ -83,7 +87,7 @@ body.listo {
     height: 3.5px;
     background: #ffd813;
     border-radius: 10px;
-    transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: all 0.3s ease;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
@@ -93,7 +97,6 @@ body.listo {
 
 .menu-hamburguesa.activo .linea:nth-child(2) {
     opacity: 0;
-    transform: scaleX(0);
 }
 
 .menu-hamburguesa.activo .linea:nth-child(3) {
@@ -112,11 +115,12 @@ body.listo {
     -webkit-backdrop-filter: blur(20px);
     padding: 120px 40px 50px;
     transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    z-index: 999;
+    z-index: 1050;
     box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
+
 
 .menu-desplegable.activo {
     right: 0;
@@ -159,7 +163,6 @@ body.listo {
 
 .menu-desplegable a:hover {
     color: #ffd813;
-    transform: translateX(10px);
 }
 
 /* ── CONTENIDO INDEX ── */
@@ -505,9 +508,11 @@ body.tripulantes-page {
     overflow-y: auto;
 }
 
+
+
 .seccion-titulo {
     text-align: center;
-    padding-top: 160px;
+    padding-top: 220px;
     padding-bottom: 10px;
     position: relative;
     z-index: 2;
@@ -546,7 +551,7 @@ body.tripulantes-page {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 32px;
     max-width: 1100px;
-    margin: 60px auto 80px;
+    margin: 40px auto 100px;
     padding: 0 30px;
     position: relative;
     z-index: 2;
@@ -595,7 +600,7 @@ body.tripulantes-page {
 .card-foto-wrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
 }
 
@@ -665,8 +670,8 @@ body.tripulantes-page {
 .card:hover .card-linea { transform: scaleX(1); }
 
 .card-vos {
-    border: 1px solid rgba(255, 216, 19, 0.35);
-    background: rgba(255, 216, 19, 0.07);
+    border: 2px solid rgba(255, 216, 19, 0.6);
+    background: transparent;
 }
 
 .card-vos:hover {
@@ -677,11 +682,11 @@ body.tripulantes-page {
 
 .foto-placeholder-vos {
     display: flex !important;
-    background: linear-gradient(135deg, #5a1a00, #c96100);
+    background: transparent;
     font-size: 96px;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    color: rgba(255, 216, 19, 0.5);
+    color: rgba(255, 216, 19, 0.4);
     letter-spacing: -4px;
 }
 
@@ -734,18 +739,21 @@ body.tripulantes-page {
     /* LOGO: grande también en mobile */
     .logo { height: 90px; }
 
-    /* HAMBURGUESA: levemente más grande en mobile (antes 45×40) */
     .menu-hamburguesa {
-        width: 46px;
-        height: 42px;
+        top: 40px;
+        right: 20px;
     }
 
     .menu-desplegable {
-        width: 100%;
+        width: 100vw;
+        right: -100vw;
         padding: 0 30px 40px;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    .menu-desplegable.activo {
+        right: 0;
     }
 
     .menu-desplegable ul {
@@ -767,14 +775,9 @@ body.tripulantes-page {
         transform: translateX(0);
     }
 
-    .menu-desplegable a {
-        font-size: clamp(22px, 6vw, 30px);
-        letter-spacing: 4px;
-    }
 
-    .menu-desplegable a:hover {
-        transform: translateX(-10px);
-    }
+
+
 
     .svg-movil { bottom: 60px; width: 60px; }
 
@@ -785,12 +788,12 @@ body.tripulantes-page {
     .imagen-centro img { width: 250px; }
     .text { font-size: 16px; }
 
-    /* SVG CALMA: más grande en tablets/mobile medianos */
-    .contenido img { max-width: clamp(240px, 55vw, 400px) !important; }
+    /* SVG CALMA: tamaño reducido en mobile */
+    .contenido img { max-width: clamp(200px, 45vw, 340px) !important; }
 
     .radio-header { padding-top: 120px; }
     .radio-header, .acordeones { padding-left: 20px; padding-right: 20px; }
-    .seccion-titulo { padding-top: 110px; }
+    .seccion-titulo { padding-top: 160px; }
 
     .ep-fila {
         grid-template-columns: 80px 1fr;
@@ -814,12 +817,12 @@ body.tripulantes-page {
 
 /* ── RESPONSIVE 480px ── */
 @media (max-width: 480px) {
-    /* SVG CALMA: bien visible en pantallas chicas */
-    .contenido img { max-width: clamp(260px, 72vw, 400px) !important; }
+    /* SVG CALMA: tamaño ajustado en pantallas chicas */
+    .contenido img { max-width: clamp(210px, 62vw, 320px) !important; }
 
     .imagen-centro img { width: 180px; }
     .text { font-size: 14px; }
     .grid-tripulantes { grid-template-columns: 1fr; max-width: 360px; }
     .radio-header { padding-top: 100px; }
-    .seccion-titulo { padding-top: 100px; }
+    .seccion-titulo { padding-top: 150px; }
 }

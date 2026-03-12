@@ -54,6 +54,36 @@
             background: #0077b6;
         }
 
+        body.revista-page .navbar {
+            background: transparent;
+        }
+
+        body.revista-page .navbar.con-scroll {
+            background: rgba(235, 245, 252, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 12px rgba(0, 119, 182, 0.10);
+        }
+
+        body.revista-page .menu-hamburguesa {
+            top: 58px;
+            right: 44px;
+        }
+
+        .revista-header { padding-left: 80px; padding-right: 80px; }
+        .revista-grid { padding-left: 80px; padding-right: 80px; }
+        .suscripcion-wrap { padding-left: 80px; padding-right: 80px; }
+
+        @media (max-width: 768px) {
+            body.revista-page .menu-hamburguesa {
+                top: 35px;
+                right: 20px;
+            }
+            .revista-header,
+            .revista-grid,
+            .suscripcion-wrap { padding-left: 28px; padding-right: 28px; }
+        }
+
         .revista-grid {
             position: relative;
             z-index: 2;
@@ -328,12 +358,13 @@
         <a href="index.html">
             <img src="media/balsaC2.svg" alt="Logo" class="logo">
         </a>
-        <div class="menu-hamburguesa" id="menuHamburguesa">
-            <div class="linea"></div>
-            <div class="linea"></div>
-            <div class="linea"></div>
-        </div>
     </nav>
+
+    <div class="menu-hamburguesa" id="menuHamburguesa">
+        <div class="linea"></div>
+        <div class="linea"></div>
+        <div class="linea"></div>
+    </div>
 
     <div class="menu-desplegable" id="menuDesplegable">
         <ul>
