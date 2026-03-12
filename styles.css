@@ -34,7 +34,7 @@ body.listo {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 40px;
+    padding: 18px 44px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,36 +47,44 @@ body.listo {
     background: rgba(0, 0, 0, 0.45);
 }
 
+/* LOGO: bastante más grande (80 → 120px) */
 .logo {
-    height: 80px;
+    height: 120px;
     width: auto;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
-    transition: opacity 0.2s ease;
+    filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.4));
+    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .logo:hover {
-    opacity: 0.85;
+    opacity: 0.88;
+    transform: scale(1.04);
 }
 
-/* ── HAMBURGUESA ── */
+/* ── HAMBURGUESA: levemente más grande (45×40 → 50×44) ── */
 .menu-hamburguesa {
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     z-index: 1001;
-    padding: 5px;
-    width: 45px;
-    height: 40px;
+    padding: 6px;
+    width: 50px;
+    height: 44px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.menu-hamburguesa:hover {
+    background: rgba(255, 216, 19, 0.12);
 }
 
 .linea {
     width: 100%;
-    height: 3px;
+    height: 3.5px;
     background: #ffd813;
     border-radius: 10px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .menu-hamburguesa.activo .linea:nth-child(1) {
@@ -85,6 +93,7 @@ body.listo {
 
 .menu-hamburguesa.activo .linea:nth-child(2) {
     opacity: 0;
+    transform: scaleX(0);
 }
 
 .menu-hamburguesa.activo .linea:nth-child(3) {
@@ -135,16 +144,6 @@ body.listo {
 .menu-desplegable.activo li:nth-child(4) { transition-delay: 0.4s; }
 .menu-desplegable.activo li:nth-child(5) { transition-delay: 0.5s; }
 .menu-desplegable.activo li:nth-child(6) { transition-delay: 0.6s; }
-
-.menu-desplegable a {
-    text-decoration: none;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.menu-desplegable a:hover {
-    transform: translateX(10px);
-}
 
 .menu-desplegable a {
     font-family: 'JetBrains Mono', monospace;
@@ -722,7 +721,7 @@ body.tripulantes-page {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE 768px ── */
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
@@ -732,11 +731,21 @@ body.tripulantes-page {
         box-shadow: none;
     }
 
-    .logo { height: 60px; }
+    /* LOGO: grande también en mobile */
+    .logo { height: 90px; }
+
+    /* HAMBURGUESA: levemente más grande en mobile (antes 45×40) */
+    .menu-hamburguesa {
+        width: 46px;
+        height: 42px;
+    }
 
     .menu-desplegable {
         width: 100%;
-        padding: 100px 30px 40px;
+        padding: 0 30px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .menu-desplegable ul {
@@ -744,15 +753,23 @@ body.tripulantes-page {
         flex-direction: column;
         align-items: flex-end;
         text-align: right;
+        padding-top: 140px;
+        width: 100%;
     }
 
+    /* MENÚ: separación reducida entre items (28px → 16px) */
     .menu-desplegable li {
-        margin: 36px 0;
+        margin: 16px 0;
         transform: translateX(50px);
     }
 
     .menu-desplegable.activo li {
         transform: translateX(0);
+    }
+
+    .menu-desplegable a {
+        font-size: clamp(22px, 6vw, 30px);
+        letter-spacing: 4px;
     }
 
     .menu-desplegable a:hover {
@@ -767,6 +784,9 @@ body.tripulantes-page {
     .contenido h1 { font-size: 40px; line-height: 1.3; }
     .imagen-centro img { width: 250px; }
     .text { font-size: 16px; }
+
+    /* SVG CALMA: más grande en tablets/mobile medianos */
+    .contenido img { max-width: clamp(240px, 55vw, 400px) !important; }
 
     .radio-header { padding-top: 120px; }
     .radio-header, .acordeones { padding-left: 20px; padding-right: 20px; }
@@ -792,7 +812,11 @@ body.tripulantes-page {
     }
 }
 
+/* ── RESPONSIVE 480px ── */
 @media (max-width: 480px) {
+    /* SVG CALMA: bien visible en pantallas chicas */
+    .contenido img { max-width: clamp(260px, 72vw, 400px) !important; }
+
     .imagen-centro img { width: 180px; }
     .text { font-size: 14px; }
     .grid-tripulantes { grid-template-columns: 1fr; max-width: 360px; }
