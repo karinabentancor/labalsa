@@ -27,7 +27,6 @@ body.listo {
     z-index: -1;
 }
 
-/* ── NAVBAR ── */
 .navbar {
     position: fixed;
     top: 0;
@@ -48,12 +47,11 @@ body.listo {
     -webkit-backdrop-filter: blur(16px);
 }
 
-/* LOGO: bastante más grande (80 → 120px) */
 .logo {
     height: 120px;
     width: auto;
     filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.4));
-    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.23, 1, 0.32, 1));
 }
 
 .logo:hover {
@@ -61,7 +59,6 @@ body.listo {
     transform: scale(1.04);
 }
 
-/* ── HAMBURGUESA ── */
 .menu-hamburguesa {
     cursor: pointer;
     display: flex;
@@ -103,7 +100,6 @@ body.listo {
     transform: rotate(-45deg) translate(10px, -10px);
 }
 
-/* ── MENÚ DESPLEGABLE ── */
 .menu-desplegable {
     position: fixed;
     top: 0;
@@ -120,7 +116,6 @@ body.listo {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
-
 
 .menu-desplegable.activo {
     right: 0;
@@ -165,7 +160,6 @@ body.listo {
     color: #ffd813;
 }
 
-/* ── CONTENIDO INDEX ── */
 .contenido {
     position: fixed;
     top: 0;
@@ -208,7 +202,6 @@ body.listo {
     font-weight: 700;
 }
 
-/* ── IMAGEN CENTRO (INDEX) ── */
 .imagen-centro {
     position: fixed;
     top: 50%;
@@ -245,7 +238,6 @@ body.listo {
     z-index: 1;
 }
 
-/* ── RADIO PAGE ── */
 body.radio-page {
     overflow-x: hidden;
     overflow-y: auto;
@@ -320,7 +312,6 @@ body.radio-page::after {
     transform: translateY(-1px);
 }
 
-/* ── ACORDEONES ── */
 .acordeones {
     position: relative;
     z-index: 2;
@@ -502,13 +493,10 @@ body.radio-page::after {
 .mes-acordeon.abierto .ep-fila:nth-child(13) { animation-delay: 0.39s; }
 .mes-acordeon.abierto .ep-fila:nth-child(14) { animation-delay: 0.42s; }
 
-/* ── TRIPULANTES PAGE ── */
 body.tripulantes-page {
     overflow-x: hidden;
     overflow-y: auto;
 }
-
-
 
 .seccion-titulo {
     text-align: center;
@@ -530,12 +518,14 @@ body.tripulantes-page {
 
 .seccion-titulo .subtitulo {
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 600;
-    font-size: clamp(10px, 1.5vw, 13px);
-    color: rgba(255,255,255,0.65);
+    font-weight: 700;
+    font-size: clamp(11px, 1.8vw, 15px);
+    color: rgba(255, 255, 255, 0.95);
     letter-spacing: 5px;
     text-transform: uppercase;
-    margin-top: 12px;
+    margin-top: 14px;
+    display: inline-block;
+    padding: 4px 0;
 }
 
 .divisor {
@@ -569,6 +559,8 @@ body.tripulantes-page {
     cursor: default;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards;
+    display: flex;
+    flex-direction: column;
 }
 
 .card::before {
@@ -600,14 +592,17 @@ body.tripulantes-page {
 .card-foto-wrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .card-foto-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     display: block;
 }
@@ -639,6 +634,9 @@ body.tripulantes-page {
     padding: 22px 24px 26px;
     position: relative;
     z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-nombre {
@@ -662,6 +660,8 @@ body.tripulantes-page {
 .card-linea {
     height: 3px;
     background: linear-gradient(90deg, #ffd813, #c96100);
+    flex-shrink: 0;
+    margin-top: auto;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -680,9 +680,17 @@ body.tripulantes-page {
                 0 0 60px rgba(255,216,19,0.25);
 }
 
+.card-vos .card-foto-wrap {
+    background: transparent;
+}
+
+.card-vos .card-foto-wrap::after {
+    display: none;
+}
+
 .foto-placeholder-vos {
     display: flex !important;
-    background: transparent;
+    background: transparent !important;
     font-size: 96px;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
@@ -726,7 +734,6 @@ body.tripulantes-page {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── RESPONSIVE 768px ── */
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
@@ -736,7 +743,6 @@ body.tripulantes-page {
         box-shadow: none;
     }
 
-    /* LOGO: grande también en mobile */
     .logo { height: 90px; }
 
     .menu-hamburguesa {
@@ -752,6 +758,7 @@ body.tripulantes-page {
         align-items: center;
         justify-content: center;
     }
+
     .menu-desplegable.activo {
         right: 0;
     }
@@ -765,7 +772,6 @@ body.tripulantes-page {
         width: 100%;
     }
 
-    /* MENÚ: separación reducida entre items (28px → 16px) */
     .menu-desplegable li {
         margin: 16px 0;
         transform: translateX(50px);
@@ -774,10 +780,6 @@ body.tripulantes-page {
     .menu-desplegable.activo li {
         transform: translateX(0);
     }
-
-
-
-
 
     .svg-movil { bottom: 60px; width: 60px; }
 
@@ -788,7 +790,6 @@ body.tripulantes-page {
     .imagen-centro img { width: 250px; }
     .text { font-size: 16px; }
 
-    /* SVG CALMA: tamaño reducido en mobile */
     .contenido img { max-width: clamp(200px, 45vw, 340px) !important; }
 
     .radio-header { padding-top: 120px; }
@@ -815,9 +816,7 @@ body.tripulantes-page {
     }
 }
 
-/* ── RESPONSIVE 480px ── */
 @media (max-width: 480px) {
-    /* SVG CALMA: tamaño ajustado en pantallas chicas */
     .contenido img { max-width: clamp(210px, 62vw, 320px) !important; }
 
     .imagen-centro img { width: 180px; }
