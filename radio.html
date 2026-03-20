@@ -19,8 +19,9 @@
     <link rel="preload" as="image" href="media/balsaC2.svg">
 
     <style>
-        .radio-meta { color: black; font-size: 12px; }
+        .radio-meta { color: black; font-size: 12px; margin: 0; line-height: 1.5; }
         .radio-meta::before { display: none; }
+        .radio-meta:first-of-type { margin-bottom: 8px; }
 
         .player-en-vivo {
             display: inline-flex;
@@ -152,7 +153,7 @@
         <h1>La Balsa<br><em>Radio</em></h1>
         <p class="radio-meta">Programas emitidos</p>
         <p class="radio-meta">lunes, miércoles y viernes</p>
-        <p class="radio-meta">08:00 a 10:00 hs</p>
+        <p class="radio-meta"><strong>08:00 a 10:00 hs</strong></p>
 
         <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-top:20px;">
 
@@ -182,9 +183,10 @@
                     </svg>
                     <input type="range" min="0" max="1" step="0.05" value="0.8" id="volumen" oninput="cambiarVolumen(this.value)">
                 </div>
-            </div>
 
-            <img src="media/fmN.svg" alt="94.3 El Camino FM" style="height:52px; width:auto; filter: brightness(0) saturate(100%) invert(30%) sepia(90%) saturate(800%) hue-rotate(180deg);">
+                <div style="width:1px;height:32px;background:rgba(0,119,182,0.25);flex-shrink:0"></div>
+                <img src="media/fmN.svg" alt="94.3 El Camino FM" style="height:38px;width:auto;filter:brightness(0) saturate(100%) invert(30%) sepia(90%) saturate(800%) hue-rotate(180deg);flex-shrink:0">
+            </div>
 
         </div>
 
@@ -246,7 +248,6 @@ Nacho nos trae a Gramci y una de sus frases: todos somos filósofos. Como una pr
                 <div class="ep-fila"><div class="ep-izq"><span class="ep-num">#01</span><span class="ep-fecha">02/03</span><span class="ep-dia">Lunes</span></div><p class="ep-desc">En este, primer programa de la Temporada 2026, varios son los saludos y alegrías por el retorno. Además Ricardo nos trae las novedades locales desde la redacción de Ecos Regionales, Leandro perfila su remo con cortina musical nueva y los comentarios afilados de siempre. Nacho pasa a saludar y Mario reflexiona sobre balsas y puertos; sobre travesías y momentos de quietud.</p><div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/programas/02-03.mp3"></audio></div></div>
             </div></div></div>
         </div>
-
 
         <div class="mes-acordeon">
             <div class="mes-header">
@@ -448,56 +449,51 @@ Ricardo desde la redacción de Ecos Regionales nos trae las novedades locales.</
     <script src="script.js" defer></script>
 
     <script>
-        const STREAM_URL = 'https://stream.zeno.fm/r2oo4I';
+        const STREAM_URL = 'https://stream.zeno.fm/nfmmxqpp1v8uv';
 
-        const audioEl = document.getElementById('radioAudio');
-        const dot = document.getElementById('playerDot');
-        const estado = document.getElementById('playerEstado');
-        const iconoPlay = document.getElementById('iconoPlay');
-        const iconoPausa = document.getElementById('iconoPausa');
-        let reproduciendo = false;
+        const audioEl   = document.getElementById('radioAudio');
+        const dot       = document.getElementById('playerDot');
+        const estado    = document.getElementById('playerEstado');
+        const iconPlay  = document.getElementById('iconoPlay');
+        const iconPausa = document.getElementById('iconoPausa');
+        let playing = false;
 
         function toggleRadio() {
-            if (!reproduciendo) {
-                audioEl.src = STREAM_URL + '?_=' + Date.now();
+            if (!playing) {
+                audioEl.src = STREAM_URL;
+                audioEl.load();
                 audioEl.volume = parseFloat(document.getElementById('volumen').value);
-                const promesa = audioEl.play();
-                if (promesa !== undefined) {
-                    promesa.then(() => {
-                        reproduciendo = true;
-                        dot.classList.add('vivo');
-                        estado.textContent = 'Conectando...';
-                        iconoPlay.style.display = 'none';
-                        iconoPausa.style.display = 'block';
-                    }).catch(() => {
-                        estado.textContent = 'Error al conectar';
-                    });
-                }
+                dot.classList.add('vivo');
+                estado.textContent  = 'Conectando...';
+                iconPlay.style.display  = 'none';
+                iconPausa.style.display = 'block';
+                playing = true;
+                audioEl.play().catch(function() { resetPlayer('Sin señal'); });
             } else {
                 audioEl.pause();
                 audioEl.src = '';
-                reproduciendo = false;
-                dot.classList.remove('vivo');
-                estado.textContent = 'En vivo';
-                iconoPlay.style.display = 'block';
-                iconoPausa.style.display = 'none';
+                resetPlayer('En vivo');
             }
         }
 
-        function cambiarVolumen(val) {
-            audioEl.volume = parseFloat(val);
+        function resetPlayer(msg) {
+            playing = false;
+            dot.classList.remove('vivo');
+            estado.textContent      = msg;
+            iconPlay.style.display  = 'block';
+            iconPausa.style.display = 'none';
         }
 
-        audioEl.addEventListener('playing', () => {
+        function cambiarVolumen(val) { audioEl.volume = parseFloat(val); }
+
+        audioEl.addEventListener('playing', function() {
             estado.textContent = 'En vivo · El Camino FM';
         });
-
-        audioEl.addEventListener('error', () => {
-            reproduciendo = false;
-            dot.classList.remove('vivo');
-            estado.textContent = 'Error al conectar';
-            iconoPlay.style.display = 'block';
-            iconoPausa.style.display = 'none';
+        audioEl.addEventListener('error', function() {
+            if (playing) resetPlayer('Sin señal — radio fuera del aire');
+        });
+        audioEl.addEventListener('stalled', function() {
+            if (playing) estado.textContent = 'Reconectando...';
         });
     </script>
 </body>
