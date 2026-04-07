@@ -60,159 +60,233 @@
             }
         }
 
-        .cruces-header {
-            position: relative;
-            z-index: 2;
-            padding: 160px 48px 0;
-            max-width: 1080px;
-            margin: 0 auto 56px;
-        }
+        /* ── PÁGINA CRUCES ── */
 
-        .cruces-header h1 {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: clamp(32px, 5vw, 62px);
-            color: #0a1628;
-            line-height: 1.05;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-        }
-
-        .cruces-header h1 em {
-            font-style: normal;
-            color: #0077b6;
-        }
-
-        .cruces-bajada {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 300;
-            font-size: 13px;
-            color: #3a4f63;
-            line-height: 1.9;
-            max-width: 520px;
-            border-left: 3px solid #0077b6;
-            padding-left: 20px;
-        }
-
-        .damero {
+        .cruces-pagina {
             position: relative;
             z-index: 2;
             max-width: 1080px;
             margin: 0 auto 100px;
-            padding: 0 48px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            padding: 160px 48px 0;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .cruce {
-            position: relative;
-            min-height: 380px;
-            padding: 48px 44px;
+        /* ── TÍTULO PÁGINA ── */
+
+        .cruces-titulo-pagina {
+            font-size: 9px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #0a1628;
+            margin-bottom: 32px;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
+            align-items: center;
+            gap: 12px;
             opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
+            animation: fadeUp 0.5s ease 0s forwards;
         }
 
-        .cruce:nth-child(4n+1) { background: #ffffff; }
-        .cruce:nth-child(4n+2) { background: #d6eaf8; }
-        .cruce:nth-child(4n+3) { background: #d6eaf8; }
-        .cruce:nth-child(4n+4) { background: #ffffff; }
-
-        .cruce:nth-child(1) { animation-delay: 0.05s; }
-        .cruce:nth-child(2) { animation-delay: 0.10s; }
-        .cruce:nth-child(3) { animation-delay: 0.15s; }
-        .cruce:nth-child(4) { animation-delay: 0.20s; }
-
-        .cruce-resultado {
-            position: relative;
-            z-index: 1;
+        .cruces-titulo-pagina::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: #0a1628;
         }
 
-        .cruce-etiqueta {
+        /* ── GRID DE CRUCES ── */
+
+        .cruces-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        /* ── CARD INDIVIDUAL ── */
+
+        .ts-card {
+            flex: 0 0 calc(50% - 12px);
+            max-width: calc(50% - 12px);
+            background: rgba(255, 255, 255, 0.82);
+            border: 0.5px solid rgba(0, 0, 0, 0.14);
+            border-top: 4px solid #0a1628;
+            border-radius: 18px;
+            padding: 36px 36px 32px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.15s forwards;
+        }
+
+        /* ── TAG ── */
+
+        .ts-tag {
             font-size: 9px;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: #0077b6;
-            margin-bottom: 12px;
+            color: #0a1628;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .cruce-etiqueta::before {
+        .ts-tag::before {
             content: '';
             display: inline-block;
             width: 20px;
             height: 1px;
-            background: #0077b6;
+            background: #0a1628;
         }
 
-        .cruce-titulo {
-            font-family: 'JetBrains Mono', monospace;
+        /* ── TÍTULO ── */
+
+        .ts-titulo {
             font-weight: 700;
-            font-size: clamp(18px, 2.2vw, 26px);
+            font-size: clamp(28px, 3.5vw, 48px);
             color: #0a1628;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-            margin-bottom: 16px;
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            margin: 0 0 20px;
         }
 
-        .cruce-extracto {
-            font-family: 'JetBrains Mono', monospace;
+        .ts-titulo em {
+            font-style: normal;
+            color: #0a1628;
+        }
+
+        /* ── BAJADA ── */
+
+        .ts-bajada {
             font-weight: 300;
-            font-size: 12px;
+            font-size: 11px;
             color: #3a4f63;
-            line-height: 1.85;
+            line-height: 1.9;
+            border-left: 3px solid #0a1628;
+            padding-left: 16px;
+            margin-bottom: 28px;
         }
 
-        .cruce-link {
-            display: inline-flex;
+        /* ── ACORDEÓN ── */
+
+        .ts-acordeon {
+            display: flex;
+            flex-direction: column;
+            border: 0.5px solid rgba(0, 0, 0, 0.14);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .ts-ep {
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .ts-ep:last-child {
+            border-bottom: none;
+        }
+
+        .ts-ep-header {
+            display: flex;
             align-items: center;
-            gap: 8px;
-            margin-top: 24px;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-            font-size: 10px;
+            justify-content: space-between;
+            padding: 18px 22px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.90);
+            transition: background 0.2s;
+            user-select: none;
+            gap: 12px;
+        }
+
+        .ts-ep-header:hover,
+        .ts-ep-header.open {
+            background: #f0f0f0;
+        }
+
+        .ts-ep-meta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ts-ep-num {
+            font-size: 9px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #0077b6;
-            text-decoration: none;
-            transition: gap 0.25s ease, color 0.25s ease;
-            position: relative;
-            z-index: 1;
+            color: #0a1628;
+            white-space: nowrap;
         }
 
-        .cruce-link::after {
-            content: '→';
-            transition: transform 0.25s ease;
+        .ts-ep-titulo {
+            font-size: 12px;
+            font-weight: 600;
+            color: #0a1628;
+            letter-spacing: -0.3px;
         }
 
-        .cruce-link:hover { gap: 14px; color: #005a8e; }
-        .cruce-link:hover::after { transform: translateX(4px); }
-
-        .cruce::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #0077b6, #00b4d8);
-            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        .ts-chevron {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            color: #0a1628;
         }
 
-        .cruce:hover::after { width: 100%; }
+        .ts-chevron.open {
+            transform: rotate(180deg);
+        }
+
+        .ts-ep-body {
+            display: none;
+            padding: 8px 22px 22px;
+            background: #f0f0f0;
+        }
+
+        .ts-ep-body.open {
+            display: block;
+        }
+
+        .ts-player-label {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3a4f63;
+            margin-bottom: 10px;
+        }
+
+        .ts-audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 6px;
+            outline: none;
+            accent-color: #0a1628;
+        }
+
+        /* ── RESPONSIVE ── */
 
         @media (max-width: 768px) {
-            .cruces-header { padding: 140px 20px 0; }
-            .damero { grid-template-columns: 1fr; padding: 0; }
-            .cruce:nth-child(odd)  { background: #ffffff; }
-            .cruce:nth-child(even) { background: #d6eaf8; }
-            .cruce { padding: 36px 24px; min-height: auto; }
+            .cruces-pagina {
+                padding: 140px 20px 0;
+            }
+
+            .ts-card {
+                flex: 0 0 100%;
+                max-width: 100%;
+                padding: 28px 20px 24px;
+            }
+
+            .ts-ep-header {
+                padding: 16px 18px;
+            }
+
+            .ts-ep-body {
+                padding: 8px 18px 20px;
+            }
         }
+
+        /* ── ANIMACIÓN ── */
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -249,52 +323,110 @@
         </ul>
     </div>
 
-    <div class="cruces-header">
-        <h1>La Balsa<br><em>Cruces</em></h1>
-        <p class="cruces-bajada">Dos tripulantes se encuentran y crean algo que ninguno hubiera hecho solo. Escritura, imagen, sonido, conversación — lo que nazca del encuentro.</p>
-    </div>
+    <div class="cruces-pagina">
 
-    <div class="damero">
+        <p class="cruces-titulo-pagina">La Balsa &mdash; Cruces</p>
 
-        <div class="cruce">
-            <div class="cruce-resultado">
-                <p class="cruce-etiqueta">Texto + Fotografía</p>
-                <h2 class="cruce-titulo">Lo que queda cuando<br>se va el agua</h2>
-                <p class="cruce-extracto">«Ella traía las palabras. Yo traía la cámara. Nos fuimos al río un martes sin avisar a nadie y volvimos con esto: una cosa que no es un poema ni una foto sino las dos cosas al mismo tiempo.»</p>
-            </div>
-            <a href="http://algunadireccion" class="cruce-link">Ver cruce</a>
-        </div>
+        <div class="cruces-grid">
 
-        <div class="cruce">
-            <div class="cruce-resultado">
-                <p class="cruce-etiqueta">Radio + Ilustración</p>
-                <h2 class="cruce-titulo">Frecuencia de color:<br>dibujando el sonido</h2>
-                <p class="cruce-extracto">«Le pedí que dibujara mientras yo hablaba al micrófono. Sin parar, sin borrar. Al final del programa teníamos doce hojas y ni idea de qué habíamos hecho, pero era hermoso.»</p>
-            </div>
-            <a href="http://algunadireccion" class="cruce-link">Ver cruce</a>
-        </div>
+            <!-- CRUCE: TODOS SOMOS -->
+            <div class="ts-card">
 
-        <div class="cruce">
-            <div class="cruce-resultado">
-                <p class="cruce-etiqueta">Ensayo + Música</p>
-                <h2 class="cruce-titulo">Tres acordes para<br>entender una ciudad</h2>
-                <p class="cruce-extracto">«Él escribía. Yo tocaba. Ninguno veía lo que hacía el otro. Al final lo juntamos y era exactamente la misma cosa dicha de dos maneras distintas. Eso fue el cruce.»</p>
-            </div>
-            <a href="http://algunadireccion" class="cruce-link">Ver cruce</a>
-        </div>
+                <p class="ts-tag">Radio</p>
+                <h2 class="ts-titulo">TODOS<br><em>SOMOS</em></h2>
+                <p class="ts-bajada">
+                    Mario caminaba por una vereda y Nacho por otra. Tranquilamente.<br><br>
+                    Un lunes se subieron a una mínima balsa y sus palabras empezaron a enredarse.
+                    Con fluidez soltaban palabras que no tenían más sentido que el instante que las recibía. Sin embargo al escuchar a unas, pegadas a las otras, con una canción de Charly o del Nano en el medio, era como si las músicas empezaran allá y terminarán mucho más allá.<br><br>
+                    Así nace Todos Somos.<br><br>
+                    Con linternas de exploradores entran en esta cueva, donde las palabras, las propias y las prestadas, son la excusa para el encuentro.
+                </p>
 
-        <div class="cruce">
-            <div class="cruce-resultado">
-                <p class="cruce-etiqueta">Conversación + Video</p>
-                <h2 class="cruce-titulo">Dos horas hablando<br>sin grabar nada</h2>
-                <p class="cruce-extracto">«La primera hora fue sin cámara, para no actuar. La segunda hora encendimos todo. Lo que quedó registrado ya era otra cosa: más honesto, más raro, más nuestro.»</p>
-            </div>
-            <a href="http://algunadireccion" class="cruce-link">Ver cruce</a>
-        </div>
+                <div class="ts-acordeon">
 
-    </div>
+                    <div class="ts-ep">
+                        <div class="ts-ep-header" onclick="tsToggle(this)">
+                            <div class="ts-ep-meta">
+                                <span class="ts-ep-num">01</span>
+                                <span class="ts-ep-titulo">LIBERTAD A</span>
+                            </div>
+                            <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polyline points="4 6 8 10 12 6"/>
+                            </svg>
+                        </div>
+                        <div class="ts-ep-body">
+                            <p class="ts-player-label">Reproducir episodio</p>
+                            <audio class="ts-audio" controls preload="none">
+                                <source src="media/todossomos1.mp3" type="audio/mpeg">
+                                Tu navegador no soporta audio.
+                            </audio>
+                        </div>
+                    </div>
+
+                    <div class="ts-ep">
+                        <div class="ts-ep-header" onclick="tsToggle(this)">
+                            <div class="ts-ep-meta">
+                                <span class="ts-ep-num">02</span>
+                                <span class="ts-ep-titulo">LIBERTAD B</span>
+                            </div>
+                            <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polyline points="4 6 8 10 12 6"/>
+                            </svg>
+                        </div>
+                        <div class="ts-ep-body">
+                            <p class="ts-player-label">Reproducir episodio</p>
+                            <audio class="ts-audio" controls preload="none">
+                                <source src="media/todossomos2.mp3" type="audio/mpeg">
+                                Tu navegador no soporta audio.
+                            </audio>
+                        </div>
+                    </div>
+
+                    <div class="ts-ep">
+                        <div class="ts-ep-header" onclick="tsToggle(this)">
+                            <div class="ts-ep-meta">
+                                <span class="ts-ep-num">03</span>
+                                <span class="ts-ep-titulo">DEMOCRACIA A</span>
+                            </div>
+                            <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polyline points="4 6 8 10 12 6"/>
+                            </svg>
+                        </div>
+                        <div class="ts-ep-body">
+                            <p class="ts-player-label">Reproducir episodio</p>
+                            <audio class="ts-audio" controls preload="none">
+                                <source src="media/todossomos3.mp3" type="audio/mpeg">
+                                Tu navegador no soporta audio.
+                            </audio>
+                        </div>
+                    </div>
+
+                </div><!-- /.ts-acordeon -->
+
+            </div><!-- /.ts-card TODOS SOMOS -->
+
+            <!-- ACÁ VA EL PRÓXIMO CRUCE -->
+
+        </div><!-- /.cruces-grid -->
+
+    </div><!-- /.cruces-pagina -->
 
     <script src="script.js" defer></script>
+    <script>
+        function tsToggle(header) {
+            const body = header.nextElementSibling;
+            const chevron = header.querySelector('.ts-chevron');
+            const isOpen = body.classList.contains('open');
+            document.querySelectorAll('.ts-ep-body.open').forEach(b => b.classList.remove('open'));
+            document.querySelectorAll('.ts-ep-header.open').forEach(h => h.classList.remove('open'));
+            document.querySelectorAll('.ts-chevron.open').forEach(c => c.classList.remove('open'));
+            if (!isOpen) {
+                body.classList.add('open');
+                header.classList.add('open');
+                chevron.classList.add('open');
+            }
+        }
+    </script>
 
 </body>
 </html>
