@@ -311,9 +311,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js" defer></script>
     <script>
-    const EMAILJS_PUBLIC_KEY  = 'lF8jWDUR0JrnWpPR2';
-    const EMAILJS_SERVICE_ID  = 'service_sljumx8';
-    const EMAILJS_TEMPLATE_ID = 'template_jzi9p1j';
+        const EMAILJS_PUBLIC_KEY  = 'lF8jWDUR0JrnWpPR2';
+        const EMAILJS_SERVICE_ID  = 'service_sljumx8';
+        const EMAILJS_TEMPLATE_ID = 'template_jzi9p1j';
+
         emailjs.init(EMAILJS_PUBLIC_KEY);
 
         document.getElementById('contactoForm').addEventListener('submit', function(e) {
@@ -323,22 +324,33 @@
             btn.disabled = true;
             btn.textContent = 'Enviando...';
 
-            emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, this)
+            // Armamos los parámetros manualmente para asegurarnos
+            // que coincidan exactamente con las variables de la plantilla
+            const templateParams = {
+                nombre:  document.getElementById('nombre').value,
+                celular: document.getElementById('celular').value,
+                mail:    document.getElementById('mail').value,
+                destino: document.getElementById('destino').value,
+                mensaje: document.getElementById('mensaje').value,
+            };
+
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
                 .then(() => {
-                    this.style.opacity = '0';
-                    this.style.transition = 'opacity 0.3s ease';
+                    const form = document.getElementById('contactoForm');
+                    form.style.opacity = '0';
+                    form.style.transition = 'opacity 0.3s ease';
                     setTimeout(() => {
-                        this.style.display = 'none';
+                        form.style.display = 'none';
                         const conf = document.getElementById('confirmacion');
                         conf.style.display = 'block';
                         setTimeout(() => conf.classList.add('visible'), 10);
                     }, 300);
                 })
                 .catch(err => {
-                    console.error('Error:', err);
+                    console.error('EmailJS error:', err);
                     btn.disabled = false;
                     btn.innerHTML = 'Zarpar <span class="flecha">→</span>';
-                    alert('Hubo un problema al enviar. Intentá de nuevo.');
+                    alert('Error ' + (err.status || '') + ': ' + (err.text || JSON.stringify(err)));
                 });
         });
     </script>
