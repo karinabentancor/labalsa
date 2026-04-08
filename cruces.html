@@ -67,31 +67,26 @@
             z-index: 2;
             max-width: 1080px;
             margin: 0 auto 100px;
-            padding: 160px 48px 0;
+            padding: 0 48px 0;
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* ── TÍTULO PÁGINA ── */
+        /* ── HEADER igual al de radio ── */
 
-        .cruces-titulo-pagina {
-            font-size: 9px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #0a1628;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            opacity: 0;
-            animation: fadeUp 0.5s ease 0s forwards;
+        .cruces-header {
+            padding-top: 200px;
+            margin-bottom: 48px;
         }
 
-        .cruces-titulo-pagina::before {
-            content: '';
-            display: inline-block;
-            width: 24px;
-            height: 1px;
-            background: #0a1628;
+        /* Título igual al de radio: sin itálica, sin color distinto */
+        .cruces-header h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: clamp(36px, 6vw, 72px);
+            color: #0a1628;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin: 0 0 16px;
         }
 
         /* ── GRID DE CRUCES ── */
@@ -108,9 +103,16 @@
         .ts-card {
             flex: 0 0 calc(50% - 12px);
             max-width: calc(50% - 12px);
-            background: rgba(255, 255, 255, 0.82);
-            border: 0.5px solid rgba(0, 0, 0, 0.14);
-            border-top: 4px solid #0a1628;
+            background: linear-gradient(
+                155deg,
+                rgba(255, 252, 210, 0.95) 0%,
+                rgba(255, 220, 130, 0.92) 18%,
+                rgba(255, 175, 100, 0.90) 34%,
+                rgba(255, 120, 100, 0.88) 50%,
+                
+            );
+            border: 4px solid #e07040;
+            
             border-radius: 18px;
             padding: 36px 36px 32px;
             backdrop-filter: blur(14px);
@@ -119,63 +121,124 @@
             animation: fadeUp 0.6s ease 0.15s forwards;
         }
 
-        /* ── TAG ── */
-
-        .ts-tag {
-            font-size: 9px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #0a1628;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ts-tag::before {
-            content: '';
-            display: inline-block;
-            width: 20px;
-            height: 1px;
-            background: #0a1628;
-        }
-
-        /* ── TÍTULO ── */
+        /* ── TÍTULO con color ── */
 
         .ts-titulo {
             font-weight: 700;
             font-size: clamp(28px, 3.5vw, 48px);
-            color: #0a1628;
+            color: #0077b6;
             line-height: 1.05;
             letter-spacing: -1.5px;
-            margin: 0 0 20px;
+            margin: 0 0 8px;
+            white-space: nowrap;
         }
 
-        .ts-titulo em {
-            font-style: normal;
-            color: #0a1628;
+        /* ── SUBTÍTULO HORARIO ── */
+
+        .ts-horario {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
-        /* ── BAJADA ── */
+        .ts-horario-texto {
+            font-size: 10px;
+            font-weight: 300;
+            color: #3a4f63;
+            letter-spacing: 0.04em;
+        }
+
+        /* Texto radio en lugar de SVG */
+        .ts-horario-radio {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #0077b6;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 119, 182, 0.3);
+            padding-bottom: 1px;
+            transition: color 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .ts-horario-radio:hover {
+            color: #005a8e;
+            border-color: #005a8e;
+        }
+
+        /* ── BAJADA — texto más oscuro ── */
 
         .ts-bajada {
             font-weight: 300;
             font-size: 11px;
-            color: #3a4f63;
+            color: #1e2e3d;
             line-height: 1.9;
-            border-left: 3px solid #0a1628;
+            border-left: rgba(255, 175, 100, 0.90) 34% solid 4px;
             padding-left: 16px;
             margin-bottom: 28px;
         }
 
-        /* ── ACORDEÓN ── */
+
+        .ts-episodios-wrap {
+            border: 2px solid rgba(0, 119, 182, 0.28);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .ts-episodios-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 22px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.55);
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .ts-episodios-header:hover,
+        .ts-episodios-header.open {
+            background: rgba(255, 210, 160, 0.40);
+        }
+
+        .ts-episodios-label {
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #0a1628;
+            font-weight: 700;
+        }
+
+        .ts-episodios-chevron {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            color: #0a1628;
+        }
+
+        .ts-episodios-chevron.open {
+            transform: rotate(180deg);
+        }
+
+        .ts-episodios-body {
+            display: none;
+            background: rgba(255, 220, 180, 0.15);
+        }
+
+        .ts-episodios-body.open {
+            display: block;
+        }
+
+        /* ── ACORDEÓN INTERNO (episodios individuales) ── */
 
         .ts-acordeon {
             display: flex;
             flex-direction: column;
-            border: 0.5px solid rgba(0, 0, 0, 0.14);
-            border-radius: 12px;
-            overflow: hidden;
+            border-top: 0.5px solid rgba(0, 0, 0, 0.10);
         }
 
         .ts-ep {
@@ -190,9 +253,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 22px;
+            padding: 16px 22px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.90);
+            background: rgba(255, 255, 255, 0.45);
             transition: background 0.2s;
             user-select: none;
             gap: 12px;
@@ -200,7 +263,7 @@
 
         .ts-ep-header:hover,
         .ts-ep-header.open {
-            background: #f0f0f0;
+            background: rgba(255, 210, 160, 0.45);
         }
 
         .ts-ep-meta {
@@ -215,8 +278,9 @@
             font-size: 9px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #0a1628;
+            color: #c0440a;
             white-space: nowrap;
+            font-variant-numeric: tabular-nums;
         }
 
         .ts-ep-titulo {
@@ -240,20 +304,12 @@
 
         .ts-ep-body {
             display: none;
-            padding: 8px 22px 22px;
-            background: #f0f0f0;
+            padding: 10px 22px 20px;
+            background: rgba(255, 220, 180, 0.28);
         }
 
         .ts-ep-body.open {
             display: block;
-        }
-
-        .ts-player-label {
-            font-size: 9px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #3a4f63;
-            margin-bottom: 10px;
         }
 
         .ts-audio {
@@ -261,14 +317,18 @@
             height: 40px;
             border-radius: 6px;
             outline: none;
-            accent-color: #0a1628;
+            accent-color: #c0440a;
         }
 
         /* ── RESPONSIVE ── */
 
         @media (max-width: 768px) {
             .cruces-pagina {
-                padding: 140px 20px 0;
+                padding: 0 20px 0;
+            }
+
+            .cruces-header {
+                padding-top: 140px;
             }
 
             .ts-card {
@@ -277,12 +337,17 @@
                 padding: 28px 20px 24px;
             }
 
-            .ts-ep-header {
+            .ts-ep-header,
+            .ts-episodios-header {
                 padding: 16px 18px;
             }
 
             .ts-ep-body {
                 padding: 8px 18px 20px;
+            }
+
+            .ts-titulo {
+                white-space: normal;
             }
         }
 
@@ -325,15 +390,22 @@
 
     <div class="cruces-pagina">
 
-        <p class="cruces-titulo-pagina">La Balsa &mdash; Cruces</p>
+        <div class="cruces-header">
+            <h1>La Balsa<br><em>Cruces</em></h1>
+        </div>
 
         <div class="cruces-grid">
 
             <!-- CRUCE: TODOS SOMOS -->
             <div class="ts-card">
 
-                <p class="ts-tag">Radio</p>
-                <h2 class="ts-titulo">TODOS<br><em>SOMOS</em></h2>
+                <h2 class="ts-titulo">TODOS SOMOS</h2>
+
+                <div class="ts-horario">
+                    <span class="ts-horario-texto">Jueves de 20:00 a 21:00 hs</span>
+                    <a href="https://www.elcaminofm.com.uy" target="_blank" rel="noopener" class="ts-horario-radio">94.3 El Camino FM</a>
+                </div>
+
                 <p class="ts-bajada">
                     Mario caminaba por una vereda y Nacho por otra. Tranquilamente.<br><br>
                     Un lunes se subieron a una mínima balsa y sus palabras empezaron a enredarse.
@@ -342,66 +414,77 @@
                     Con linternas de exploradores entran en esta cueva, donde las palabras, las propias y las prestadas, son la excusa para el encuentro.
                 </p>
 
-                <div class="ts-acordeon">
-
-                    <div class="ts-ep">
-                        <div class="ts-ep-header" onclick="tsToggle(this)">
-                            <div class="ts-ep-meta">
-                                <span class="ts-ep-num">01</span>
-                                <span class="ts-ep-titulo">LIBERTAD A</span>
-                            </div>
-                            <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <polyline points="4 6 8 10 12 6"/>
-                            </svg>
+                <!-- ACORDEÓN EXTERNO -->
+                <div class="ts-episodios-wrap">
+                    <div class="ts-episodios-header" onclick="epToggle(this)">
+                        <div>
+                            <span class="ts-episodios-label">Episodios</span>
                         </div>
-                        <div class="ts-ep-body">
-                            <p class="ts-player-label">Reproducir episodio</p>
-                            <audio class="ts-audio" controls preload="none">
-                                <source src="media/todossomos1.mp3" type="audio/mpeg">
-                                Tu navegador no soporta audio.
-                            </audio>
-                        </div>
+                        <svg class="ts-episodios-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polyline points="4 6 8 10 12 6"/>
+                        </svg>
                     </div>
 
-                    <div class="ts-ep">
-                        <div class="ts-ep-header" onclick="tsToggle(this)">
-                            <div class="ts-ep-meta">
-                                <span class="ts-ep-num">02</span>
-                                <span class="ts-ep-titulo">LIBERTAD B</span>
-                            </div>
-                            <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <polyline points="4 6 8 10 12 6"/>
-                            </svg>
-                        </div>
-                        <div class="ts-ep-body">
-                            <p class="ts-player-label">Reproducir episodio</p>
-                            <audio class="ts-audio" controls preload="none">
-                                <source src="media/todossomos2.mp3" type="audio/mpeg">
-                                Tu navegador no soporta audio.
-                            </audio>
-                        </div>
-                    </div>
+                    <div class="ts-episodios-body">
+                        <div class="ts-acordeon">
 
-                    <div class="ts-ep">
-                        <div class="ts-ep-header" onclick="tsToggle(this)">
-                            <div class="ts-ep-meta">
-                                <span class="ts-ep-num">03</span>
-                                <span class="ts-ep-titulo">DEMOCRACIA A</span>
+                            <div class="ts-ep">
+                                <div class="ts-ep-header" onclick="tsToggle(this)">
+                                    <div class="ts-ep-meta">
+                                        <span class="ts-ep-num">01</span>
+                                        <span class="ts-ep-titulo">LIBERTAD A</span>
+                                    </div>
+                                    <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <polyline points="4 6 8 10 12 6"/>
+                                    </svg>
+                                </div>
+                                <div class="ts-ep-body">
+                                    <audio class="ts-audio" controls preload="none">
+                                        <source src="media/programas/todossomos1.mp3" type="audio/mpeg">
+                                        Tu navegador no soporta audio.
+                                    </audio>
+                                </div>
                             </div>
-                            <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <polyline points="4 6 8 10 12 6"/>
-                            </svg>
-                        </div>
-                        <div class="ts-ep-body">
-                            <p class="ts-player-label">Reproducir episodio</p>
-                            <audio class="ts-audio" controls preload="none">
-                                <source src="media/todossomos3.mp3" type="audio/mpeg">
-                                Tu navegador no soporta audio.
-                            </audio>
-                        </div>
-                    </div>
 
-                </div><!-- /.ts-acordeon -->
+                            <div class="ts-ep">
+                                <div class="ts-ep-header" onclick="tsToggle(this)">
+                                    <div class="ts-ep-meta">
+                                        <span class="ts-ep-num">02</span>
+                                        <span class="ts-ep-titulo">LIBERTAD B</span>
+                                    </div>
+                                    <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <polyline points="4 6 8 10 12 6"/>
+                                    </svg>
+                                </div>
+                                <div class="ts-ep-body">
+                                    <audio class="ts-audio" controls preload="none">
+                                        <source src="media/programas/todossomos2.mp3" type="audio/mpeg">
+                                        Tu navegador no soporta audio.
+                                    </audio>
+                                </div>
+                            </div>
+
+                            <div class="ts-ep">
+                                <div class="ts-ep-header" onclick="tsToggle(this)">
+                                    <div class="ts-ep-meta">
+                                        <span class="ts-ep-num">03</span>
+                                        <span class="ts-ep-titulo">DEMOCRACIA A</span>
+                                    </div>
+                                    <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <polyline points="4 6 8 10 12 6"/>
+                                    </svg>
+                                </div>
+                                <div class="ts-ep-body">
+                                    <audio class="ts-audio" controls preload="none">
+                                        <source src="media/programas/todossomos3.mp3" type="audio/mpeg">
+                                        Tu navegador no soporta audio.
+                                    </audio>
+                                </div>
+                            </div>
+
+                        </div><!-- /.ts-acordeon -->
+                    </div><!-- /.ts-episodios-body -->
+                </div><!-- /.ts-episodios-wrap -->
 
             </div><!-- /.ts-card TODOS SOMOS -->
 
@@ -413,6 +496,23 @@
 
     <script src="script.js" defer></script>
     <script>
+        /* Acordeón externo EPISODIOS */
+        function epToggle(header) {
+            const body = header.nextElementSibling;
+            const chevron = header.querySelector('.ts-episodios-chevron');
+            const isOpen = body.classList.contains('open');
+            body.classList.toggle('open', !isOpen);
+            header.classList.toggle('open', !isOpen);
+            chevron.classList.toggle('open', !isOpen);
+            /* Si se cierra el contenedor, cerrar también los episodios abiertos */
+            if (isOpen) {
+                body.querySelectorAll('.ts-ep-body.open').forEach(b => b.classList.remove('open'));
+                body.querySelectorAll('.ts-ep-header.open').forEach(h => h.classList.remove('open'));
+                body.querySelectorAll('.ts-chevron.open').forEach(c => c.classList.remove('open'));
+            }
+        }
+
+        /* Acordeón interno episodios */
         function tsToggle(header) {
             const body = header.nextElementSibling;
             const chevron = header.querySelector('.ts-chevron');
