@@ -1,3 +1,7 @@
+html {
+    overflow-x: hidden;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +10,8 @@
 
 body {
     font-family: 'JetBrains Mono', monospace;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
     min-height: 100vh;
     position: relative;
     opacity: 0;
@@ -51,7 +56,7 @@ body.listo {
     height: 120px;
     width: auto;
     filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.4));
-    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.23, 1, 0.32, 1));
+    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .logo:hover {
@@ -171,6 +176,7 @@ body.listo {
     justify-content: center;
     text-align: center;
     color: #ffd813;
+    padding: 0 20px;
 }
 
 .contenido h1 {
@@ -193,6 +199,7 @@ body.listo {
     right: 0;
     text-align: center;
     color: white;
+    padding: 0 16px;
 }
 
 .linea-desktop { display: inline; }
@@ -212,12 +219,15 @@ body.listo {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    padding: 0 20px;
 }
 
 .imagen-centro img {
     width: 200px;
     height: auto;
     filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.4));
+    max-width: 100%;
 }
 
 .text {
@@ -232,7 +242,7 @@ body.listo {
 .svg-movil {
     position: fixed;
     bottom: 80px;
-    left: -100px;
+    left: 0;
     width: 80px;
     height: auto;
     z-index: 1;
@@ -504,6 +514,8 @@ body.tripulantes-page {
     padding-bottom: 10px;
     position: relative;
     z-index: 2;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .seccion-titulo h1 {
@@ -737,10 +749,16 @@ body.tripulantes-page {
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
-        background: none;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
+        background: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
         box-shadow: none;
+    }
+
+    .navbar.con-scroll {
+        background: rgba(20, 60, 90, 0.55) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
     }
 
     .logo { height: 90px; }
@@ -781,7 +799,11 @@ body.tripulantes-page {
         transform: translateX(0);
     }
 
-    .svg-movil { bottom: 60px; width: 60px; }
+    .svg-movil {
+        bottom: 60px;
+        width: 60px;
+        left: 0;
+    }
 
     .linea-desktop { display: none; }
     .linea-mobile  { display: inline; }
@@ -792,8 +814,17 @@ body.tripulantes-page {
 
     .contenido img { max-width: clamp(200px, 45vw, 340px) !important; }
 
-    .radio-header { padding-top: 120px; }
-    .radio-header, .acordeones { padding-left: 20px; padding-right: 20px; }
+    .radio-header {
+        padding-top: 120px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .acordeones {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
     .seccion-titulo { padding-top: 160px; }
 
     .ep-fila {
@@ -816,12 +847,31 @@ body.tripulantes-page {
     }
 }
 
+@media (max-width: 600px) {
+    .ep-fila {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 8px;
+    }
+
+    .ep-izq { grid-column: 1; grid-row: 1; }
+    .ep-audio-wrap { grid-column: 1; grid-row: 2; }
+    .ep-desc { grid-column: 1; grid-row: 3; }
+}
+
 @media (max-width: 480px) {
     .contenido img { max-width: clamp(210px, 62vw, 320px) !important; }
 
     .imagen-centro img { width: 180px; }
     .text { font-size: 14px; }
-    .grid-tripulantes { grid-template-columns: 1fr; max-width: 360px; }
+    .grid-tripulantes {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        padding: 0 16px;
+    }
     .radio-header { padding-top: 100px; }
     .seccion-titulo { padding-top: 150px; }
+
+    .card-nombre-vos { font-size: 22px; letter-spacing: 3px; }
+    .btn-subite { font-size: 11px; padding: 10px 20px; }
 }
