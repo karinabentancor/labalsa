@@ -22,6 +22,7 @@
         body.cruces-page {
             overflow-x: hidden;
             overflow-y: auto;
+            max-width: 100vw;
         }
 
         body.cruces-page::after {
@@ -60,8 +61,6 @@
             }
         }
 
-        /* ── PÁGINA CRUCES ── */
-
         .cruces-pagina {
             position: relative;
             z-index: 2;
@@ -71,14 +70,11 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* ── HEADER igual al de radio ── */
-
         .cruces-header {
             padding-top: 200px;
             margin-bottom: 48px;
         }
 
-        /* Título igual al de radio: sin itálica, sin color distinto */
         .cruces-header h1 {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 700;
@@ -89,8 +85,6 @@
             margin: 0 0 16px;
         }
 
-        /* ── GRID DE CRUCES ── */
-
         .cruces-grid {
             display: flex;
             flex-wrap: wrap;
@@ -98,21 +92,17 @@
             align-items: flex-start;
         }
 
-        /* ── CARD INDIVIDUAL ── */
-
         .ts-card {
             flex: 0 0 calc(50% - 12px);
             max-width: calc(50% - 12px);
             background: linear-gradient(
                 155deg,
-                rgba(255, 252, 210, 0.95) 0%,
-                rgba(255, 220, 130, 0.92) 18%,
-                rgba(255, 175, 100, 0.90) 34%,
-                rgba(255, 120, 100, 0.88) 50%,
-                
+                rgba(255, 252, 235, 0.80) 0%,
+                rgba(255, 235, 195, 0.72) 35%,
+                rgba(255, 215, 170, 0.65) 70%,
+                rgba(255, 195, 150, 0.60) 100%
             );
             border: 4px solid #e07040;
-            
             border-radius: 18px;
             padding: 36px 36px 32px;
             backdrop-filter: blur(14px);
@@ -120,8 +110,6 @@
             opacity: 0;
             animation: fadeUp 0.6s ease 0.15s forwards;
         }
-
-        /* ── TÍTULO con color ── */
 
         .ts-titulo {
             font-weight: 700;
@@ -133,11 +121,9 @@
             white-space: nowrap;
         }
 
-        /* ── SUBTÍTULO HORARIO ── */
-
         .ts-horario {
             display: flex;
-            align-items: center;
+            align-items: baseline;
             gap: 12px;
             margin-bottom: 20px;
             flex-wrap: wrap;
@@ -150,37 +136,23 @@
             letter-spacing: 0.04em;
         }
 
-        /* Texto radio en lugar de SVG */
         .ts-horario-radio {
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #0077b6;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(0, 119, 182, 0.3);
-            padding-bottom: 1px;
-            transition: color 0.2s, border-color 0.2s;
-            white-space: nowrap;
+            font-size: 10px;
+            font-weight: 300;
+            color: #3a4f63;
+            letter-spacing: 0.04em;
         }
-
-        .ts-horario-radio:hover {
-            color: #005a8e;
-            border-color: #005a8e;
-        }
-
-        /* ── BAJADA — texto más oscuro ── */
 
         .ts-bajada {
             font-weight: 300;
             font-size: 11px;
             color: #1e2e3d;
             line-height: 1.9;
-            border-left: rgba(255, 175, 100, 0.90) 34% solid 4px;
+            border-left: 4px solid rgba(255, 175, 100, 0.90);
             padding-left: 16px;
             margin-bottom: 28px;
+            text-align: justify;
         }
-
 
         .ts-episodios-wrap {
             border: 2px solid rgba(0, 119, 182, 0.28);
@@ -232,8 +204,6 @@
         .ts-episodios-body.open {
             display: block;
         }
-
-        /* ── ACORDEÓN INTERNO (episodios individuales) ── */
 
         .ts-acordeon {
             display: flex;
@@ -320,20 +290,26 @@
             accent-color: #c0440a;
         }
 
-        /* ── RESPONSIVE ── */
-
         @media (max-width: 768px) {
             .cruces-pagina {
                 padding: 0 20px 0;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             .cruces-header {
                 padding-top: 140px;
             }
 
+            .cruces-grid {
+                width: 100%;
+            }
+
             .ts-card {
                 flex: 0 0 100%;
                 max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
                 padding: 28px 20px 24px;
             }
 
@@ -350,8 +326,6 @@
                 white-space: normal;
             }
         }
-
-        /* ── ANIMACIÓN ── */
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -391,19 +365,18 @@
     <div class="cruces-pagina">
 
         <div class="cruces-header">
-            <h1>La Balsa<br><em>Cruces</em></h1>
+            <h1>La Balsa<br><span style="color: #0077b6;">Cruces</span></h1>
         </div>
 
         <div class="cruces-grid">
 
-            <!-- CRUCE: TODOS SOMOS -->
             <div class="ts-card">
 
                 <h2 class="ts-titulo">TODOS SOMOS</h2>
 
                 <div class="ts-horario">
                     <span class="ts-horario-texto">Jueves de 20:00 a 21:00 hs</span>
-                    <a href="https://www.elcaminofm.com.uy" target="_blank" rel="noopener" class="ts-horario-radio">94.3 El Camino FM</a>
+                    <span class="ts-horario-radio">94.3 El Camino FM</span>
                 </div>
 
                 <p class="ts-bajada">
@@ -414,7 +387,6 @@
                     Con linternas de exploradores entran en esta cueva, donde las palabras, las propias y las prestadas, son la excusa para el encuentro.
                 </p>
 
-                <!-- ACORDEÓN EXTERNO -->
                 <div class="ts-episodios-wrap">
                     <div class="ts-episodios-header" onclick="epToggle(this)">
                         <div>
@@ -439,7 +411,7 @@
                                     </svg>
                                 </div>
                                 <div class="ts-ep-body">
-                                    <audio class="ts-audio" controls preload="none">
+                                    <audio class="ts-audio" controls preload="metadata">
                                         <source src="media/programas/todossomos1.mp3" type="audio/mpeg">
                                         Tu navegador no soporta audio.
                                     </audio>
@@ -457,7 +429,7 @@
                                     </svg>
                                 </div>
                                 <div class="ts-ep-body">
-                                    <audio class="ts-audio" controls preload="none">
+                                    <audio class="ts-audio" controls preload="metadata">
                                         <source src="media/programas/todossomos2.mp3" type="audio/mpeg">
                                         Tu navegador no soporta audio.
                                     </audio>
@@ -475,28 +447,25 @@
                                     </svg>
                                 </div>
                                 <div class="ts-ep-body">
-                                    <audio class="ts-audio" controls preload="none">
+                                    <audio class="ts-audio" controls preload="metadata">
                                         <source src="media/programas/todossomos3.mp3" type="audio/mpeg">
                                         Tu navegador no soporta audio.
                                     </audio>
                                 </div>
                             </div>
 
-                        </div><!-- /.ts-acordeon -->
-                    </div><!-- /.ts-episodios-body -->
-                </div><!-- /.ts-episodios-wrap -->
+                        </div>
+                    </div>
+                </div>
 
-            </div><!-- /.ts-card TODOS SOMOS -->
+            </div>
 
-            <!-- ACÁ VA EL PRÓXIMO CRUCE -->
+        </div>
 
-        </div><!-- /.cruces-grid -->
-
-    </div><!-- /.cruces-pagina -->
+    </div>
 
     <script src="script.js" defer></script>
     <script>
-        /* Acordeón externo EPISODIOS */
         function epToggle(header) {
             const body = header.nextElementSibling;
             const chevron = header.querySelector('.ts-episodios-chevron');
@@ -504,7 +473,6 @@
             body.classList.toggle('open', !isOpen);
             header.classList.toggle('open', !isOpen);
             chevron.classList.toggle('open', !isOpen);
-            /* Si se cierra el contenedor, cerrar también los episodios abiertos */
             if (isOpen) {
                 body.querySelectorAll('.ts-ep-body.open').forEach(b => b.classList.remove('open'));
                 body.querySelectorAll('.ts-ep-header.open').forEach(h => h.classList.remove('open'));
@@ -512,7 +480,6 @@
             }
         }
 
-        /* Acordeón interno episodios */
         function tsToggle(header) {
             const body = header.nextElementSibling;
             const chevron = header.querySelector('.ts-chevron');
