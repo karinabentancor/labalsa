@@ -92,39 +92,50 @@
             align-items: flex-start;
         }
 
+        /* ── CARD ── */
         .ts-card {
             flex: 0 0 calc(50% - 12px);
             max-width: calc(50% - 12px);
-            background: linear-gradient(
-                155deg,
-                rgba(255, 252, 235, 0.80) 0%,
-                rgba(255, 235, 195, 0.72) 35%,
-                rgba(255, 215, 170, 0.65) 70%,
-                rgba(255, 195, 150, 0.60) 100%
-            );
-            border: 4px solid #e07040;
-            border-radius: 18px;
-            padding: 36px 36px 32px;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(255, 255, 255, 0.60);
+            border: 1.5px solid rgba(0, 119, 182, 0.22);
+            border-radius: 22px;
+            overflow: hidden;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             opacity: 0;
             animation: fadeUp 0.6s ease 0.15s forwards;
         }
 
+        /* ── IMAGEN SUPERIOR ── */
+        .ts-imagen {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ── CUERPO ── */
+        .ts-cuerpo {
+            padding: 32px 32px 28px;
+        }
+
         .ts-titulo {
             font-weight: 700;
-            font-size: clamp(28px, 3.5vw, 48px);
-            color: #0077b6;
+            font-size: clamp(26px, 3.2vw, 44px);
+            color: #0a1628;
             line-height: 1.05;
             letter-spacing: -1.5px;
-            margin: 0 0 8px;
-            white-space: nowrap;
+            margin: 0 0 6px;
+        }
+
+        .ts-titulo span {
+            color: #0077b6;
         }
 
         .ts-horario {
             display: flex;
             align-items: baseline;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
@@ -138,9 +149,10 @@
 
         .ts-horario-radio {
             font-size: 10px;
-            font-weight: 300;
-            color: #3a4f63;
-            letter-spacing: 0.04em;
+            font-weight: 600;
+            color: #0077b6;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
 
         .ts-bajada {
@@ -148,14 +160,15 @@
             font-size: 11px;
             color: #1e2e3d;
             line-height: 1.9;
-            border-left: 4px solid rgba(255, 175, 100, 0.90);
+            border-left: 3px solid #0077b6;
             padding-left: 16px;
             margin-bottom: 28px;
             text-align: justify;
         }
 
+        /* ── ACORDEÓN DE EPISODIOS ── */
         .ts-episodios-wrap {
-            border: 2px solid rgba(0, 119, 182, 0.28);
+            border: 1.5px solid rgba(0, 119, 182, 0.22);
             border-radius: 12px;
             overflow: hidden;
         }
@@ -164,21 +177,21 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 22px;
+            padding: 16px 20px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.55);
+            background: rgba(0, 119, 182, 0.06);
             transition: background 0.2s;
             user-select: none;
         }
 
         .ts-episodios-header:hover,
         .ts-episodios-header.open {
-            background: rgba(255, 210, 160, 0.40);
+            background: rgba(0, 119, 182, 0.13);
         }
 
         .ts-episodios-label {
-            font-size: 13px;
-            letter-spacing: 1.5px;
+            font-size: 11px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: #0a1628;
             font-weight: 700;
@@ -189,7 +202,7 @@
             height: 15px;
             flex-shrink: 0;
             transition: transform 0.3s ease;
-            color: #0a1628;
+            color: #0077b6;
         }
 
         .ts-episodios-chevron.open {
@@ -198,7 +211,6 @@
 
         .ts-episodios-body {
             display: none;
-            background: rgba(255, 220, 180, 0.15);
         }
 
         .ts-episodios-body.open {
@@ -208,11 +220,11 @@
         .ts-acordeon {
             display: flex;
             flex-direction: column;
-            border-top: 0.5px solid rgba(0, 0, 0, 0.10);
+            border-top: 0.5px solid rgba(0, 119, 182, 0.15);
         }
 
         .ts-ep {
-            border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.07);
         }
 
         .ts-ep:last-child {
@@ -223,9 +235,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 22px;
+            padding: 14px 20px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.50);
             transition: background 0.2s;
             user-select: none;
             gap: 12px;
@@ -233,13 +245,13 @@
 
         .ts-ep-header:hover,
         .ts-ep-header.open {
-            background: rgba(255, 210, 160, 0.45);
+            background: rgba(0, 119, 182, 0.08);
         }
 
         .ts-ep-meta {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 16px;
             flex: 1;
             min-width: 0;
         }
@@ -248,7 +260,7 @@
             font-size: 9px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #c0440a;
+            color: #0077b6;
             white-space: nowrap;
             font-variant-numeric: tabular-nums;
         }
@@ -265,7 +277,7 @@
             height: 15px;
             flex-shrink: 0;
             transition: transform 0.3s ease;
-            color: #0a1628;
+            color: #0077b6;
         }
 
         .ts-chevron.open {
@@ -274,8 +286,8 @@
 
         .ts-ep-body {
             display: none;
-            padding: 10px 22px 20px;
-            background: rgba(255, 220, 180, 0.28);
+            padding: 10px 20px 18px;
+            background: rgba(0, 119, 182, 0.04);
         }
 
         .ts-ep-body.open {
@@ -287,7 +299,7 @@
             height: 40px;
             border-radius: 6px;
             outline: none;
-            accent-color: #c0440a;
+            accent-color: #0077b6;
         }
 
         @media (max-width: 768px) {
@@ -310,16 +322,19 @@
                 max-width: 100%;
                 width: 100%;
                 box-sizing: border-box;
-                padding: 28px 20px 24px;
+            }
+
+            .ts-cuerpo {
+                padding: 24px 20px 20px;
             }
 
             .ts-ep-header,
             .ts-episodios-header {
-                padding: 16px 18px;
+                padding: 14px 16px;
             }
 
             .ts-ep-body {
-                padding: 8px 18px 20px;
+                padding: 8px 16px 18px;
             }
 
             .ts-titulo {
@@ -372,92 +387,118 @@
 
             <div class="ts-card">
 
-                <h2 class="ts-titulo">TODOS SOMOS</h2>
+                <!-- IMAGEN -->
+                <img
+                    src="media/todossomos.jpeg"
+                    alt="Todos Somos"
+                    class="ts-imagen"
+                >
 
-                <div class="ts-horario">
-                    <span class="ts-horario-texto">Jueves de 20:00 a 21:00 hs</span>
-                    <span class="ts-horario-radio">94.3 El Camino FM</span>
-                </div>
+                <div class="ts-cuerpo">
 
-                <p class="ts-bajada">
-                    Mario caminaba por una vereda y Nacho por otra. Tranquilamente.<br><br>
-                    Un lunes se subieron a una mínima balsa y sus palabras empezaron a enredarse.
-                    Con fluidez soltaban palabras que no tenían más sentido que el instante que las recibía. Sin embargo al escuchar a unas, pegadas a las otras, con una canción de Charly o del Nano en el medio, era como si las músicas empezaran allá y terminarán mucho más allá.<br><br>
-                    Así nace Todos Somos.<br><br>
-                    Con linternas de exploradores entran en esta cueva, donde las palabras, las propias y las prestadas, son la excusa para el encuentro.
-                </p>
+                    <h2 class="ts-titulo">TODOS <span>SOMOS</span></h2>
 
-                <div class="ts-episodios-wrap">
-                    <div class="ts-episodios-header" onclick="epToggle(this)">
-                        <div>
+                    <div class="ts-horario">
+                        <span class="ts-horario-texto">Jueves de 20:00 a 21:00 hs</span>
+                        <span class="ts-horario-radio">94.3 El Camino FM</span>
+                    </div>
+
+                    <p class="ts-bajada">
+                        Mario caminaba por una vereda y Nacho por otra. Tranquilamente.<br><br>
+                        Un lunes se subieron a una mínima balsa y sus palabras empezaron a enredarse.
+                        Con fluidez soltaban palabras que no tenían más sentido que el instante que las recibía. Sin embargo al escuchar a unas, pegadas a las otras, con una canción de Charly o del Nano en el medio, era como si las músicas empezaran allá y terminarán mucho más allá.<br><br>
+                        Así nace Todos Somos.<br><br>
+                        Con linternas de exploradores entran en esta cueva, donde las palabras, las propias y las prestadas, son la excusa para el encuentro.
+                    </p>
+
+                    <div class="ts-episodios-wrap">
+                        <div class="ts-episodios-header" onclick="epToggle(this)">
                             <span class="ts-episodios-label">Episodios</span>
+                            <svg class="ts-episodios-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polyline points="4 6 8 10 12 6"/>
+                            </svg>
                         </div>
-                        <svg class="ts-episodios-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <polyline points="4 6 8 10 12 6"/>
-                        </svg>
+
+                        <div class="ts-episodios-body">
+                            <div class="ts-acordeon">
+
+                                <div class="ts-ep">
+                                    <div class="ts-ep-header" onclick="tsToggle(this)">
+                                        <div class="ts-ep-meta">
+                                            <span class="ts-ep-num">01</span>
+                                            <span class="ts-ep-titulo">LIBERTAD A</span>
+                                        </div>
+                                        <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <polyline points="4 6 8 10 12 6"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ts-ep-body">
+                                        <audio class="ts-audio" controls preload="metadata">
+                                            <source src="media/programas/todossomos1.mp3" type="audio/mpeg">
+                                            Tu navegador no soporta audio.
+                                        </audio>
+                                    </div>
+                                </div>
+
+                                <div class="ts-ep">
+                                    <div class="ts-ep-header" onclick="tsToggle(this)">
+                                        <div class="ts-ep-meta">
+                                            <span class="ts-ep-num">02</span>
+                                            <span class="ts-ep-titulo">LIBERTAD B</span>
+                                        </div>
+                                        <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <polyline points="4 6 8 10 12 6"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ts-ep-body">
+                                        <audio class="ts-audio" controls preload="metadata">
+                                            <source src="media/programas/todossomos2.mp3" type="audio/mpeg">
+                                            Tu navegador no soporta audio.
+                                        </audio>
+                                    </div>
+                                </div>
+
+                                <div class="ts-ep">
+                                    <div class="ts-ep-header" onclick="tsToggle(this)">
+                                        <div class="ts-ep-meta">
+                                            <span class="ts-ep-num">03</span>
+                                            <span class="ts-ep-titulo">DEMOCRACIA A</span>
+                                        </div>
+                                        <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <polyline points="4 6 8 10 12 6"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ts-ep-body">
+                                        <audio class="ts-audio" controls preload="metadata">
+                                            <source src="media/programas/todossomos3.mp3" type="audio/mpeg">
+                                            Tu navegador no soporta audio.
+                                        </audio>
+                                    </div>
+                                </div>
+
+                                <div class="ts-ep">
+                                    <div class="ts-ep-header" onclick="tsToggle(this)">
+                                        <div class="ts-ep-meta">
+                                            <span class="ts-ep-num">04</span>
+                                            <span class="ts-ep-titulo">DEMOCRACIA B</span>
+                                        </div>
+                                        <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <polyline points="4 6 8 10 12 6"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ts-ep-body">
+                                        <audio class="ts-audio" controls preload="metadata">
+                                            <source src="media/programas/todossomos4.mp3" type="audio/mpeg">
+                                            Tu navegador no soporta audio.
+                                        </audio>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="ts-episodios-body">
-                        <div class="ts-acordeon">
-
-                            <div class="ts-ep">
-                                <div class="ts-ep-header" onclick="tsToggle(this)">
-                                    <div class="ts-ep-meta">
-                                        <span class="ts-ep-num">01</span>
-                                        <span class="ts-ep-titulo">LIBERTAD A</span>
-                                    </div>
-                                    <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <polyline points="4 6 8 10 12 6"/>
-                                    </svg>
-                                </div>
-                                <div class="ts-ep-body">
-                                    <audio class="ts-audio" controls preload="metadata">
-                                        <source src="media/programas/todossomos1.mp3" type="audio/mpeg">
-                                        Tu navegador no soporta audio.
-                                    </audio>
-                                </div>
-                            </div>
-
-                            <div class="ts-ep">
-                                <div class="ts-ep-header" onclick="tsToggle(this)">
-                                    <div class="ts-ep-meta">
-                                        <span class="ts-ep-num">02</span>
-                                        <span class="ts-ep-titulo">LIBERTAD B</span>
-                                    </div>
-                                    <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <polyline points="4 6 8 10 12 6"/>
-                                    </svg>
-                                </div>
-                                <div class="ts-ep-body">
-                                    <audio class="ts-audio" controls preload="metadata">
-                                        <source src="media/programas/todossomos2.mp3" type="audio/mpeg">
-                                        Tu navegador no soporta audio.
-                                    </audio>
-                                </div>
-                            </div>
-
-                            <div class="ts-ep">
-                                <div class="ts-ep-header" onclick="tsToggle(this)">
-                                    <div class="ts-ep-meta">
-                                        <span class="ts-ep-num">03</span>
-                                        <span class="ts-ep-titulo">DEMOCRACIA A</span>
-                                    </div>
-                                    <svg class="ts-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <polyline points="4 6 8 10 12 6"/>
-                                    </svg>
-                                </div>
-                                <div class="ts-ep-body">
-                                    <audio class="ts-audio" controls preload="metadata">
-                                        <source src="media/programas/todossomos3.mp3" type="audio/mpeg">
-                                        Tu navegador no soporta audio.
-                                    </audio>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
-
             </div>
 
         </div>
