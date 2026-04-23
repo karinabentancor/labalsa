@@ -23,7 +23,7 @@
         .revista-header {
             position: relative;
             z-index: 2;
-            padding: 160px 48px 0;
+            padding: 160px 80px 0;
             max-width: 1080px;
             margin: 0 auto;
         }
@@ -50,13 +50,9 @@
             letter-spacing: 2px;
         }
 
-        .revista-page .linea {
-            background: #0077b6;
-        }
+        .revista-page .linea { background: #0077b6; }
 
-        body.revista-page .navbar {
-            background: transparent;
-        }
+        body.revista-page .navbar { background: transparent; }
 
         body.revista-page .navbar.con-scroll {
             background: rgba(235, 245, 252, 0.35);
@@ -70,26 +66,25 @@
             right: 44px;
         }
 
-        .revista-header { padding-left: 80px; padding-right: 80px; }
-        .revista-grid { padding-left: 80px; padding-right: 80px; }
-        .suscripcion-wrap { padding-left: 80px; padding-right: 80px; }
-
         @media (max-width: 768px) {
             body.revista-page .menu-hamburguesa {
                 top: 35px;
                 right: 20px;
             }
-            .revista-header,
-            .revista-grid,
-            .suscripcion-wrap { padding-left: 28px; padding-right: 28px; }
+            .revista-header { padding-left: 28px; padding-right: 28px; }
+            .revista-grid   { padding-left: 28px; padding-right: 28px; }
         }
 
         .revista-grid {
             position: relative;
             z-index: 2;
             max-width: 420px;
-            margin: 56px auto 0;
-            padding: 0 48px;
+            margin: 56px auto 80px;
+            padding: 0 80px;
+        }
+
+        @media (max-width: 768px) {
+            .revista-grid { padding: 0 28px; }
         }
 
         .tomo-card {
@@ -112,116 +107,29 @@
         }
 
         .tomo-img-wrap {
-            position: relative;
             width: 100%;
-            aspect-ratio: 3 / 4;
             overflow: hidden;
             background: #c5d5e8;
+            display: block;
         }
 
         .tomo-img-wrap img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
             display: block;
             transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .tomo-card:hover .tomo-img-wrap img {
-            transform: scale(1.04);
-        }
-
-        .tomo-img-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #c5d5e8, #a8c0d6);
-            color: rgba(10, 22, 40, 0.18);
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: clamp(40px, 6vw, 80px);
-            letter-spacing: -2px;
-            user-select: none;
-        }
-
-        .tomo-badge {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: #0077b6;
-            color: #fff;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-            font-size: 10px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 5px 12px;
-            border-radius: 2px;
-        }
-
-        .tomo-body {
-            padding: 28px 30px 30px;
-            border-top: 3px solid #0077b6;
-        }
-
-        .tomo-seccion {
-            font-size: 9px;
-            letter-spacing: 4px;
-            color: #0077b6;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .tomo-titulo {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: clamp(18px, 2.2vw, 24px);
-            color: #0a1628;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-            margin-bottom: 14px;
-        }
-
-        .tomo-sumario {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 400;
-            font-size: 12px;
-            color: #1e2f3e;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .tomo-temas {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 22px;
-        }
-
-        .tomo-tema {
-            font-size: 9px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #0077b6;
-            border: 1px solid #c5d5e8;
-            padding: 4px 10px;
-            border-radius: 2px;
+            transform: scale(1.02);
         }
 
         .tomo-footer {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
-            border-top: 1px solid #e4edf5;
-            padding-top: 18px;
-        }
-
-        .tomo-fecha {
-            font-size: 10px;
-            color: #3a4f63;
-            letter-spacing: 2px;
+            padding: 14px 20px;
+            border-top: 3px solid #0077b6;
         }
 
         .tomo-leer {
@@ -245,101 +153,6 @@
 
         .tomo-leer:hover { gap: 14px; color: #005a8e; }
         .tomo-leer:hover::after { transform: translateX(4px); }
-
-        .suscripcion-wrap {
-            position: relative;
-            z-index: 2;
-            max-width: 1080px;
-            margin: 72px auto 80px;
-            padding: 0 48px;
-        }
-
-        .suscripcion-inner {
-            background: linear-gradient(135deg, #0a1628 0%, #0077b6 100%);
-            border-radius: 8px;
-            padding: 64px 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-            box-shadow: 0 12px 48px rgba(0, 119, 182, 0.25);
-        }
-
-        .suscripcion-texto { flex: 1; }
-
-        .sus-eyebrow {
-            font-size: 9px;
-            letter-spacing: 5px;
-            color: rgba(255,255,255,0.5);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .sus-titulo {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: clamp(22px, 3vw, 36px);
-            color: #fff;
-            letter-spacing: -0.5px;
-            line-height: 1.15;
-            margin-bottom: 14px;
-        }
-
-        .sus-titulo em { font-style: normal; color: #ffd813; }
-
-        .sus-desc {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 300;
-            font-size: 12px;
-            color: rgba(255,255,255,0.65);
-            line-height: 1.8;
-            max-width: 420px;
-        }
-
-        .suscripcion-cta {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .btn-suscribirse {
-            display: inline-block;
-            padding: 16px 42px;
-            background: linear-gradient(90deg, #ffd813, #c96100);
-            color: #1a0800;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: 12px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            text-decoration: none;
-            border-radius: 3px;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: 0 4px 24px rgba(201, 97, 0, 0.5);
-            white-space: nowrap;
-        }
-
-        .btn-suscribirse:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 10px 36px rgba(255, 216, 19, 0.5);
-        }
-
-        @media (max-width: 768px) {
-            .revista-header,
-            .revista-grid,
-            .suscripcion-wrap { padding-left: 20px; padding-right: 20px; }
-
-            .suscripcion-inner {
-                padding: 44px 30px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 32px;
-            }
-
-            .suscripcion-cta { width: 100%; align-items: flex-start; }
-        }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -382,31 +195,16 @@
     </div>
 
     <div class="revista-grid">
-        <a href="media/revistas/marzo2026.pdf" target="_blank" class="tomo-card">
+       <a href="media/revistas/marzo2026.pdf" target="_blank" class="tomo-card">
             <div class="tomo-img-wrap">
-                <img src="media/revista/mar2026.jpg" alt="Marzo 2026" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                <div class="tomo-img-placeholder" style="display:none;">MAR</div>
-                <span class="tomo-badge">Marzo 2026</span>
+                <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1">
             </div>
-            <div class="tomo-body">
-                <p class="tomo-seccion">Edición actual</p>
-                <h2 class="tomo-titulo">Número de marzo</h2>
-                <p class="tomo-sumario">Adelantos de la edición de marzo. Textos, imágenes y voces que componen esta entrega de La Balsa Revista.</p>
-                <div class="tomo-temas">
-                    <span class="tomo-tema">Cultura</span>
-                    <span class="tomo-tema">Territorio</span>
-                    <span class="tomo-tema">Comunidad</span>
-                </div>
-                <div class="tomo-footer">
-                    <span class="tomo-fecha">Marzo 2026</span>
-                    <span class="tomo-leer">Ver edición</span>
-                </div>
+            <div class="tomo-footer">
+                <span class="tomo-leer">Ver edición</span>
             </div>
         </a>
     </div>
 
-<br>
-<br>
     <script src="script.js"></script>
 </body>
 </html>
