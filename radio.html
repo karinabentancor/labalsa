@@ -23,6 +23,7 @@
         .radio-meta::before { display: none; }
         .radio-meta:first-of-type { margin-bottom: 8px; }
 
+        /* ── Player en vivo ── */
         .player-en-vivo {
             display: inline-flex;
             align-items: center;
@@ -118,6 +119,107 @@
                 right: 20px;
             }
         }
+
+        /* ── Reproductor de episodios ── */
+        .ep-audio-wrap {
+            margin-top: 10px;
+        }
+
+        .ep-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border: 1px solid rgba(0, 119, 182, 0.25);
+            border-radius: 2px;
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            font-family: 'JetBrains Mono', monospace;
+            max-width: 420px;
+        }
+
+        .ep-play-btn {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 119, 182, 0.5);
+            background: transparent;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.2s;
+            padding: 0;
+        }
+        .ep-play-btn:hover { background: rgba(0, 119, 182, 0.12); }
+        .ep-play-btn svg { display: block; }
+
+        .ep-progress-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .ep-progress {
+            width: 100%;
+            height: 2px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(0,119,182,0.18);
+            border-radius: 1px;
+            cursor: pointer;
+            outline: none;
+        }
+        .ep-progress::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #0077b6;
+            cursor: pointer;
+        }
+        .ep-progress::-moz-range-thumb {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #0077b6;
+            border: none;
+            cursor: pointer;
+        }
+
+        .ep-time {
+            font-size: 9px;
+            font-weight: 300;
+            color: rgba(0,0,0,0.4);
+            letter-spacing: 0.04em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ep-vol {
+            width: 50px;
+            height: 2px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(0,119,182,0.18);
+            border-radius: 1px;
+            cursor: pointer;
+            outline: none;
+            flex-shrink: 0;
+        }
+        .ep-vol::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: rgba(0,119,182,0.6);
+            cursor: pointer;
+        }
+        .ep-vol::-moz-range-thumb {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: rgba(0,119,182,0.6);
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -207,7 +309,18 @@
             <div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista">
 
                 <div class="ep-fila">
-                      <div class="ep-izq"><span class="ep-num">#21</span><span class="ep-fecha">24/04</span><span class="ep-dia">Viernes</span></div>
+                    <div class="ep-izq"><span class="ep-num">#22</span><span class="ep-fecha">27/04</span><span class="ep-dia">Lunes</span></div>
+                    <p class="ep-desc">En este programa Leandro critica duramente a Mercedes Vigil, escritora que con un halo de intelectualidad, presenta una idea en el Partido Nacional, para liberar de la cárcel a los acusados de delitos de DDHH.
+Lucía nos maravilla con su poesía.
+Ricardo trae las novedades locales desde la redacción de Ecos Regionales y Mario nos habla de mantener las corrientes de pensamientos y sentires.
+Que no seamos llaves de corte. Que seamos buenos, siendo.
+<br><br>
+Lo más recomendable para estos días fríos: La Balsa.</p>
+                    <div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/programas/27-04.mp3"></audio></div>
+                </div>
+
+                <div class="ep-fila">
+                    <div class="ep-izq"><span class="ep-num">#21</span><span class="ep-fecha">24/04</span><span class="ep-dia">Viernes</span></div>
                     <p class="ep-desc">En este programa escuchamos a la misma balsa de siempre, en una travesía menor.
 Debido a una obligación externa, navegamos la mitad del tiempo.
 Leandro habla realmente enojado con algunas decisiones tibias del gobierno del Frente Amplio. Habla de la necesidad de tomar decisiones que cuiden a las mayorías de nuestro país.
@@ -216,12 +329,12 @@ Ale nos habla del cambio de temperatura y de como esta circunstancia nos afecta.
 Mario nos invita a aprovechar el placer del momento. De la alegría que nos da los instantes bien vividos y esa paradoja que se muerde la cola para seguir girando.
 Nos habla de la biblioteca comunitaria en construcción y de quienes leen viven esas mil vidas y quienes no, solo una.
 Finaliza su participación con un elogio profundo a Carlos Felipe y su espectacular taller de cine.
-<br>
-<br>
+<br><br>
 Todo esto, y quizás más imperdible hoy en La Balsa.</p>
-<div class="ep-fila"></div>
-                    <div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/programas/22-04.mp3"></audio></div>
-                </div> 
+                    <div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/programas/24-04.mp3"></audio></div>
+                </div>
+
+                <div class="ep-fila">
                     <div class="ep-izq"><span class="ep-num">#20</span><span class="ep-fecha">22/04</span><span class="ep-dia">Miércoles</span></div>
                     <p class="ep-desc">Comienza Leandro criticando a los partidos políticos que no van a participar en el Congreso de la Educación. Quieren desconocer esta instancia de participación popular y dejan ver su rechazo a que se involucre la comunidad con las políticas públicas. Al pasar nomás hace una referencia a Rodrigo Goñi como un mal local, que ya es nacional.
 Fernanda propone traer al psiquiatra Ariel Gold a nuestra ciudad. Lo hace a partir de un artículo de prensa donde Gold desarrolla la idea de que luego de la Pandemia, algo se rompió en el tejido social y ahora la empatía significa otra cosa. El aislamiento, la mediación de las pantallas y el individualismo como salida afecta fuerte a nuestras adolescencias e infancias y el mundo adulto simplemente no entiende qué le pasa.
@@ -231,6 +344,7 @@ Nacho nos habla de la modernidad líquida, de la nueva realidad en moldes viejos
 Mario comparte un guión para el Ciclo de Cine Movie en Live:Don Gogo Billetes que es imperdible.</p>
                     <div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/programas/22-04.mp3"></audio></div>
                 </div>
+
                 <div class="ep-fila">
                     <div class="ep-izq"><span class="ep-num">#19</span><span class="ep-fecha">20/04</span><span class="ep-dia">Lunes</span></div>
                     <p class="ep-desc">En este programa Ricardo nos trae las novedades del ámbito local. Nos habla desde la redacción de Ecos Regionales y pone el énfasis en el Festival Volcán III que ocurrió en nuestra ciudad el pasado Sábado.
@@ -352,7 +466,7 @@ Escuchalos, te va a hacer bien.</p>
                 <div class="ep-fila">
                     <div class="ep-izq"><span class="ep-num">#09</span><span class="ep-fecha">20/03</span><span class="ep-dia">Viernes</span></div>
                     <p class="ep-desc">En este programa Leandro hace un análisis de la oposición política de nuestro país y lo contextualiza en el concierto mundial. Le llama la atención lo pobre de las no propuestas y lo destructivo de sus planteos.
-Más cerca de Trinidad, Ricardo nos adelanta las novedades locales desde la redacción de Ecos Regionales. Le agrega a cada noticia la mirada  personal, que por supuesto mejora la comprensión de la misma.
+Más cerca de Trinidad, Ricardo nos adelanta las novedades locales desde la redacción de Ecos Regionales. Le agrega a cada noticia la mirada personal, que por supuesto mejora la comprensión de la misma.
 Ale nos habla de los animales emblemáticos y en particular se detiene en el caballo de fuego, por ser justamente, este año, su año.
 Lejos del determinismo, el año nos da algunas pistas sobre las personas que son caballos de fuego, por ejemplo: que los guía el corazón, que son de andar,....hay que escucharlo.
 Mario finalmente nos alerta que nuestra sociedad mal abrevia momentos que merecen más espacios. Atrapa en msjs de texto largas charlas en la plaza, o interminables caminatas al atardecer, se aniquilan en un audio de 20 segundos.
@@ -416,7 +530,7 @@ Escribiendo nos conocemos y reconocemos: Escuché lo que escribiste, escuché al
                     <div class="ep-izq"><span class="ep-num">#04</span><span class="ep-fecha">09/03</span><span class="ep-dia">Lunes</span></div>
                     <p class="ep-desc">En este programa Elena Rodríguez comparte un recuerdo de su mamá, la maestra Olga Silva. Hace un recorrido emotivo por su vida profesional-social y vuelve a recordarnos del homenaje mayor que será ponerle su nombre al Instituto de Formación Docente local.
 Leandro nos comparte, desde una experiencia personal, el desafío de crecimiento y oportunidades que tienen los y las jóvenes de nuestro departamento. Por supuesto, también hace referencia al carnaval como genuina expresión popular.
-Ricardo hace un detallado relato de las novedades a nivel local. Pone algún énfasis en el 8M y nnos describe la marcha y el acto realizado en nuestra ciudad.
+Ricardo hace un detallado relato de las novedades a nivel local. Pone algún énfasis en el 8M y nos describe la marcha y el acto realizado en nuestra ciudad.
 Mario en su remo, nos habla del 8M, del momento exacto donde desde la cobardía los hombres decimos como te quiero, te pego. Porque te quiero, te mato. Por supuesto explicita esto abogando por que seamos(los hombres) menos cagones y que las comunidades estemos alertas.</p>
                     <div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/programas/09-03.mp3"></audio></div>
                 </div>
@@ -1190,7 +1304,7 @@ Ricardo desde la redacción de Ecos Regionales nos trae las novedades locales.</
 
                 <div class="ep-fila">
                     <div class="ep-izq"><span class="ep-num">#11</span><span class="ep-fecha">28/03</span><span class="ep-dia">Viernes</span></div>
-                    <p class="ep-desc">Hablan Ricardo desde la redacción de Ecos Regionales, Ale deasde el Consultorio de Medicina China nos alerta de la entrada de la nueva estación con sus luces, temperaturas,...Leandro nos habla de los festejos por los 54 años del Frente Amplio y de las carreras electorales en nuestra ciudad.</p>
+                    <p class="ep-desc">Hablan Ricardo desde la redacción de Ecos Regionales, Ale desde el Consultorio de Medicina China nos alerta de la entrada de la nueva estación con sus luces, temperaturas,...Leandro nos habla de los festejos por los 54 años del Frente Amplio y de las carreras electorales en nuestra ciudad.</p>
                     <div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/programas/28-03-25.mp3"></audio></div>
                 </div>
 
@@ -1249,7 +1363,7 @@ Ricardo desde la redacción de Ecos Regionales nos trae las novedades locales.</
                 </div>
 
                 <div class="ep-fila">
-                    <div class="ep-izq"><span class="ep-num">#01</span><span class="ep-fecha">05/03</span><span class="ep-dia">Miércoles</span></div>
+                    <div class="ep-izq"><span class="ep-num">#01</span><span class="ep-fecha">05/03</span><span class="ep-dia">Lunes</span></div>
                     <p class="ep-desc">Presentación de la Tripulación, objetivos del espacio, dinámica, invitación.</p>
                     <div class="ep-audio-wrap"><audio class="ep-audio" controls src="media/programas/05-03-25.mp3"></audio></div>
                 </div>
@@ -1263,6 +1377,7 @@ Ricardo desde la redacción de Ecos Regionales nos trae las novedades locales.</
     <script src="script.js" defer></script>
 
     <script>
+        /* ── Player en vivo ── */
         const STREAM_URL = 'https://stream.zeno.fm/nfmmxqpp1v8uv';
 
         const audioEl   = document.getElementById('radioAudio');
