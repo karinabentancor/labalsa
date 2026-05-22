@@ -865,6 +865,50 @@ body.tripulantes-page {
     }
 }
 
+.menu-footer-dev {
+    position: absolute;
+    bottom: 17px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.5s;
+}
+
+.menu-desplegable.activo .menu-footer-dev {
+    opacity: 1;
+}
+
+.menu-footer-dev span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: lowercase;
+}
+
+.menu-footer-dev a {
+    display: flex;
+    align-items: center;
+     margin: 0;
+    padding: 0;
+    line-height: 0;
+}
+
+.menu-footer-dev img {
+    height: 44px;
+    width: auto;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.menu-footer-dev a:hover img {
+    opacity: 1;
+}
+
 @media (max-width: 600px) {
     .ep-fila {
         grid-template-columns: 1fr;
