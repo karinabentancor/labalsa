@@ -2,11 +2,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.body.classList.add('listo');
 
-    // ── EmailJS ──────────────────────────────────────────────
-    emailjs.init('lF8jWDUR0JrnWpPR2');
-
+    // ── EmailJS (solo se inicializa si el SDK está cargado) ──
     const EMAILJS_SERVICE  = 'service_sljumx8';
     const EMAILJS_TEMPLATE = 'template_jzi9p1j';
+
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('lF8jWDUR0JrnWpPR2');
+    }
     // ─────────────────────────────────────────────────────────
 
     const logosPorPagina = {
@@ -204,7 +206,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ── Helper: mensaje inline en el modal ───────────────────
     function mostrarMensaje(texto, tipo) {
         let msg = form.querySelector('.form-mensaje');
         if (!msg) {
