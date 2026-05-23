@@ -2,6 +2,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.body.classList.add('listo');
 
+    // ── EmailJS ──────────────────────────────────────────────
+    emailjs.init('lF8jWDUR0JrnWpPR2');
+
+    const EMAILJS_SERVICE  = 'service_sljumx8';
+    const EMAILJS_TEMPLATE = 'template_jzi9p1j';
+    // ─────────────────────────────────────────────────────────
+
     const logosPorPagina = {
         'radio.html':   'media/balsaC2.svg',
         'revista.html': 'media/balsaC2.svg',
@@ -120,9 +127,12 @@ document.addEventListener('DOMContentLoaded', function () {
         moverSVG();
     }
 
-    const btnAbrir = document.getElementById('btnAbrirModal');
-    const modal = document.getElementById('modalSuscripcion');
+    // ── Modal ─────────────────────────────────────────────────
+    const btnAbrir  = document.getElementById('btnAbrirModal');
+    const modal     = document.getElementById('modalSuscripcion');
     const btnCerrar = document.getElementById('modalCerrar');
+    const form      = modal ? modal.querySelector('.suscripcion-form') : null;
+    const btnSubmit = form  ? form.querySelector('.btn-modal-submit') : null;
 
     function abrirModal() {
         modal.classList.add('activa');
@@ -136,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (btnAbrir && modal) {
         btnAbrir.addEventListener('click', abrirModal);
-
         btnCerrar.addEventListener('click', cerrarModal);
 
         modal.addEventListener('click', function (e) {
@@ -146,6 +155,78 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && modal.classList.contains('activa')) cerrarModal();
         });
+    }
+
+    // ── Envío del formulario con EmailJS ──────────────────────
+    if (form && btnSubmit) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nombre    = document.getElementById('sub-nombre').value.trim();
+            const email     = document.getElementById('sub-email').value.trim();
+            const celular   = document.getElementById('sub-cel').value.trim();
+            const direccion = document.getElementById('sub-direccion').value.trim();
+            const tipoEl    = form.querySelector('input[name="sub-tipo"]:checked');
+            const tipo      = tipoEl ? tipoEl.value : '';
+
+            // Validación básica
+            if (!nombre || !email || !celular || !direccion) {
+                mostrarMensaje('Por favor completá todos los campos.', 'error');
+                return;
+            }
+
+            // Estado de carga
+            btnSubmit.disabled   = true;
+            btnSubmit.textContent = 'Enviando...';
+
+            const templateParams = {
+                nombre:    nombre,
+                tipo:      tipo === 'anual' ? 'Suscripción anual' : 'Por número',
+                email:     email,
+                celular:   celular,
+                direccion: direccion,
+            };
+
+            emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, templateParams)
+                .then(function () {
+                    mostrarMensaje('¡Suscripción enviada! Te contactamos pronto.', 'ok');
+                    form.reset();
+                    setTimeout(cerrarModal, 2800);
+                })
+                .catch(function (err) {
+                    console.error('EmailJS error:', err);
+                    mostrarMensaje('Hubo un problema. Intentá de nuevo.', 'error');
+                })
+                .finally(function () {
+                    btnSubmit.disabled   = false;
+                    btnSubmit.textContent = 'Confirmar suscripción';
+                });
+        });
+    }
+
+    // ── Helper: mensaje inline en el modal ───────────────────
+    function mostrarMensaje(texto, tipo) {
+        let msg = form.querySelector('.form-mensaje');
+        if (!msg) {
+            msg = document.createElement('p');
+            msg.className = 'form-mensaje';
+            msg.style.cssText = [
+                'font-family:"JetBrains Mono",monospace',
+                'font-size:12px',
+                'letter-spacing:0.5px',
+                'border-radius:6px',
+                'padding:10px 14px',
+                'margin-top:4px',
+                'text-align:center',
+            ].join(';');
+            btnSubmit.insertAdjacentElement('afterend', msg);
+        }
+        msg.textContent = texto;
+        msg.style.background = tipo === 'ok' ? '#e6f4ea' : '#fdecea';
+        msg.style.color       = tipo === 'ok' ? '#1a7340' : '#b91c1c';
+        if (tipo === 'ok') {
+            setTimeout(() => msg.remove(), 3000);
+        }
     }
 
 });
