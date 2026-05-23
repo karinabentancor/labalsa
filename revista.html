@@ -5,160 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revista – LA BALSA</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body.revista-page {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-        body.revista-page::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: rgba(230, 240, 248, 0.72);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .revista-header {
-            position: relative;
-            z-index: 2;
-            padding: 160px 80px 0;
-            max-width: 1080px;
-            margin: 0 auto;
-        }
-
-        .revista-header h1 {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: clamp(32px, 5vw, 62px);
-            color: #0a1628;
-            line-height: 1.05;
-            margin: 0;
-            letter-spacing: -1px;
-        }
-
-        .revista-header h1 em {
-            font-style: normal;
-            color: #0077b6;
-        }
-
-        .revista-meta {
-            margin-top: 18px;
-            font-size: 14px;
-            color: #000000;
-            letter-spacing: 2px;
-        }
-
-        .revista-page .linea { background: #0077b6; }
-
-        body.revista-page .navbar { background: transparent; }
-
-        body.revista-page .navbar.con-scroll {
-            background: rgba(235, 245, 252, 0.35);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 1px 12px rgba(0, 119, 182, 0.10);
-        }
-
-        body.revista-page .menu-hamburguesa {
-            top: 58px;
-            right: 44px;
-        }
-
-        @media (max-width: 768px) {
-            body.revista-page .menu-hamburguesa {
-                top: 35px;
-                right: 20px;
-            }
-            .revista-header { padding-left: 28px; padding-right: 28px; }
-            .revista-grid   { padding-left: 28px; padding-right: 28px; }
-        }
-
-        .revista-grid {
-            position: relative;
-            z-index: 2;
-            max-width: 420px;
-            margin: 56px auto 80px;
-            padding: 0 80px;
-        }
-
-        @media (max-width: 768px) {
-            .revista-grid { padding: 0 28px; }
-        }
-
-        .tomo-card {
-            background: #fff;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 4px 24px rgba(10, 22, 40, 0.10);
-            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.35s ease;
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-            animation-delay: 0.08s;
-            cursor: pointer;
-            display: block;
-            text-decoration: none;
-        }
-
-        .tomo-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 48px rgba(10, 22, 40, 0.18);
-        }
-
-        .tomo-img-wrap {
-            width: 100%;
-            overflow: hidden;
-            background: #c5d5e8;
-            display: block;
-        }
-
-        .tomo-img-wrap img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .tomo-card:hover .tomo-img-wrap img {
-            transform: scale(1.02);
-        }
-
-        .tomo-footer {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 14px 20px;
-            border-top: 3px solid #0077b6;
-        }
-
-        .tomo-leer {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-            font-size: 10px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #0077b6;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: gap 0.25s ease, color 0.25s ease;
-        }
-
-        .tomo-leer::after {
-            content: '→';
-            transition: transform 0.25s ease;
-        }
-
-        .tomo-leer:hover { gap: 14px; color: #005a8e; }
-        .tomo-leer:hover::after { transform: translateX(4px); }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 </head>
 
 <body class="revista-page">
@@ -167,23 +13,95 @@
         <source src="media/video1.mp4" type="video/mp4">
     </video>
 
+    <div id="menu-global"></div>
 
-  <div id="menu-global"></div>
+    <!-- Wrapper que pone título a la izquierda y portada a la derecha en desktop -->
+    <div class="revista-hero">
 
-    <div class="revista-header" style="padding-top: 200px;">
-        <h1>La Balsa<br><em>Revista</em></h1>
-        <p class="revista-meta">Leeme, navegarás el mundo</p>
+        <div class="revista-header">
+            <h1>La Balsa<br><em>Revista</em></h1>
+        </div>
+
+        <div class="revista-grid">
+            <a href="media/revistas/labalsa01.pdf" target="_blank" class="tomo-card">
+                <div class="tomo-img-wrap">
+                    <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1">
+                </div>
+                <div class="tomo-footer">
+                    <span class="tomo-leer">Ver edición</span>
+                </div>
+            </a>
+        </div>
+
     </div>
 
-    <div class="revista-grid">
-       <a href="media/revistas/labalsa01.pdf" target="_blank" class="tomo-card">
-            <div class="tomo-img-wrap">
-                <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1">
+    <div class="suscripcion-seccion">
+        <div class="suscripcion-inner suscripcion-solo-texto">
+            <div class="suscripcion-texto">
+                <!-- "Revista física ·" eliminado, solo queda "Envío a todo el país" -->
+                <p class="suscripcion-eyebrow">Envío a todo el país</p>
+                <h2 class="suscripcion-titulo">Remá con nosotros</h2>
+                <p class="suscripcion-bajada">Recibí La Balsa en tu casa cada edición. Una revista para leer despacio, como se navega.</p>
+                <div class="suscripcion-precios">
+                    <div class="precio-item">
+                        <span class="precio-label">Por número</span>
+                        <span class="precio-valor">$$$$</span>
+                    </div>
+                    <div class="precio-divider"></div>
+                    <div class="precio-item">
+                        <span class="precio-label">Suscripción anual</span>
+                        <span class="precio-valor">$$$$</span>
+                    </div>
+                </div>
+                <button class="btn-suscribirse btn-abrir-modal" id="btnAbrirModal">Quiero suscribirme</button>
             </div>
-            <div class="tomo-footer">
-                <span class="tomo-leer">Ver edición</span>
+        </div>
+
+        <div class="publicidad-seccion">
+            <p class="publicidad-texto">¿Querés publicitar en la revista?</p>
+            <a href="https://wa.me/5980000" target="_blank" class="btn-wsp">Comunicate por WhatsApp</a>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalSuscripcion" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+        <div class="modal-caja">
+            <button class="modal-cerrar" id="modalCerrar" aria-label="Cerrar">✕</button>
+            <div class="modal-encabezado">
+                <h3 class="modal-titulo" id="modalTitulo">Suscripción<br><em>La Balsa Revista</em></h3>
             </div>
-        </a>
+            <form class="suscripcion-form modal-form" onsubmit="return false;">
+                <div class="form-field">
+                    <label for="sub-nombre">Nombre</label>
+                    <input type="text" id="sub-nombre" placeholder="Tu nombre">
+                </div>
+                <div class="form-field">
+                    <label>Tipo de suscripción</label>
+                    <div class="radio-group">
+                        <label class="radio-opcion">
+                            <input type="radio" name="sub-tipo" value="numero" checked>
+                            <span class="radio-label">Por número</span>
+                        </label>
+                        <label class="radio-opcion">
+                            <input type="radio" name="sub-tipo" value="anual">
+                            <span class="radio-label">Suscripción anual</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="sub-email">Correo electrónico</label>
+                    <input type="email" id="sub-email" placeholder="tu@correo.com">
+                </div>
+                <div class="form-field">
+                    <label for="sub-cel">Celular</label>
+                    <input type="tel" id="sub-cel" placeholder="+598 09X XXX XXX">
+                </div>
+                <div class="form-field">
+                    <label for="sub-direccion">Dirección de envío</label>
+                    <textarea id="sub-direccion" rows="3" placeholder="Calle, número, ciudad, departamento"></textarea>
+                </div>
+                <button type="submit" class="btn-suscribirse btn-modal-submit">Confirmar suscripción</button>
+            </form>
+        </div>
     </div>
 
     <script src="script.js"></script>

@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 menuGlobal.innerHTML = html;
             }
 
-            // Cambiar logo según la página
             const pagina = window.location.pathname.split('/').pop();
             const logoSrc = logosPorPagina[pagina];
             if (logoSrc) {
@@ -119,6 +118,34 @@ document.addEventListener('DOMContentLoaded', function () {
             requestAnimationFrame(moverSVG);
         }
         moverSVG();
+    }
+
+    const btnAbrir = document.getElementById('btnAbrirModal');
+    const modal = document.getElementById('modalSuscripcion');
+    const btnCerrar = document.getElementById('modalCerrar');
+
+    function abrirModal() {
+        modal.classList.add('activa');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarModal() {
+        modal.classList.remove('activa');
+        document.body.style.overflow = '';
+    }
+
+    if (btnAbrir && modal) {
+        btnAbrir.addEventListener('click', abrirModal);
+
+        btnCerrar.addEventListener('click', cerrarModal);
+
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) cerrarModal();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('activa')) cerrarModal();
+        });
     }
 
 });
