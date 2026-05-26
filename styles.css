@@ -1103,7 +1103,7 @@ body.revista-page .menu-hamburguesa {
     justify-content: space-between;
     gap: 24px;
     background: transparent;
-    border: 3px solid rgba(0, 119, 182, 0.55);
+    border: 3px solid #25d366;
     border-radius: 12px;
     padding: 24px 40px;
     box-shadow: none;
