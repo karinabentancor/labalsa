@@ -510,6 +510,26 @@ body.tripulantes-page {
     overflow-y: auto;
 }
 
+.tripulantes-page .linea {
+    background: #0077b6;
+}
+
+body.tripulantes-page .navbar {
+    background: transparent;
+}
+
+body.tripulantes-page .navbar.con-scroll {
+    background: rgba(235, 245, 252, 0.35);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 12px rgba(0, 119, 182, 0.10);
+}
+
+body.tripulantes-page .menu-hamburguesa {
+    top: 58px;
+    right: 44px;
+}
+
 .seccion-titulo {
     text-align: center;
     padding-top: 220px;
@@ -794,10 +814,6 @@ body.tripulantes-page {
     opacity: 1;
 }
 
-/* =====================
-   REVISTA PAGE
-   ===================== */
-
 body.revista-page {
     overflow-x: hidden;
     overflow-y: auto;
@@ -832,7 +848,6 @@ body.revista-page .menu-hamburguesa {
     right: 44px;
 }
 
-/* Layout: titulo izq + portada der en desktop */
 .revista-hero {
     position: relative;
     z-index: 2;
@@ -899,7 +914,6 @@ body.revista-page .menu-hamburguesa {
     transform: translateY(-6px);
 }
 
-/* ── FIX: sin fondo, sin altura fija — se ajusta a la portada ── */
 .tomo-img-wrap {
     width: 100%;
     display: block;
@@ -973,7 +987,7 @@ body.revista-page .menu-hamburguesa {
 }
 
 .suscripcion-texto {
-    background: #f0f6fb;
+    background: rgba(240, 246, 251, 0.85);
     padding: 56px 52px;
     display: flex;
     flex-direction: column;
@@ -994,7 +1008,7 @@ body.revista-page .menu-hamburguesa {
 .suscripcion-titulo {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    font-size: clamp(26px, 3.5vw, 40px);
+    font-size: clamp(30px, 4vw, 46px);
     color: #0a1628;
     line-height: 1.1;
     letter-spacing: -1px;
@@ -1003,7 +1017,8 @@ body.revista-page .menu-hamburguesa {
 
 .suscripcion-bajada {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     color: #4a6070;
     line-height: 1.8;
     letter-spacing: 0.5px;
@@ -1087,10 +1102,11 @@ body.revista-page .menu-hamburguesa {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    background: #fff;
+    background: transparent;
+    border: 3px solid rgba(0, 119, 182, 0.55);
     border-radius: 12px;
-    padding: 28px 40px;
-    box-shadow: 0 4px 24px rgba(10, 22, 40, 0.09);
+    padding: 24px 40px;
+    box-shadow: none;
     opacity: 0;
     animation: fadeUp 0.7s ease forwards;
     animation-delay: 0.35s;
@@ -1098,22 +1114,22 @@ body.revista-page .menu-hamburguesa {
 
 .publicidad-texto {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 700;
     color: #0a1628;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .btn-wsp {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #fff;
     background: #25d366;
     border-radius: 6px;
-    padding: 12px 24px;
+    padding: 14px 28px;
     text-decoration: none;
     white-space: nowrap;
     transition: background 0.2s ease, transform 0.2s ease;
@@ -1289,7 +1305,6 @@ body.revista-page .menu-hamburguesa {
     padding: 16px 28px;
 }
 
-/* Radio group de tipo de suscripción */
 .radio-group {
     display: flex;
     gap: 12px;
@@ -1371,18 +1386,12 @@ body.revista-page .menu-hamburguesa {
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
-        background: none !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        box-shadow: none;
+        
     }
-
-    .navbar.con-scroll {
-        background: rgba(20, 60, 90, 0.55) !important;
-        backdrop-filter: blur(16px) !important;
-        -webkit-backdrop-filter: blur(16px) !important;
-    }
-
+.body.tripulantes-page .menu-hamburguesa {
+    top: 35px;
+    right: 20px;
+}
     .logo { height: 90px; }
 
     .menu-hamburguesa {
@@ -1465,7 +1474,6 @@ body.revista-page .menu-hamburguesa {
         right: 20px;
     }
 
-    /* ── Mobile: layout en columna, portada centrada y mas pequeña ── */
     .revista-hero {
         grid-template-columns: 1fr;
         padding: 120px 20px 0;
@@ -1479,7 +1487,6 @@ body.revista-page .menu-hamburguesa {
         padding: 0;
     }
 
-
     .suscripcion-seccion {
         padding: 0 16px 80px;
         margin-top: 48px;
@@ -1490,7 +1497,22 @@ body.revista-page .menu-hamburguesa {
     }
 
     .suscripcion-texto {
-        padding: 36px 28px;
+        padding: 28px 20px;
+    }
+
+    .suscripcion-titulo {
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .suscripcion-bajada {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .suscripcion-eyebrow {
+        font-size: 11px;
+        margin-bottom: 12px;
     }
 
     .suscripcion-precios {
@@ -1520,8 +1542,8 @@ body.revista-page .menu-hamburguesa {
     .publicidad-seccion {
         flex-direction: column;
         align-items: flex-start;
-        padding: 24px 24px;
-        gap: 16px;
+        padding: 20px 24px;
+        gap: 14px;
     }
 
     .btn-wsp {
@@ -1578,8 +1600,6 @@ body.revista-page .menu-hamburguesa {
 
     .suscripcion-titulo { font-size: 24px; }
     .precio-valor { font-size: 28px; }
-
-    /* ── FIX mobile pequeño: sin altura fija ── */
 
     .modal-caja {
         padding: 40px 20px 32px;
