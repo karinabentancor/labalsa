@@ -511,7 +511,7 @@ body.tripulantes-page {
 }
 
 .tripulantes-page .linea {
-    background: #0077b6;
+    background: #ffd813;
 }
 
 body.tripulantes-page .navbar {
@@ -789,7 +789,7 @@ body.tripulantes-page .menu-hamburguesa {
 
 .menu-footer-dev span {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 7px;
+    font-size: 6px;
     letter-spacing: 3px;
     color: rgba(255, 255, 255, 0.45);
     text-transform: lowercase;
@@ -797,14 +797,16 @@ body.tripulantes-page .menu-hamburguesa {
 
 .menu-footer-dev a {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin: 0;
     padding: 0;
     line-height: 0;
+    gap: 6px;
 }
 
 .menu-footer-dev img {
-    height: 44px;
+    height: 32px;
     width: auto;
     opacity: 0.6;
     transition: opacity 0.2s ease;
@@ -1386,12 +1388,13 @@ body.revista-page .menu-hamburguesa {
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
-        
     }
-.body.tripulantes-page .menu-hamburguesa {
-    top: 35px;
-    right: 20px;
-}
+
+    .body.tripulantes-page .menu-hamburguesa {
+        top: 35px;
+        right: 20px;
+    }
+
     .logo { height: 90px; }
 
     .menu-hamburguesa {
