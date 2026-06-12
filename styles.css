@@ -869,10 +869,12 @@ body.revista-page .menu-hamburguesa {
     z-index: 2;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 160px 80px 0;
+    min-height: 55vh;
+    padding: 200px 80px 0;
     display: grid;
     grid-template-columns: 1fr auto;
-    align-items: start;
+    align-items: center;
+    align-items: center;
     gap: 60px;
 }
 
@@ -898,10 +900,49 @@ body.revista-page .menu-hamburguesa {
     color: #0077b6;
 }
 
+
+
+.portada-img {
+    width: 100%;
+    max-height: 46vh;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 16px 40px rgba(10, 22, 40, 0.28));
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.portada-img:hover {
+    transform: translateY(-6px) scale(1.015);
+}
+
+.btn-ver-edicion {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 13px 28px;
+    background: transparent;
+    color: #0077b6;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid #0077b6;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+.btn-ver-edicion:hover {
+    background: #0077b6;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
 .revista-grid {
     position: relative;
     z-index: 2;
-    width: 340px;
+    width: 260px;
     flex-shrink: 0;
     padding: 0;
     margin: 0;
@@ -936,14 +977,17 @@ body.revista-page .menu-hamburguesa {
     background: transparent;
     line-height: 0;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: 0;
     box-shadow: 0 16px 60px rgba(10, 22, 40, 0.30);
 }
 
 .tomo-img-wrap img {
-    width: 100%;
+    width: auto;
     height: auto;
+    max-width: 100%;
+    max-height: 46vh;
     display: block;
+    margin: 0 auto;
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -963,8 +1007,8 @@ body.revista-page .menu-hamburguesa {
 .tomo-leer {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 3px;
+    font-size: 11px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: #0077b6;
     text-decoration: none;
@@ -975,6 +1019,128 @@ body.revista-page .menu-hamburguesa {
 }
 
 .tomo-leer:hover { color: #005a8e; }
+
+.presentacion-seccion {
+    position: relative;
+    z-index: 2;
+    max-width: 1080px;
+    margin: 80px auto 0;
+    padding: 0 80px;
+}
+
+.presentacion-header {
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+}
+
+.presentacion-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(18px, 2.5vw, 28px);
+    letter-spacing: 2px;
+    color: #0077b6;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.presentacion-temporada {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #0a1628;
+    text-transform: uppercase;
+    margin-top: 8px;
+    font-weight: 700;
+}
+
+.presentacion-texto {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a6070;
+    line-height: 1.8;
+    letter-spacing: 0.3px;
+    margin-top: 22px;
+    max-width: 640px;
+}
+
+.presentacion-carousel-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.carousel-flecha {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid #0077b6;
+    background: rgba(255,255,255,0.85);
+    color: #0077b6;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    z-index: 3;
+    line-height: 1;
+}
+
+.carousel-flecha:hover {
+    background: #0077b6;
+    color: #fff;
+    transform: scale(1.08);
+}
+
+.carousel-flecha-izq { margin-right: 12px; }
+.carousel-flecha-der { margin-left: 12px; }
+
+.presentacion-carousel {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+    animation-delay: 0.15s;
+    flex: 1;
+}
+
+.presentacion-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.presentacion-track {
+    display: flex;
+    gap: 12px;
+}
+
+.presentacion-foto {
+    flex: 0 0 31%;
+    scroll-snap-align: start;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(0, 119, 182, 0.08);
+    box-shadow: 0 6px 20px rgba(10, 22, 40, 0.12);
+}
+
+.presentacion-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.presentacion-foto:hover img {
+    transform: scale(1.04);
+}
 
 .suscripcion-seccion {
     position: relative;
@@ -1508,16 +1674,86 @@ body.revista-page .menu-hamburguesa {
     }
 
     .revista-hero {
+        min-height: 52vh;
+        padding: 160px 20px 0;
         grid-template-columns: 1fr;
-        padding: 120px 20px 0;
-        gap: 20px;
+        gap: 12px;
         justify-items: start;
+        align-items: center;
     }
 
-    .revista-grid {
-        width: 190px;
+    
+
+.portada-img {
+    width: 100%;
+    max-height: 46vh;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 16px 40px rgba(10, 22, 40, 0.28));
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.portada-img:hover {
+    transform: translateY(-6px) scale(1.015);
+}
+
+.btn-ver-edicion {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 13px 28px;
+    background: transparent;
+    color: #0077b6;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid #0077b6;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+.btn-ver-edicion:hover {
+    background: #0077b6;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.revista-grid {
+        width: 160px;
         margin: 0 auto;
         padding: 0;
+    }
+
+    .tomo-img-wrap img {
+        max-height: 34vh;
+    }
+
+    .carousel-flecha {
+        display: none;
+    }
+
+    .presentacion-seccion {
+        padding: 0 20px;
+        margin-top: 8px;
+    }
+
+    .presentacion-header {
+        margin-bottom: 24px;
+    }
+
+    .presentacion-eyebrow {
+        font-size: clamp(14px, 4vw, 20px);
+    }
+
+    .presentacion-texto {
+        margin-top: 16px;
+    }
+
+    .presentacion-foto {
+        flex: 0 0 78%;
     }
 
     .suscripcion-seccion {

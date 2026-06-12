@@ -22,16 +22,42 @@
         </div>
 
         <div class="revista-grid">
-            <a href="media/revistas/labalsa01.pdf" target="_blank" class="tomo-card">
-                <div class="tomo-img-wrap">
-                    <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1">
-                </div>
-                <div class="tomo-footer">
-                    <span class="tomo-leer">Ver edición</span>
-                </div>
-            </a>
+            <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1" class="portada-img">
+            <a href="media/revistas/labalsa01.pdf" target="_blank" class="btn-ver-edicion">Ver edición Otoño 2026</a>
         </div>
 
+    </div>
+<br>
+<br>
+
+    <div class="presentacion-seccion">
+        <div class="presentacion-header">
+            <p class="presentacion-eyebrow">Presentación La Balsa Revista #01</p>
+            <p class="presentacion-temporada">Otoño 2026</p>
+            <p class="presentacion-texto">
+                El pasado 5 de junio presentamos el primer número de LA BALSA revista.
+            </p>
+        </div>
+        <div class="presentacion-carousel-wrap">
+            <button class="carousel-flecha carousel-flecha-izq" aria-label="Anterior">&#8592;</button>
+            <div class="presentacion-carousel">
+                <div class="presentacion-track">
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento1.jpeg" alt="Lanzamiento La Balsa - foto 1"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento2.jpeg" alt="Lanzamiento La Balsa - foto 2"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento3.jpeg" alt="Lanzamiento La Balsa - foto 3"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento4.jpeg" alt="Lanzamiento La Balsa - foto 4"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento5.jpeg" alt="Lanzamiento La Balsa - foto 5"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento6.jpeg" alt="Lanzamiento La Balsa - foto 6"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento7.jpeg" alt="Lanzamiento La Balsa - foto 7"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento8.jpeg" alt="Lanzamiento La Balsa - foto 8"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento9.jpeg" alt="Lanzamiento La Balsa - foto 9"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento10.jpeg" alt="Lanzamiento La Balsa - foto 10"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento11.jpeg" alt="Lanzamiento La Balsa - foto 11"></div>
+                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento12.jpeg" alt="Lanzamiento La Balsa - foto 12"></div>
+                </div>
+            </div>
+            <button class="carousel-flecha carousel-flecha-der" aria-label="Siguiente">&#8594;</button>
+        </div>
     </div>
 
     <div class="suscripcion-seccion">
@@ -104,5 +130,26 @@
 
    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="script.js"></script>
+<script>
+    // Flechas del carrusel
+    (function () {
+        const carousel = document.querySelector('.presentacion-carousel');
+        const btnIzq   = document.querySelector('.carousel-flecha-izq');
+        const btnDer   = document.querySelector('.carousel-flecha-der');
+        if (!carousel || !btnIzq || !btnDer) return;
+
+        const paso = () => {
+            const foto = carousel.querySelector('.presentacion-foto');
+            return foto ? foto.offsetWidth + 12 : 300;
+        };
+
+        btnIzq.addEventListener('click', () => {
+            carousel.scrollBy({ left: -paso(), behavior: 'smooth' });
+        });
+        btnDer.addEventListener('click', () => {
+            carousel.scrollBy({ left: paso(), behavior: 'smooth' });
+        });
+    })();
+</script>
 </body>
 </html>
