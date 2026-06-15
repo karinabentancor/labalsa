@@ -100,7 +100,10 @@
             width: 100%;
             aspect-ratio: 16 / 9;
             object-fit: cover;
+            object-position: center;
             display: block;
+            line-height: 0;
+            font-size: 0;
         }
 
         .ts-cuerpo {
@@ -113,7 +116,7 @@
             color: #0a1628;
             line-height: 1.05;
             letter-spacing: -1.5px;
-            margin: 0 0 6px;
+            margin: 0 0 20px;
         }
 
         .ts-titulo span {
@@ -358,6 +361,7 @@
 
         <div class="cruces-grid">
 
+            <!-- CARD: TODOS SOMOS -->
             <div class="ts-card">
 
                 <img src="media/todossomos.jpeg" alt="Todos Somos" class="ts-imagen">
@@ -572,7 +576,7 @@ Con linternas de exploradores entran en esta cueva, donde las palabras, las prop
                                     </div>
                                 </div>
 
-                                 <div class="ts-ep">
+                                <div class="ts-ep">
                                     <div class="ts-ep-header" onclick="tsToggle(this)">
                                         <div class="ts-ep-meta">
                                             <span class="ts-ep-num">11</span>
@@ -590,7 +594,7 @@ Con linternas de exploradores entran en esta cueva, donde las palabras, las prop
                                     </div>
                                 </div>
 
-                                    <div class="ts-ep">
+                                <div class="ts-ep">
                                     <div class="ts-ep-header" onclick="tsToggle(this)">
                                         <div class="ts-ep-meta">
                                             <span class="ts-ep-num">12</span>
@@ -610,6 +614,32 @@ Con linternas de exploradores entran en esta cueva, donde las palabras, las prop
 
                             </div>
                         </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CARD: LA PLAZA FILOSÓFICA -->
+            <div class="ts-card" style="display: flex; flex-direction: column;">
+
+                <img src="media/laplazafilosofica.png" alt="La Plaza Filosófica" style="width:100%; aspect-ratio: 16/9; object-fit: cover; object-position: center; display: block; flex-shrink: 0;">
+
+                <div class="ts-cuerpo" style="display: flex; flex-direction: column; flex: 1;">
+
+                    <a href="https://www.laplazafilosofica.com/" target="_blank" rel="noopener noreferrer" class="ts-horario-radio" style="display:block; margin-bottom: 8px; text-decoration: none;">www.laplazafilosofica.com</a>
+                    <h2 class="ts-titulo">LA PLAZA <span>FILOSÓFICA</span></h2>
+
+                    <p class="ts-bajada" style="flex: 1;">
+                        Cuando en el basural de cada día encontramos una perla, una buena madera para La Balsa, lo menos que podemos hacer es llevarla a casa.<br><br>
+                        Luego, con calma, ya veremos si es de proa, de remos, o de fuego que abriga e ilumina.<br><br>
+                        Lo importante es rescatar buenos lugares que nos desafían con cada invitación.<br>
+                        Con ustedes: <a href="https://www.laplazafilosofica.com/" target="_blank" rel="noopener noreferrer" style="color: #0077b6; text-decoration: none; font-weight: 600;">www.laplazafilosofica.com</a>
+                    </p>
+
+                    <div style="text-align: right;">
+                        <a href="https://www.laplazafilosofica.com/" target="_blank" rel="noopener noreferrer" style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0a1628;border:1.5px solid rgba(0,119,182,0.4);border-radius:8px;padding:10px 18px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(0,119,182,0.10)'" onmouseout="this.style.background='transparent'">
+                            Visitar sitio
+                        </a>
                     </div>
 
                 </div>
