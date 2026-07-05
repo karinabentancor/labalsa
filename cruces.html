@@ -77,15 +77,13 @@
         }
 
         .cruces-grid {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 24px;
-            align-items: flex-start;
+            align-items: start;
         }
 
         .ts-card {
-            flex: 0 0 calc(50% - 12px);
-            max-width: calc(50% - 12px);
             background: rgba(255, 255, 255, 0.60);
             border: 1.5px solid rgba(0, 119, 182, 0.22);
             border-radius: 22px;
@@ -305,11 +303,10 @@
 
             .cruces-grid {
                 width: 100%;
+                grid-template-columns: 1fr;
             }
 
             .ts-card {
-                flex: 0 0 100%;
-                max-width: 100%;
                 width: 100%;
                 box-sizing: border-box;
             }
@@ -638,10 +635,10 @@ Con linternas de exploradores entran en esta cueva, donde las palabras, las prop
                 </div>
             </div>
 
-            <!-- CARD: LA PLAZA FILOSÓFICA -->
+
             <div class="ts-card" style="display: flex; flex-direction: column;">
 
-                <img src="media/laplazafilosofica.png" alt="La Plaza Filosófica" style="width:100%; aspect-ratio: 16/9; object-fit: cover; object-position: center; display: block; flex-shrink: 0;">
+                <img src="media/laplazafilosofica.png" alt="La Plaza Filosófica" style="width:100%; aspect-ratio: 16/9; object-fit: cover; object-position: center; display: block; flex-shrink: 0; transform: scale(1.25);">
 
                 <div class="ts-cuerpo" style="display: flex; flex-direction: column; flex: 1;">
 
@@ -665,8 +662,30 @@ Con linternas de exploradores entran en esta cueva, donde las palabras, las prop
                 </div>
             </div>
 
-        </div>
+            <div class="ts-card" style="display: flex; flex-direction: column;">
 
+                <img src="media/andresito.png" alt="Andresito Busea en sus Raíces" style="width:100%; aspect-ratio: 16/9; object-fit: cover; object-position: center; display: block; flex-shrink: 0;">
+
+                <div class="ts-cuerpo" style="display: flex; flex-direction: column; flex: 1;">
+
+
+                    <h2 class="ts-titulo">ANDRESITO <span>BUSEA EN SUS RAÍCES</span></h2>
+
+                    <p class="ts-bajada" style="flex: 1;">
+En el marco del proyecto 20 pueblos, 20 memorias,en el año 2011, bicentenario del comienzo del proceso independentista nacional, el pueblo Andresito, del departamento de Flores, Uruguay cuenta su historia.
+Registros fotográficos, escritos, plásticos y sobre todo vivenciales se encuentran en este audiovisual generando en forma dinámica, un encuentro con un poco de la historia de los pueblos del interior profundo del país, también atravesado por las decisiones autoritarias de la última dictadura cívico-militar que sometió al país y a su gente.<br>
+                    </p>
+
+                    <div style="text-align: right;">
+                        <a href="https://archive.org/details/andresito-bucea-en-sus-raices" target="_blank" rel="noopener noreferrer" style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0a1628;border:1.5px solid rgba(0,119,182,0.4);border-radius:8px;padding:10px 18px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(0,119,182,0.10)'" onmouseout="this.style.background='transparent'">
+                            Visitar sitio
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <script src="script.js" defer></script>
