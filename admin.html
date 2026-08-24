@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>La Balsa — Panel de programas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{ --azul:#0077b6; }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh;
+    font-family:'JetBrains Mono', monospace;
+    background:#0b1620;
+    color:#eaf2f8;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  .card{
+    width:100%; max-width:520px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(0,119,182,0.35);
+    border-radius:4px;
+    padding:32px;
+  }
+  h1{
+    font-size:15px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--azul); margin:0 0 24px;
+  }
+  label{
+    display:block; font-size:11px; letter-spacing:.06em;
+    color:rgba(234,242,248,0.65); margin-bottom:6px; margin-top:16px;
+    text-transform:uppercase;
+  }
+  input, textarea{
+    width:100%; padding:10px 12px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(0,119,182,0.35);
+    border-radius:2px;
+    color:#eaf2f8;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+  }
+  textarea{ min-height:140px; resize:vertical; }
+  input:focus, textarea:focus{ outline:none; border-color:var(--azul); }
+  button{
+    margin-top:22px;
+    width:100%;
+    padding:12px;
+    background:var(--azul);
+    border:none; border-radius:2px;
+    color:#fff; font-weight:700;
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:.08em; text-transform:uppercase;
+    font-size:12px;
+    cursor:pointer;
+  }
+  button:disabled{ opacity:.5; cursor:not-allowed; }
+  button.secundario{
+    background:transparent; border:1px solid rgba(234,242,248,0.3);
+    margin-top:10px;
+  }
+  #msg{ margin-top:14px; font-size:12px; line-height:1.5; }
+  #msg.ok{ color:#7be0a0; }
+  #msg.error{ color:#ff8a8a; }
+  .fila-doble{ display:flex; gap:12px; }
+  .fila-doble > div{ flex:1; }
+  .top-bar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+  .lista{ margin-top:30px; }
+  .item{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08);
+    font-size:12px;
+  }
+  .item span.num{ color:var(--azul); font-weight:700; margin-right:8px; }
+  .item button{
+    width:auto; margin:0; padding:6px 10px; font-size:10px;
+    background:transparent; border:1px solid rgba(255,120,120,0.5); color:#ff8a8a;
+  }
+  #panelLogin, #panelSubida{ display:none; }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <div id="panelLogin">
+    <h1>La Balsa · Ingreso</h1>
+    <label for="loginEmail">Email</label>
+    <input type="email" id="loginEmail" autocomplete="username">
+    <label for="loginPass">Contraseña</label>
+    <input type="password" id="loginPass" autocomplete="current-password">
+    <button id="btnLogin">Ingresar</button>
+    <div id="msg"></div>
+  </div>
+
+  <div id="panelSubida">
+    <div class="top-bar">
+      <h1 style="margin:0;">Subir programa</h1>
+      <button class="secundario" id="btnLogout">Salir</button>
+    </div>
+
+    <div class="fila-doble">
+      <div>
+        <label for="numero"># de programa</label>
+        <input type="number" id="numero" placeholder="66">
+      </div>
+      <div>
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha">
+      </div>
+    </div>
+
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" placeholder="En este programa..."></textarea>
+
+    <label for="audio">Archivo de audio (mp3)</label>
+    <input type="file" id="audio" accept="audio/*">
+
+    <button id="btnSubir">Publicar programa</button>
+    <div id="msg2"></div>
+
+    <div class="lista">
+      <label style="margin-top:0;">Últimos programas publicados</label>
+      <div id="listaProgramas"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SUPABASE_URL = "https://npqxqfxzykvpwwrrrupc.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_djOkmwydtJ-WFW3veBk3RA_-Ryqv6lw";
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const panelLogin = document.getElementById('panelLogin');
+const panelSubida = document.getElementById('panelSubida');
+const msg = document.getElementById('msg');
+const msg2 = document.getElementById('msg2');
+
+const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+async function checkSesion() {
+  const { data } = await sb.auth.getSession();
+  if (data.session) {
+    mostrarPanelSubida();
+  } else {
+    panelLogin.style.display = 'block';
+    panelSubida.style.display = 'none';
+  }
+}
+
+function mostrarPanelSubida() {
+  panelLogin.style.display = 'none';
+  panelSubida.style.display = 'block';
+  cargarLista();
+}
+
+document.getElementById('btnLogin').addEventListener('click', async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPass').value;
+  msg.textContent = 'Ingresando...';
+  msg.className = '';
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    msg.textContent = 'Clave o email incorrectos.';
+    msg.className = 'error';
+  } else {
+    msg.textContent = '';
+    mostrarPanelSubida();
+  }
+});
+
+document.getElementById('btnLogout').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  checkSesion();
+});
+
+document.getElementById('btnSubir').addEventListener('click', async () => {
+  const numero = document.getElementById('numero').value.trim();
+  const fecha = document.getElementById('fecha').value;
+  const descripcion = document.getElementById('descripcion').value.trim();
+  const archivo = document.getElementById('audio').files[0];
+  const btn = document.getElementById('btnSubir');
+
+  if (!numero || !fecha || !descripcion || !archivo) {
+    msg2.textContent = 'Completá todos los campos y elegí un archivo de audio.';
+    msg2.className = 'error';
+    return;
+  }
+
+  btn.disabled = true;
+  msg2.textContent = 'Subiendo audio...';
+  msg2.className = '';
+
+  try {
+    const fechaObj = new Date(fecha + 'T00:00:00');
+    const nombreArchivo = `programa-${numero}-${fecha}-${Date.now()}.mp3`;
+
+    const { error: errSubida } = await sb.storage
+      .from('audios')
+      .upload(nombreArchivo, archivo, { contentType: archivo.type || 'audio/mpeg' });
+
+    if (errSubida) throw errSubida;
+
+    const { data: urlData } = sb.storage.from('audios').getPublicUrl(nombreArchivo);
+    const audioUrl = urlData.publicUrl;
+
+    const dia = DIAS[fechaObj.getDay()];
+    const mesLabel = `${MESES[fechaObj.getMonth()]} ${fechaObj.getFullYear()}`;
+
+    const { error: errInsert } = await sb.from('programas').insert({
+      numero: parseInt(numero, 10),
+      fecha,
+      dia,
+      mes_label: mesLabel,
+      descripcion,
+      audio_url: audioUrl
+    });
+
+    if (errInsert) throw errInsert;
+
+    msg2.textContent = '¡Programa publicado! Ya aparece en la web.';
+    msg2.className = 'ok';
+    document.getElementById('numero').value = '';
+    document.getElementById('fecha').value = '';
+    document.getElementById('descripcion').value = '';
+    document.getElementById('audio').value = '';
+    cargarLista();
+
+  } catch (e) {
+    console.error(e);
+    msg2.textContent = 'Error al publicar: ' + (e.message || e);
+    msg2.className = 'error';
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+async function cargarLista() {
+  const cont = document.getElementById('listaProgramas');
+  cont.innerHTML = 'Cargando...';
+  const { data, error } = await sb
+    .from('programas')
+    .select('*')
+    .order('fecha', { ascending: false })
+    .limit(15);
+
+  if (error) {
+    cont.innerHTML = 'No se pudo cargar la lista.';
+    return;
+  }
+  if (!data.length) {
+    cont.innerHTML = '<p style="opacity:.6">Todavía no hay programas cargados.</p>';
+    return;
+  }
+  cont.innerHTML = '';
+  data.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `<div><span class="num">#${p.numero}</span>${p.fecha} — ${p.dia}</div>`;
+    const btnBorrar = document.createElement('button');
+    btnBorrar.textContent = 'Borrar';
+    btnBorrar.addEventListener('click', () => borrarPrograma(p.id));
+    div.appendChild(btnBorrar);
+    cont.appendChild(div);
+  });
+}
+
+async function borrarPrograma(id) {
+  if (!confirm('¿Borrar este programa? Esta acción no se puede deshacer.')) return;
+  const { error } = await sb.from('programas').delete().eq('id', id);
+  if (error) {
+    alert('No se pudo borrar: ' + error.message);
+  } else {
+    cargarLista();
+  }
+}
+
+checkSesion();
+</script>
+</body>
+</html>

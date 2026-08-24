@@ -2,14 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.body.classList.add('listo');
 
-    // ── EmailJS (solo se inicializa si el SDK está cargado) ──
     const EMAILJS_SERVICE  = 'service_sljumx8';
     const EMAILJS_TEMPLATE = 'template_jzi9p1j';
 
     if (typeof emailjs !== 'undefined') {
         emailjs.init('lF8jWDUR0JrnWpPR2');
     }
-    // ─────────────────────────────────────────────────────────
+
+    const SUPABASE_URL = 'https://npqxqfxzykvpwwrrrupc.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_djOkmwydtJ-WFW3veBk3RA_-Ryqv6lw';
 
     const logosPorPagina = {
         'radio.html':   'media/balsaC2.svg',
@@ -99,22 +100,113 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-    document.querySelectorAll('.mes-header').forEach(header => {
-        header.addEventListener('click', () => {
-            const acordeon = header.parentElement;
-            const estaAbierto = acordeon.classList.contains('abierto');
-            document.querySelectorAll('.mes-acordeon').forEach(a => a.classList.remove('abierto'));
-            if (!estaAbierto) acordeon.classList.add('abierto');
-        });
+    document.addEventListener('click', function (e) {
+        const header = e.target.closest('.mes-header');
+        if (!header) return;
+        const acordeon = header.parentElement;
+        const estaAbierto = acordeon.classList.contains('abierto');
+        document.querySelectorAll('.mes-acordeon').forEach(a => a.classList.remove('abierto'));
+        if (!estaAbierto) acordeon.classList.add('abierto');
     });
 
-    document.querySelectorAll('.ep-audio').forEach(audio => {
-        audio.addEventListener('play', () => {
-            document.querySelectorAll('.ep-audio').forEach(other => {
-                if (other !== audio) other.pause();
-            });
+    document.addEventListener('play', function (e) {
+        if (!e.target.classList || !e.target.classList.contains('ep-audio')) return;
+        document.querySelectorAll('.ep-audio').forEach(other => {
+            if (other !== e.target) other.pause();
         });
-    });
+    }, true);
+
+    function armarReproductorEpisodio(audioEp) {
+        const wrap = audioEp.closest('.ep-audio-wrap');
+        if (!wrap || wrap.dataset.armado === '1') return;
+        wrap.dataset.armado = '1';
+
+        const srcEp = audioEp.getAttribute('src');
+        audioEp.removeAttribute('controls');
+        audioEp.preload = 'metadata';
+
+        const player = document.createElement('div');
+        player.className = 'ep-player';
+        player.innerHTML =
+            '<button class="ep-play-btn" type="button" aria-label="Reproducir">' +
+                '<svg class="ep-icono-play" width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+                    '<polygon points="4,2 14,8 4,14" fill="#0077b6"/>' +
+                '</svg>' +
+                '<svg class="ep-icono-pausa" width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">' +
+                    '<rect x="3" y="2" width="4" height="12" rx="1" fill="#0077b6"/>' +
+                    '<rect x="9" y="2" width="4" height="12" rx="1" fill="#0077b6"/>' +
+                '</svg>' +
+            '</button>' +
+            '<div class="ep-progress-wrap">' +
+                '<input type="range" class="ep-progress" min="0" max="100" value="0" step="0.1" aria-label="Progreso de reproducción">' +
+                '<div class="ep-time"><span class="ep-time-actual">0:00</span><span class="ep-time-total">--:--</span></div>' +
+            '</div>';
+
+        wrap.insertBefore(player, audioEp);
+        audioEp.style.display = 'none';
+
+        const btnEp       = player.querySelector('.ep-play-btn');
+        const iconEpPlay  = player.querySelector('.ep-icono-play');
+        const iconEpPausa = player.querySelector('.ep-icono-pausa');
+        const progressEp  = player.querySelector('.ep-progress');
+        const tActual     = player.querySelector('.ep-time-actual');
+        const tTotal      = player.querySelector('.ep-time-total');
+        let arrastrandoEp = false;
+
+        function formatoTiempo(seg) {
+            if (!isFinite(seg) || isNaN(seg)) return '--:--';
+            const m = Math.floor(seg / 60);
+            const s = Math.floor(seg % 60).toString().padStart(2, '0');
+            return m + ':' + s;
+        }
+
+        btnEp.addEventListener('click', function () {
+            if (audioEp.paused) {
+                if (!audioEp.src) audioEp.src = srcEp;
+                audioEp.play();
+            } else {
+                audioEp.pause();
+            }
+        });
+
+        audioEp.addEventListener('play', function () {
+            iconEpPlay.style.display  = 'none';
+            iconEpPausa.style.display = 'block';
+        });
+
+        audioEp.addEventListener('pause', function () {
+            iconEpPlay.style.display  = 'block';
+            iconEpPausa.style.display = 'none';
+        });
+
+        audioEp.addEventListener('loadedmetadata', function () {
+            tTotal.textContent = formatoTiempo(audioEp.duration);
+            progressEp.max = audioEp.duration || 100;
+        });
+
+        audioEp.addEventListener('timeupdate', function () {
+            if (!arrastrandoEp) progressEp.value = audioEp.currentTime;
+            tActual.textContent = formatoTiempo(audioEp.currentTime);
+        });
+
+        audioEp.addEventListener('ended', function () {
+            progressEp.value = 0;
+            tActual.textContent = '0:00';
+        });
+
+        progressEp.addEventListener('input', function () {
+            arrastrandoEp = true;
+            tActual.textContent = formatoTiempo(parseFloat(progressEp.value));
+        });
+
+        progressEp.addEventListener('change', function () {
+            if (!audioEp.src) audioEp.src = srcEp;
+            audioEp.currentTime = parseFloat(progressEp.value);
+            arrastrandoEp = false;
+        });
+    }
+
+    document.querySelectorAll('.ep-audio-wrap .ep-audio').forEach(armarReproductorEpisodio);
 
     const svgMovil = document.querySelector('.svg-movil');
     if (svgMovil) {
@@ -129,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function () {
         moverSVG();
     }
 
-    // ── Modal ─────────────────────────────────────────────────
     const btnAbrir  = document.getElementById('btnAbrirModal');
     const modal     = document.getElementById('modalSuscripcion');
     const btnCerrar = document.getElementById('modalCerrar');
@@ -159,7 +250,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ── Envío del formulario con EmailJS ──────────────────────
     if (form && btnSubmit) {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -171,13 +261,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const tipoEl    = form.querySelector('input[name="sub-tipo"]:checked');
             const tipo      = tipoEl ? tipoEl.value : '';
 
-            // Validación básica
             if (!nombre || !email || !celular || !direccion) {
                 mostrarMensaje('Por favor completá todos los campos.', 'error');
                 return;
             }
 
-            // Estado de carga
             btnSubmit.disabled   = true;
             btnSubmit.textContent = 'Enviando...';
 
@@ -228,6 +316,92 @@ document.addEventListener('DOMContentLoaded', function () {
         if (tipo === 'ok') {
             setTimeout(() => msg.remove(), 3000);
         }
+    }
+
+    let toques = 0;
+    let temporizadorToques = null;
+    const TIEMPO_MAX_ENTRE_TOQUES = 600;
+    const TOQUES_NECESARIOS = 5;
+
+    document.addEventListener('click', function (e) {
+        const logoImg = e.target.closest('.navbar .logo, img.logo');
+        if (!logoImg) return;
+
+        const link = logoImg.closest('a');
+        e.preventDefault();
+
+        toques++;
+        clearTimeout(temporizadorToques);
+
+        if (toques >= TOQUES_NECESARIOS) {
+            toques = 0;
+            window.location.href = 'admin.html';
+            return;
+        }
+
+        temporizadorToques = setTimeout(function () {
+            toques = 0;
+            if (link) window.location.href = link.getAttribute('href') || 'index.html';
+        }, TIEMPO_MAX_ENTRE_TOQUES);
+    });
+
+    const contenedorProgramas = document.getElementById('programas-nuevos');
+    if (contenedorProgramas && typeof supabase !== 'undefined') {
+
+        const sbRadio = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        function escapeHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        sbRadio
+            .from('programas')
+            .select('*')
+            .order('fecha', { ascending: false })
+            .then(function (respuesta) {
+                const data = respuesta.data;
+                const error = respuesta.error;
+                if (error || !data || !data.length) return;
+
+                const grupos = {};
+                data.forEach(p => {
+                    if (!grupos[p.mes_label]) grupos[p.mes_label] = [];
+                    grupos[p.mes_label].push(p);
+                });
+
+                Object.keys(grupos).forEach(mesLabel => {
+                    const acordeon = document.createElement('div');
+                    acordeon.className = 'mes-acordeon abierto';
+                    acordeon.innerHTML =
+                        '<div class="mes-header">' +
+                            '<span class="mes-nombre">' + escapeHtml(mesLabel) + '</span>' +
+                            '<div class="mes-info"><span class="mes-flecha">+</span></div>' +
+                        '</div>' +
+                        '<div class="mes-cuerpo"><div class="mes-cuerpo-inner"><div class="ep-lista"></div></div></div>';
+
+                    const lista = acordeon.querySelector('.ep-lista');
+
+                    grupos[mesLabel].forEach(p => {
+                        const fila = document.createElement('div');
+                        fila.className = 'ep-fila';
+                        fila.innerHTML =
+                            '<div class="ep-izq">' +
+                                '<span class="ep-num">#' + p.numero + '</span>' +
+                                '<span class="ep-fecha">' + p.fecha.split('-').reverse().slice(0, 2).join('/') + '</span>' +
+                                '<span class="ep-dia">' + escapeHtml(p.dia) + '</span>' +
+                            '</div>' +
+                            '<p class="ep-desc">' + escapeHtml(p.descripcion).replace(/\n/g, '<br>') + '</p>' +
+                            '<div class="ep-audio-wrap"><audio class="ep-audio" src="' + p.audio_url + '"></audio></div>';
+                        lista.appendChild(fila);
+                    });
+
+                    contenedorProgramas.appendChild(acordeon);
+                });
+
+                contenedorProgramas.querySelectorAll('.ep-audio').forEach(armarReproductorEpisodio);
+            });
     }
 
 });
