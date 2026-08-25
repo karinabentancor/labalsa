@@ -404,4 +404,78 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    const revPortadaEl = document.getElementById('revista-portada');
+    if (revPortadaEl && typeof supabase !== 'undefined') {
+
+        const sbRevista = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        sbRevista
+            .from('revistas')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .then(function (respuesta) {
+                const data = respuesta.data;
+                const error = respuesta.error;
+                if (error || !data || !data.length) return;
+
+                const r = data[0];
+                revPortadaEl.src = r.portada_url;
+
+                const btnEl = document.getElementById('revista-btn');
+                if (btnEl) {
+                    btnEl.href = r.pdf_url;
+                    btnEl.textContent = 'Ver edición ' + r.temporada;
+                }
+
+                const eyebrowEl = document.getElementById('revista-eyebrow');
+                if (eyebrowEl) {
+                    eyebrowEl.textContent = 'Presentación La Balsa Revista #' + String(r.numero).padStart(2, '0');
+                }
+
+                const temporadaEl = document.getElementById('revista-temporada');
+                if (temporadaEl) temporadaEl.textContent = r.temporada;
+
+                const textoEl = document.getElementById('revista-texto');
+                if (textoEl) textoEl.textContent = r.texto;
+            });
+    }
+
+    const gridTripulantes = document.querySelector('.grid-tripulantes');
+    if (gridTripulantes && typeof supabase !== 'undefined') {
+
+        const sbTripulantes = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        function escapeHtmlTrip(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        sbTripulantes
+            .from('tripulantes')
+            .select('*')
+            .order('created_at', { ascending: true })
+            .then(function (respuesta) {
+                const data = respuesta.data;
+                const error = respuesta.error;
+                if (error || !data || !data.length) return;
+
+                data.forEach(t => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML =
+                        '<div class="card-foto-wrap">' +
+                            '<img src="' + t.foto_url + '" alt="' + escapeHtmlTrip(t.nombre) + '">' +
+                        '</div>' +
+                        '<div class="card-info">' +
+                            '<p class="card-nombre">' + escapeHtmlTrip(t.nombre) + '</p>' +
+                            '<p class="card-descripcion">' + escapeHtmlTrip(t.descripcion).replace(/\n/g, '<br>') + '</p>' +
+                        '</div>' +
+                        '<div class="card-linea"></div>';
+                    gridTripulantes.appendChild(card);
+                });
+            });
+    }
+
 });

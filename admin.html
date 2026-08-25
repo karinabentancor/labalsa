@@ -4,131 +4,239 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>La Balsa — Panel de programas</title>
+<title>La Balsa — Panel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  :root{ --azul:#0077b6; }
+  :root{
+    --amarillo:#ffd813;
+    --azul:#0077b6;
+    --fondo:#0a1628;
+    --panel:rgba(255,255,255,0.04);
+    --borde:rgba(255,216,19,0.25);
+  }
   *{box-sizing:border-box;}
   body{
     margin:0; min-height:100vh;
     font-family:'JetBrains Mono', monospace;
-    background:#0b1620;
+    background:radial-gradient(circle at 20% 0%, #102338 0%, var(--fondo) 55%);
     color:#eaf2f8;
     display:flex; align-items:center; justify-content:center;
     padding:24px;
   }
+  .wrap{ width:100%; max-width:640px; }
+  .logo-top{ display:flex; justify-content:center; margin-bottom:28px; }
+  .logo-top img{ height:80px; filter:drop-shadow(0 4px 16px rgba(255,216,19,0.35)); }
   .card{
-    width:100%; max-width:520px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(0,119,182,0.35);
-    border-radius:4px;
-    padding:32px;
+    background:var(--panel);
+    border:1px solid var(--borde);
+    border-radius:8px;
+    padding:36px;
   }
   h1{
-    font-size:15px; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--azul); margin:0 0 24px;
+    font-size:16px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--amarillo); margin:0 0 26px; font-weight:800;
   }
   label{
-    display:block; font-size:11px; letter-spacing:.06em;
-    color:rgba(234,242,248,0.65); margin-bottom:6px; margin-top:16px;
-    text-transform:uppercase;
+    display:block; font-size:11px; letter-spacing:.08em;
+    color:rgba(234,242,248,0.6); margin-bottom:8px; margin-top:20px;
+    text-transform:uppercase; font-weight:700;
   }
   input, textarea{
-    width:100%; padding:10px 12px;
+    width:100%; padding:14px 16px;
     background:rgba(255,255,255,0.06);
-    border:1px solid rgba(0,119,182,0.35);
-    border-radius:2px;
+    border:1.5px solid rgba(255,216,19,0.2);
+    border-radius:6px;
     color:#eaf2f8;
     font-family:'JetBrains Mono', monospace;
-    font-size:13px;
+    font-size:14px;
   }
   textarea{ min-height:140px; resize:vertical; }
-  input:focus, textarea:focus{ outline:none; border-color:var(--azul); }
+  input:focus, textarea:focus{ outline:none; border-color:var(--amarillo); }
+  input[type=file]{ padding:12px; font-size:12px; }
   button{
-    margin-top:22px;
+    margin-top:28px;
     width:100%;
-    padding:12px;
-    background:var(--azul);
-    border:none; border-radius:2px;
-    color:#fff; font-weight:700;
+    padding:18px;
+    background:var(--amarillo);
+    border:none; border-radius:6px;
+    color:#0a1628; font-weight:800;
     font-family:'JetBrains Mono', monospace;
     letter-spacing:.08em; text-transform:uppercase;
-    font-size:12px;
+    font-size:14px;
     cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
   }
-  button:disabled{ opacity:.5; cursor:not-allowed; }
+  button:hover{ transform:translateY(-1px); box-shadow:0 8px 24px rgba(255,216,19,0.25); }
+  button:disabled{ opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
   button.secundario{
-    background:transparent; border:1px solid rgba(234,242,248,0.3);
-    margin-top:10px;
+    background:transparent; border:1.5px solid rgba(234,242,248,0.3);
+    color:#eaf2f8; margin-top:0;
+    width:auto; padding:12px 22px; font-size:12px;
   }
-  #msg{ margin-top:14px; font-size:12px; line-height:1.5; }
-  #msg.ok{ color:#7be0a0; }
-  #msg.error{ color:#ff8a8a; }
-  .fila-doble{ display:flex; gap:12px; }
+  #msg{ margin-top:16px; font-size:13px; line-height:1.5; }
+  #msg2{ margin-top:16px; font-size:13px; line-height:1.5; }
+  #msgRev{ margin-top:16px; font-size:13px; line-height:1.5; }
+  .ok{ color:#7be0a0; }
+  .error{ color:#ff8a8a; }
+  .fila-doble{ display:flex; gap:14px; }
   .fila-doble > div{ flex:1; }
-  .top-bar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
-  .lista{ margin-top:30px; }
+  .top-bar{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:24px;
+  }
+  .tabs{
+    display:flex; gap:10px; margin-bottom:28px;
+  }
+  .tab-btn{
+    flex:1; margin:0; padding:16px;
+    background:transparent;
+    border:1.5px solid rgba(255,216,19,0.25);
+    color:rgba(234,242,248,0.6);
+    font-weight:700; font-size:13px;
+  }
+  .tab-btn.activo{
+    background:var(--amarillo);
+    color:#0a1628;
+    border-color:var(--amarillo);
+  }
+  .tab-panel{ display:none; }
+  .tab-panel.activo{ display:block; }
+  .lista{ margin-top:36px; }
+  .lista label{ margin-top:0; }
   .item{
     display:flex; justify-content:space-between; align-items:center;
-    padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08);
-    font-size:12px;
+    padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08);
+    font-size:13px;
   }
-  .item span.num{ color:var(--azul); font-weight:700; margin-right:8px; }
+  .item span.num{ color:var(--amarillo); font-weight:800; margin-right:10px; }
   .item button{
-    width:auto; margin:0; padding:6px 10px; font-size:10px;
-    background:transparent; border:1px solid rgba(255,120,120,0.5); color:#ff8a8a;
+    width:auto; margin:0; padding:8px 14px; font-size:11px;
+    background:transparent; border:1.5px solid rgba(255,120,120,0.5); color:#ff8a8a;
   }
-  #panelLogin, #panelSubida{ display:none; }
+  #panelLogin, #panelPrincipal{ display:none; }
+  .actual-badge{
+    display:inline-block; background:rgba(255,216,19,0.15);
+    color:var(--amarillo); font-size:10px; font-weight:800;
+    letter-spacing:.08em; text-transform:uppercase;
+    padding:4px 10px; border-radius:20px; margin-bottom:16px;
+  }
 </style>
 </head>
 <body>
 
-<div class="card">
+<div class="wrap">
 
-  <div id="panelLogin">
-    <h1>La Balsa · Ingreso</h1>
-    <label for="loginEmail">Email</label>
-    <input type="email" id="loginEmail" autocomplete="username">
-    <label for="loginPass">Contraseña</label>
-    <input type="password" id="loginPass" autocomplete="current-password">
-    <button id="btnLogin">Ingresar</button>
-    <div id="msg"></div>
+  <div class="logo-top">
+    <img src="media/balsaA.svg" alt="La Balsa">
   </div>
 
-  <div id="panelSubida">
-    <div class="top-bar">
-      <h1 style="margin:0;">Subir programa</h1>
-      <button class="secundario" id="btnLogout">Salir</button>
+  <div class="card">
+
+    <div id="panelLogin">
+      <h1>La Balsa · Ingreso</h1>
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" autocomplete="username">
+      <label for="loginPass">Contraseña</label>
+      <input type="password" id="loginPass" autocomplete="current-password">
+      <button id="btnLogin">Ingresar</button>
+      <div id="msg"></div>
     </div>
 
-    <div class="fila-doble">
-      <div>
-        <label for="numero"># de programa</label>
-        <input type="number" id="numero" placeholder="66">
+    <div id="panelPrincipal">
+      <div class="top-bar">
+        <h1 style="margin:0;">Panel La Balsa</h1>
+        <button class="secundario" id="btnLogout">Salir</button>
       </div>
-      <div>
-        <label for="fecha">Fecha</label>
-        <input type="date" id="fecha">
+
+      <div class="tabs">
+        <button class="tab-btn activo" id="tabBtnRadio">Radio</button>
+        <button class="tab-btn" id="tabBtnRevista">Revista</button>
+        <button class="tab-btn" id="tabBtnTripulantes">Tripulantes</button>
       </div>
+
+      <div class="tab-panel activo" id="tabRadio">
+        <div class="fila-doble">
+          <div>
+            <label for="numero"># de programa</label>
+            <input type="number" id="numero" placeholder="66">
+          </div>
+          <div>
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha">
+          </div>
+        </div>
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" placeholder="En este programa..."></textarea>
+
+        <label for="audio">Archivo de audio (mp3)</label>
+        <input type="file" id="audio" accept="audio/*">
+
+        <button id="btnSubir">Publicar programa</button>
+        <div id="msg2"></div>
+
+        <div class="lista">
+          <label>Últimos programas publicados</label>
+          <div id="listaProgramas"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tabRevista">
+        <span class="actual-badge">Esto reemplaza la edición mostrada en la web</span>
+
+        <div class="fila-doble">
+          <div>
+            <label for="revNumero">N° de edición</label>
+            <input type="number" id="revNumero" placeholder="2">
+          </div>
+          <div>
+            <label for="revTemporada">Temporada</label>
+            <input type="text" id="revTemporada" placeholder="Invierno 2026">
+          </div>
+        </div>
+
+        <label for="revTexto">Texto de presentación</label>
+        <textarea id="revTexto" placeholder="El pasado... presentamos el número..."></textarea>
+
+        <label for="revPortada">Imagen de portada</label>
+        <input type="file" id="revPortada" accept="image/*">
+
+        <label for="revPdf">Archivo PDF de la revista</label>
+        <input type="file" id="revPdf" accept="application/pdf">
+
+        <button id="btnSubirRevista">Publicar edición</button>
+        <div id="msgRev"></div>
+
+        <div class="lista">
+          <label>Ediciones publicadas</label>
+          <div id="listaRevistas"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tabTripulantes">
+        <label for="tripNombre">Nombre</label>
+        <input type="text" id="tripNombre" placeholder="Nombre y apellido">
+
+        <label for="tripDescripcion">Descripción</label>
+        <textarea id="tripDescripcion" placeholder="Un párrafo sobre esta persona..."></textarea>
+
+        <label for="tripFoto">Foto</label>
+        <input type="file" id="tripFoto" accept="image/*">
+
+        <button id="btnSubirTripulante">Agregar tripulante</button>
+        <div id="msgTrip"></div>
+
+        <div class="lista">
+          <label>Tripulantes agregados</label>
+          <div id="listaTripulantes"></div>
+        </div>
+      </div>
+
     </div>
 
-    <label for="descripcion">Descripción</label>
-    <textarea id="descripcion" placeholder="En este programa..."></textarea>
-
-    <label for="audio">Archivo de audio (mp3)</label>
-    <input type="file" id="audio" accept="audio/*">
-
-    <button id="btnSubir">Publicar programa</button>
-    <div id="msg2"></div>
-
-    <div class="lista">
-      <label style="margin-top:0;">Últimos programas publicados</label>
-      <div id="listaProgramas"></div>
-    </div>
   </div>
-
 </div>
 
 <script>
@@ -139,9 +247,11 @@ const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const panelLogin = document.getElementById('panelLogin');
-const panelSubida = document.getElementById('panelSubida');
+const panelPrincipal = document.getElementById('panelPrincipal');
 const msg = document.getElementById('msg');
 const msg2 = document.getElementById('msg2');
+const msgRev = document.getElementById('msgRev');
+const msgTrip = document.getElementById('msgTrip');
 
 const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -149,17 +259,19 @@ const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
 async function checkSesion() {
   const { data } = await sb.auth.getSession();
   if (data.session) {
-    mostrarPanelSubida();
+    mostrarPanelPrincipal();
   } else {
     panelLogin.style.display = 'block';
-    panelSubida.style.display = 'none';
+    panelPrincipal.style.display = 'none';
   }
 }
 
-function mostrarPanelSubida() {
+function mostrarPanelPrincipal() {
   panelLogin.style.display = 'none';
-  panelSubida.style.display = 'block';
+  panelPrincipal.style.display = 'block';
   cargarLista();
+  cargarListaRevistas();
+  cargarListaTripulantes();
 }
 
 document.getElementById('btnLogin').addEventListener('click', async () => {
@@ -173,7 +285,7 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
     msg.className = 'error';
   } else {
     msg.textContent = '';
-    mostrarPanelSubida();
+    mostrarPanelPrincipal();
   }
 });
 
@@ -181,6 +293,24 @@ document.getElementById('btnLogout').addEventListener('click', async () => {
   await sb.auth.signOut();
   checkSesion();
 });
+
+const tabBtnRadio = document.getElementById('tabBtnRadio');
+const tabBtnRevista = document.getElementById('tabBtnRevista');
+const tabBtnTripulantes = document.getElementById('tabBtnTripulantes');
+const tabRadio = document.getElementById('tabRadio');
+const tabRevista = document.getElementById('tabRevista');
+const tabTripulantes = document.getElementById('tabTripulantes');
+
+function mostrarTab(activa) {
+  [tabBtnRadio, tabBtnRevista, tabBtnTripulantes].forEach(b => b.classList.remove('activo'));
+  [tabRadio, tabRevista, tabTripulantes].forEach(p => p.classList.remove('activo'));
+  activa.boton.classList.add('activo');
+  activa.panel.classList.add('activo');
+}
+
+tabBtnRadio.addEventListener('click', () => mostrarTab({ boton: tabBtnRadio, panel: tabRadio }));
+tabBtnRevista.addEventListener('click', () => mostrarTab({ boton: tabBtnRevista, panel: tabRevista }));
+tabBtnTripulantes.addEventListener('click', () => mostrarTab({ boton: tabBtnTripulantes, panel: tabTripulantes }));
 
 document.getElementById('btnSubir').addEventListener('click', async () => {
   const numero = document.getElementById('numero').value.trim();
@@ -280,6 +410,204 @@ async function borrarPrograma(id) {
     alert('No se pudo borrar: ' + error.message);
   } else {
     cargarLista();
+  }
+}
+
+document.getElementById('btnSubirRevista').addEventListener('click', async () => {
+  const numero = document.getElementById('revNumero').value.trim();
+  const temporada = document.getElementById('revTemporada').value.trim();
+  const texto = document.getElementById('revTexto').value.trim();
+  const portada = document.getElementById('revPortada').files[0];
+  const pdf = document.getElementById('revPdf').files[0];
+  const btn = document.getElementById('btnSubirRevista');
+
+  if (!numero || !temporada || !texto || !portada || !pdf) {
+    msgRev.textContent = 'Completá todos los campos, la portada y el PDF.';
+    msgRev.className = 'error';
+    return;
+  }
+
+  btn.disabled = true;
+  msgRev.textContent = 'Subiendo portada...';
+  msgRev.className = '';
+
+  try {
+    const sello = Date.now();
+    const extPortada = portada.name.split('.').pop();
+    const nombrePortada = `portada-${numero}-${sello}.${extPortada}`;
+
+    const { error: errPortada } = await sb.storage
+      .from('revistas')
+      .upload(nombrePortada, portada, { contentType: portada.type });
+    if (errPortada) throw errPortada;
+
+    const { data: urlPortada } = sb.storage.from('revistas').getPublicUrl(nombrePortada);
+
+    msgRev.textContent = 'Subiendo PDF...';
+    const nombrePdf = `revista-${numero}-${sello}.pdf`;
+
+    const { error: errPdf } = await sb.storage
+      .from('revistas')
+      .upload(nombrePdf, pdf, { contentType: 'application/pdf' });
+    if (errPdf) throw errPdf;
+
+    const { data: urlPdf } = sb.storage.from('revistas').getPublicUrl(nombrePdf);
+
+    const { error: errInsert } = await sb.from('revistas').insert({
+      numero: parseInt(numero, 10),
+      temporada,
+      texto,
+      portada_url: urlPortada.publicUrl,
+      pdf_url: urlPdf.publicUrl
+    });
+    if (errInsert) throw errInsert;
+
+    msgRev.textContent = '¡Edición publicada! Ya es la que se muestra en la web.';
+    msgRev.className = 'ok';
+    document.getElementById('revNumero').value = '';
+    document.getElementById('revTemporada').value = '';
+    document.getElementById('revTexto').value = '';
+    document.getElementById('revPortada').value = '';
+    document.getElementById('revPdf').value = '';
+    cargarListaRevistas();
+
+  } catch (e) {
+    console.error(e);
+    msgRev.textContent = 'Error al publicar: ' + (e.message || e);
+    msgRev.className = 'error';
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+async function cargarListaRevistas() {
+  const cont = document.getElementById('listaRevistas');
+  cont.innerHTML = 'Cargando...';
+  const { data, error } = await sb
+    .from('revistas')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(10);
+
+  if (error) {
+    cont.innerHTML = 'No se pudo cargar la lista.';
+    return;
+  }
+  if (!data.length) {
+    cont.innerHTML = '<p style="opacity:.6">Todavía no hay ediciones cargadas.</p>';
+    return;
+  }
+  cont.innerHTML = '';
+  data.forEach((r, i) => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    const etiqueta = i === 0 ? ' (actual en la web)' : '';
+    div.innerHTML = `<div><span class="num">N°${r.numero}</span>${r.temporada}${etiqueta}</div>`;
+    const btnBorrar = document.createElement('button');
+    btnBorrar.textContent = 'Borrar';
+    btnBorrar.addEventListener('click', () => borrarRevista(r.id));
+    div.appendChild(btnBorrar);
+    cont.appendChild(div);
+  });
+}
+
+async function borrarRevista(id) {
+  if (!confirm('¿Borrar esta edición? Esta acción no se puede deshacer.')) return;
+  const { error } = await sb.from('revistas').delete().eq('id', id);
+  if (error) {
+    alert('No se pudo borrar: ' + error.message);
+  } else {
+    cargarListaRevistas();
+  }
+}
+
+document.getElementById('btnSubirTripulante').addEventListener('click', async () => {
+  const nombre = document.getElementById('tripNombre').value.trim();
+  const descripcion = document.getElementById('tripDescripcion').value.trim();
+  const foto = document.getElementById('tripFoto').files[0];
+  const btn = document.getElementById('btnSubirTripulante');
+
+  if (!nombre || !descripcion || !foto) {
+    msgTrip.textContent = 'Completá el nombre, la descripción y elegí una foto.';
+    msgTrip.className = 'error';
+    return;
+  }
+
+  btn.disabled = true;
+  msgTrip.textContent = 'Subiendo foto...';
+  msgTrip.className = '';
+
+  try {
+    const ext = foto.name.split('.').pop();
+    const nombreArchivo = `tripulante-${Date.now()}.${ext}`;
+
+    const { error: errFoto } = await sb.storage
+      .from('tripulantes')
+      .upload(nombreArchivo, foto, { contentType: foto.type });
+    if (errFoto) throw errFoto;
+
+    const { data: urlFoto } = sb.storage.from('tripulantes').getPublicUrl(nombreArchivo);
+
+    const { error: errInsert } = await sb.from('tripulantes').insert({
+      nombre,
+      descripcion,
+      foto_url: urlFoto.publicUrl
+    });
+    if (errInsert) throw errInsert;
+
+    msgTrip.textContent = '¡Tripulante agregado! Ya aparece en la web.';
+    msgTrip.className = 'ok';
+    document.getElementById('tripNombre').value = '';
+    document.getElementById('tripDescripcion').value = '';
+    document.getElementById('tripFoto').value = '';
+    cargarListaTripulantes();
+
+  } catch (e) {
+    console.error(e);
+    msgTrip.textContent = 'Error al publicar: ' + (e.message || e);
+    msgTrip.className = 'error';
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+async function cargarListaTripulantes() {
+  const cont = document.getElementById('listaTripulantes');
+  cont.innerHTML = 'Cargando...';
+  const { data, error } = await sb
+    .from('tripulantes')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(20);
+
+  if (error) {
+    cont.innerHTML = 'No se pudo cargar la lista.';
+    return;
+  }
+  if (!data.length) {
+    cont.innerHTML = '<p style="opacity:.6">Todavía no hay tripulantes agregados.</p>';
+    return;
+  }
+  cont.innerHTML = '';
+  data.forEach(t => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `<div>${t.nombre}</div>`;
+    const btnBorrar = document.createElement('button');
+    btnBorrar.textContent = 'Borrar';
+    btnBorrar.addEventListener('click', () => borrarTripulante(t.id));
+    div.appendChild(btnBorrar);
+    cont.appendChild(div);
+  });
+}
+
+async function borrarTripulante(id) {
+  if (!confirm('¿Borrar este tripulante? Esta acción no se puede deshacer.')) return;
+  const { error } = await sb.from('tripulantes').delete().eq('id', id);
+  if (error) {
+    alert('No se pudo borrar: ' + error.message);
+  } else {
+    cargarListaTripulantes();
   }
 }
 
