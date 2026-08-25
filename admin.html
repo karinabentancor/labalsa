@@ -109,14 +109,20 @@
     height:32px;
     margin:0;
     padding:6px;
-    background:rgba(255,216,19,0.08);
-    border:1px solid rgba(255,216,19,0.25);
+    background:var(--amarillo);
+    border:1.5px solid var(--amarillo);
     border-radius:5px;
-    color:#ffe873;
+    color:#0077b6;
     display:flex; align-items:center; justify-content:center;
     box-shadow:none;
   }
-  .btn-ojo:hover{ color:#0a1628; background:var(--amarillo); border-color:var(--amarillo); transform:translateY(calc(-50% + 4px)); box-shadow:none; }
+  .btn-ojo:hover{
+    background:#ffe873;
+    border-color:#ffe873;
+    color:#005a8a;
+    transform:translateY(calc(-50% + 4px));
+    box-shadow:none;
+  }
   .btn-ojo svg{ width:20px; height:20px; stroke-width:2.2; }
 
   #msg{ margin-top:16px; font-size:13px; line-height:1.5; }
@@ -218,6 +224,7 @@
       order:1;
       flex:0 1 440px;
     }
+  }
 </style>
 </head>
 <body>
@@ -241,8 +248,8 @@
         <input type="password" id="loginPass" autocomplete="current-password">
         <button type="button" class="btn-ojo" id="btnOjo" aria-label="Mostrar contraseña">
           <svg id="iconoOjo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a19.7 19.7 0 0 1 4.22-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a19.7 19.7 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
           </svg>
         </button>
       </div>
@@ -439,10 +446,10 @@ const OJO_ABIERTO = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></pa
 const OJO_CERRADO = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a19.7 19.7 0 0 1 4.22-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a19.7 19.7 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
 
 btnOjo.addEventListener('click', () => {
-  const oculto = loginPass.type === 'password';
-  loginPass.type = oculto ? 'text' : 'password';
-  iconoOjo.innerHTML = oculto ? OJO_CERRADO : OJO_ABIERTO;
-  btnOjo.setAttribute('aria-label', oculto ? 'Ocultar contraseña' : 'Mostrar contraseña');
+  const estabaOculta = loginPass.type === 'password';
+  loginPass.type = estabaOculta ? 'text' : 'password';
+  iconoOjo.innerHTML = estabaOculta ? OJO_ABIERTO : OJO_CERRADO;
+  btnOjo.setAttribute('aria-label', estabaOculta ? 'Ocultar contraseña' : 'Mostrar contraseña');
 });
 
 document.getElementById('btnLogin').addEventListener('click', async () => {
