@@ -17,6 +17,7 @@
     --borde:rgba(255,216,19,0.25);
   }
   *{box-sizing:border-box;}
+  html, body{ overflow-x:hidden; }
   body{
     margin:0; min-height:100vh;
     font-family:'JetBrains Mono', monospace;
@@ -25,9 +26,9 @@
     display:flex; align-items:center; justify-content:center;
     padding:24px;
   }
-  .wrap{ width:100%; max-width:640px; }
+  .wrap{ width:100%; max-width:640px; position:relative; }
   .logo-top{ display:flex; justify-content:center; margin-bottom:28px; }
-  .logo-top img{ height:80px; filter:drop-shadow(0 4px 16px rgba(255,216,19,0.35)); }
+  .logo-top img{ height:130px; filter:drop-shadow(0 4px 16px rgba(255,216,19,0.35)); }
   .card{
     background:var(--panel);
     border:1px solid var(--borde);
@@ -43,7 +44,7 @@
     color:rgba(234,242,248,0.6); margin-bottom:8px; margin-top:20px;
     text-transform:uppercase; font-weight:700;
   }
-  input, textarea{
+  input, textarea, select{
     width:100%; padding:14px 16px;
     background:rgba(255,255,255,0.06);
     border:1.5px solid rgba(255,216,19,0.2);
@@ -53,7 +54,7 @@
     font-size:14px;
   }
   textarea{ min-height:140px; resize:vertical; }
-  input:focus, textarea:focus{ outline:none; border-color:var(--amarillo); }
+  input:focus, textarea:focus, select:focus{ outline:none; border-color:var(--amarillo); }
   input[type=file]{ padding:12px; font-size:12px; }
   button{
     margin-top:28px;
@@ -70,14 +71,59 @@
   }
   button:hover{ transform:translateY(-1px); box-shadow:0 8px 24px rgba(255,216,19,0.25); }
   button:disabled{ opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
-  button.secundario{
-    background:transparent; border:1.5px solid rgba(234,242,248,0.3);
-    color:#eaf2f8; margin-top:0;
-    width:auto; padding:12px 22px; font-size:12px;
+
+  /* Botón salir: vive afuera de la tarjeta, arriba a la derecha.
+     Mobile-first: apilado y alineado a la derecha, sin desborde.
+     En pantallas grandes (ver media query más abajo) flota afuera de la tarjeta. */
+  .btn-salir{
+    display:none;
+    width:fit-content;
+    max-width:100%;
+    margin:0 0 16px auto;
+    padding:10px 16px;
+    background:rgba(255,120,120,0.1);
+    border:1.5px solid rgba(255,120,120,0.5);
+    color:#ff8a8a;
+    font-size:11px;
+    letter-spacing:.06em;
+    line-height:1.4;
+    text-align:right;
+    white-space:normal;
+    box-shadow:none;
   }
+  .btn-salir:hover{
+    background:rgba(255,120,120,0.18);
+    transform:none;
+    box-shadow:none;
+  }
+
+  /* Campo de contraseña con ojito */
+  .campo-pass{ position:relative; }
+  .campo-pass input{ padding-right:48px; }
+  .btn-ojo{
+    position:absolute;
+    right:6px;
+    top:50%;
+    transform:translateY(calc(-50% + 4px));
+    width:36px;
+    height:32px;
+    margin:0;
+    padding:6px;
+    background:rgba(255,216,19,0.08);
+    border:1px solid rgba(255,216,19,0.25);
+    border-radius:5px;
+    color:#ffe873;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:none;
+  }
+  .btn-ojo:hover{ color:#0a1628; background:var(--amarillo); border-color:var(--amarillo); transform:translateY(calc(-50% + 4px)); box-shadow:none; }
+  .btn-ojo svg{ width:20px; height:20px; stroke-width:2.2; }
+
   #msg{ margin-top:16px; font-size:13px; line-height:1.5; }
   #msg2{ margin-top:16px; font-size:13px; line-height:1.5; }
   #msgRev{ margin-top:16px; font-size:13px; line-height:1.5; }
+  #msgTrip{ margin-top:16px; font-size:13px; line-height:1.5; }
+  #msgCruce{ margin-top:16px; font-size:13px; line-height:1.5; }
   .ok{ color:#7be0a0; }
   .error{ color:#ff8a8a; }
   .fila-doble{ display:flex; gap:14px; }
@@ -87,14 +133,20 @@
     margin-bottom:24px;
   }
   .tabs{
-    display:flex; gap:10px; margin-bottom:28px;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:10px; margin-bottom:28px;
   }
   .tab-btn{
-    flex:1; margin:0; padding:16px;
+    margin:0; padding:14px 6px;
+    min-width:0;
     background:transparent;
     border:1.5px solid rgba(255,216,19,0.25);
     color:rgba(234,242,248,0.6);
-    font-weight:700; font-size:13px;
+    font-weight:700; font-size:12px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
   .tab-btn.activo{
     background:var(--amarillo);
@@ -122,11 +174,57 @@
     letter-spacing:.08em; text-transform:uppercase;
     padding:4px 10px; border-radius:20px; margin-bottom:16px;
   }
+
+  /* Pantallas grandes: contenedor más ancho y elementos más cómodos */
+  @media (min-width: 900px){
+    .wrap{ max-width:980px; }
+    .logo-top img{ height:170px; }
+    .card{ padding:56px; }
+    h1{ font-size:19px; }
+    label{ font-size:12px; }
+    input, textarea, select{ padding:16px 18px; font-size:15px; }
+    button{ padding:20px; font-size:15px; }
+    .tabs{ grid-template-columns:repeat(4, minmax(0, 1fr)); }
+    .tab-btn{ padding:20px; font-size:14px; }
+    .btn-salir{
+      margin:0 0 20px auto;
+      padding:14px 24px;
+      font-size:13px;
+    }
+    .item{ font-size:14px; padding:16px 0; }
+  }
+
+  /* Pantalla de login en pantallas grandes: mitad izquierda formulario, mitad derecha logo grande */
+  @media (min-width: 900px){
+    body.vista-login .wrap{
+      max-width:1180px;
+      display:flex;
+      align-items:center;
+      gap:70px;
+    }
+    body.vista-login .btn-salir{ display:none !important; }
+    body.vista-login .logo-top{
+      order:2;
+      flex:1 1 0;
+      margin-bottom:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    body.vista-login .logo-top img{
+      height:320px;
+    }
+    body.vista-login .card{
+      order:1;
+      flex:0 1 440px;
+    }
 </style>
 </head>
 <body>
 
 <div class="wrap">
+
+  <button class="btn-salir" id="btnLogout">✕ Salir</button>
 
   <div class="logo-top">
     <img src="media/balsaA.svg" alt="La Balsa">
@@ -135,31 +233,39 @@
   <div class="card">
 
     <div id="panelLogin">
-      <h1>La Balsa · Ingreso</h1>
+      <h1>Panel administrador</h1>
       <label for="loginEmail">Email</label>
       <input type="email" id="loginEmail" autocomplete="username">
       <label for="loginPass">Contraseña</label>
-      <input type="password" id="loginPass" autocomplete="current-password">
+      <div class="campo-pass">
+        <input type="password" id="loginPass" autocomplete="current-password">
+        <button type="button" class="btn-ojo" id="btnOjo" aria-label="Mostrar contraseña">
+          <svg id="iconoOjo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
       <button id="btnLogin">Ingresar</button>
       <div id="msg"></div>
     </div>
 
     <div id="panelPrincipal">
       <div class="top-bar">
-        <h1 style="margin:0;">Panel La Balsa</h1>
-        <button class="secundario" id="btnLogout">Salir</button>
+        <h1 style="margin:0;">Panel administrador</h1>
       </div>
 
       <div class="tabs">
         <button class="tab-btn activo" id="tabBtnRadio">Radio</button>
         <button class="tab-btn" id="tabBtnRevista">Revista</button>
+        <button class="tab-btn" id="tabBtnCruces">Cruces</button>
         <button class="tab-btn" id="tabBtnTripulantes">Tripulantes</button>
       </div>
 
       <div class="tab-panel activo" id="tabRadio">
         <div class="fila-doble">
           <div>
-            <label for="numero"># de programa</label>
+            <label for="numero">programa</label>
             <input type="number" id="numero" placeholder="66">
           </div>
           <div>
@@ -215,6 +321,47 @@
         </div>
       </div>
 
+      <div class="tab-panel" id="tabCruces">
+        <label for="cruceTitulo">Título</label>
+        <input type="text" id="cruceTitulo" placeholder="Nombre del cruce">
+
+        <label for="cruceDescripcion">Descripción</label>
+        <textarea id="cruceDescripcion" placeholder="Texto de presentación..."></textarea>
+
+        <label for="cruceImagen">Imagen de portada</label>
+        <input type="file" id="cruceImagen" accept="image/*">
+
+        <label for="cruceTipo">Tipo de contenido</label>
+        <select id="cruceTipo">
+          <option value="enlace">Enlace externo</option>
+          <option value="audio">Archivo de audio</option>
+          <option value="imagen">Imagen adicional</option>
+        </select>
+
+        <div id="cruceCampoEnlace">
+          <label for="cruceEnlace">URL del enlace</label>
+          <input type="text" id="cruceEnlace" placeholder="https://...">
+        </div>
+
+        <div id="cruceCampoAudio" style="display:none">
+          <label for="cruceAudio">Archivo de audio</label>
+          <input type="file" id="cruceAudio" accept="audio/*">
+        </div>
+
+        <div id="cruceCampoImagen" style="display:none">
+          <label for="cruceImagenExtra">Imagen adicional</label>
+          <input type="file" id="cruceImagenExtra" accept="image/*">
+        </div>
+
+        <button id="btnSubirCruce">Publicar cruce</button>
+        <div id="msgCruce"></div>
+
+        <div class="lista">
+          <label>Cruces publicados</label>
+          <div id="listaCruces"></div>
+        </div>
+      </div>
+
       <div class="tab-panel" id="tabTripulantes">
         <label for="tripNombre">Nombre</label>
         <input type="text" id="tripNombre" placeholder="Nombre y apellido">
@@ -248,10 +395,12 @@ const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const panelLogin = document.getElementById('panelLogin');
 const panelPrincipal = document.getElementById('panelPrincipal');
+const btnLogout = document.getElementById('btnLogout');
 const msg = document.getElementById('msg');
 const msg2 = document.getElementById('msg2');
 const msgRev = document.getElementById('msgRev');
 const msgTrip = document.getElementById('msgTrip');
+const msgCruce = document.getElementById('msgCruce');
 
 const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -263,20 +412,42 @@ async function checkSesion() {
   } else {
     panelLogin.style.display = 'block';
     panelPrincipal.style.display = 'none';
+    btnLogout.style.display = 'none';
+    document.body.classList.add('vista-login');
+    document.body.classList.remove('vista-panel');
   }
 }
 
 function mostrarPanelPrincipal() {
   panelLogin.style.display = 'none';
   panelPrincipal.style.display = 'block';
+  btnLogout.style.display = 'block';
+  document.body.classList.add('vista-panel');
+  document.body.classList.remove('vista-login');
   cargarLista();
   cargarListaRevistas();
   cargarListaTripulantes();
+  cargarListaCruces();
 }
+
+// Ojito para mostrar/ocultar la contraseña
+const loginPass = document.getElementById('loginPass');
+const btnOjo = document.getElementById('btnOjo');
+const iconoOjo = document.getElementById('iconoOjo');
+
+const OJO_ABIERTO = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path><circle cx="12" cy="12" r="3"></circle>';
+const OJO_CERRADO = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a19.7 19.7 0 0 1 4.22-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a19.7 19.7 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+
+btnOjo.addEventListener('click', () => {
+  const oculto = loginPass.type === 'password';
+  loginPass.type = oculto ? 'text' : 'password';
+  iconoOjo.innerHTML = oculto ? OJO_CERRADO : OJO_ABIERTO;
+  btnOjo.setAttribute('aria-label', oculto ? 'Ocultar contraseña' : 'Mostrar contraseña');
+});
 
 document.getElementById('btnLogin').addEventListener('click', async () => {
   const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPass').value;
+  const password = loginPass.value;
   msg.textContent = 'Ingresando...';
   msg.className = '';
   const { error } = await sb.auth.signInWithPassword({ email, password });
@@ -289,27 +460,35 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
   }
 });
 
-document.getElementById('btnLogout').addEventListener('click', async () => {
-  await sb.auth.signOut();
-  checkSesion();
+btnLogout.addEventListener('click', async () => {
+  try {
+    await sb.auth.signOut();
+  } catch (e) {
+    console.error('Error al cerrar sesión:', e);
+  } finally {
+    window.location.href = 'https://www.labalsa.com.uy';
+  }
 });
 
 const tabBtnRadio = document.getElementById('tabBtnRadio');
 const tabBtnRevista = document.getElementById('tabBtnRevista');
+const tabBtnCruces = document.getElementById('tabBtnCruces');
 const tabBtnTripulantes = document.getElementById('tabBtnTripulantes');
 const tabRadio = document.getElementById('tabRadio');
 const tabRevista = document.getElementById('tabRevista');
+const tabCruces = document.getElementById('tabCruces');
 const tabTripulantes = document.getElementById('tabTripulantes');
 
 function mostrarTab(activa) {
-  [tabBtnRadio, tabBtnRevista, tabBtnTripulantes].forEach(b => b.classList.remove('activo'));
-  [tabRadio, tabRevista, tabTripulantes].forEach(p => p.classList.remove('activo'));
+  [tabBtnRadio, tabBtnRevista, tabBtnCruces, tabBtnTripulantes].forEach(b => b.classList.remove('activo'));
+  [tabRadio, tabRevista, tabCruces, tabTripulantes].forEach(p => p.classList.remove('activo'));
   activa.boton.classList.add('activo');
   activa.panel.classList.add('activo');
 }
 
 tabBtnRadio.addEventListener('click', () => mostrarTab({ boton: tabBtnRadio, panel: tabRadio }));
 tabBtnRevista.addEventListener('click', () => mostrarTab({ boton: tabBtnRevista, panel: tabRevista }));
+tabBtnCruces.addEventListener('click', () => mostrarTab({ boton: tabBtnCruces, panel: tabCruces }));
 tabBtnTripulantes.addEventListener('click', () => mostrarTab({ boton: tabBtnTripulantes, panel: tabTripulantes }));
 
 document.getElementById('btnSubir').addEventListener('click', async () => {
@@ -518,6 +697,158 @@ async function borrarRevista(id) {
     alert('No se pudo borrar: ' + error.message);
   } else {
     cargarListaRevistas();
+  }
+}
+
+const cruceTipo = document.getElementById('cruceTipo');
+const cruceCampoEnlace = document.getElementById('cruceCampoEnlace');
+const cruceCampoAudio = document.getElementById('cruceCampoAudio');
+const cruceCampoImagen = document.getElementById('cruceCampoImagen');
+
+cruceTipo.addEventListener('change', () => {
+  cruceCampoEnlace.style.display = cruceTipo.value === 'enlace' ? 'block' : 'none';
+  cruceCampoAudio.style.display = cruceTipo.value === 'audio' ? 'block' : 'none';
+  cruceCampoImagen.style.display = cruceTipo.value === 'imagen' ? 'block' : 'none';
+});
+
+document.getElementById('btnSubirCruce').addEventListener('click', async () => {
+  const titulo = document.getElementById('cruceTitulo').value.trim();
+  const descripcion = document.getElementById('cruceDescripcion').value.trim();
+  const imagen = document.getElementById('cruceImagen').files[0];
+  const tipo = cruceTipo.value;
+  const btn = document.getElementById('btnSubirCruce');
+
+  const enlaceVal = document.getElementById('cruceEnlace').value.trim();
+  const audioFile = document.getElementById('cruceAudio').files[0];
+  const imagenExtraFile = document.getElementById('cruceImagenExtra').files[0];
+
+  if (!titulo || !descripcion || !imagen) {
+    msgCruce.textContent = 'Completá título, descripción e imagen de portada.';
+    msgCruce.className = 'error';
+    return;
+  }
+  if (tipo === 'enlace' && !enlaceVal) {
+    msgCruce.textContent = 'Ingresá la URL del enlace.';
+    msgCruce.className = 'error';
+    return;
+  }
+  if (tipo === 'audio' && !audioFile) {
+    msgCruce.textContent = 'Elegí un archivo de audio.';
+    msgCruce.className = 'error';
+    return;
+  }
+  if (tipo === 'imagen' && !imagenExtraFile) {
+    msgCruce.textContent = 'Elegí la imagen adicional.';
+    msgCruce.className = 'error';
+    return;
+  }
+
+  btn.disabled = true;
+  msgCruce.textContent = 'Subiendo portada...';
+  msgCruce.className = '';
+
+  try {
+    const sello = Date.now();
+    const extImagen = imagen.name.split('.').pop();
+    const nombreImagen = `portada-${sello}.${extImagen}`;
+
+    const { error: errImagen } = await sb.storage
+      .from('cruces')
+      .upload(nombreImagen, imagen, { contentType: imagen.type });
+    if (errImagen) throw errImagen;
+
+    const { data: urlImagen } = sb.storage.from('cruces').getPublicUrl(nombreImagen);
+
+    let contenidoUrl = '';
+
+    if (tipo === 'enlace') {
+      contenidoUrl = enlaceVal;
+    } else if (tipo === 'audio') {
+      msgCruce.textContent = 'Subiendo audio...';
+      const extAudio = audioFile.name.split('.').pop();
+      const nombreAudio = `audio-${sello}.${extAudio}`;
+      const { error: errAudio } = await sb.storage
+        .from('cruces')
+        .upload(nombreAudio, audioFile, { contentType: audioFile.type || 'audio/mpeg' });
+      if (errAudio) throw errAudio;
+      const { data: urlAudio } = sb.storage.from('cruces').getPublicUrl(nombreAudio);
+      contenidoUrl = urlAudio.publicUrl;
+    } else if (tipo === 'imagen') {
+      msgCruce.textContent = 'Subiendo imagen adicional...';
+      const extImgExtra = imagenExtraFile.name.split('.').pop();
+      const nombreImgExtra = `extra-${sello}.${extImgExtra}`;
+      const { error: errImgExtra } = await sb.storage
+        .from('cruces')
+        .upload(nombreImgExtra, imagenExtraFile, { contentType: imagenExtraFile.type });
+      if (errImgExtra) throw errImgExtra;
+      const { data: urlImgExtra } = sb.storage.from('cruces').getPublicUrl(nombreImgExtra);
+      contenidoUrl = urlImgExtra.publicUrl;
+    }
+
+    const { error: errInsert } = await sb.from('cruces').insert({
+      titulo,
+      descripcion,
+      imagen_url: urlImagen.publicUrl,
+      tipo,
+      contenido_url: contenidoUrl
+    });
+    if (errInsert) throw errInsert;
+
+    msgCruce.textContent = '¡Cruce publicado!';
+    msgCruce.className = 'ok';
+    document.getElementById('cruceTitulo').value = '';
+    document.getElementById('cruceDescripcion').value = '';
+    document.getElementById('cruceImagen').value = '';
+    document.getElementById('cruceEnlace').value = '';
+    document.getElementById('cruceAudio').value = '';
+    document.getElementById('cruceImagenExtra').value = '';
+    cargarListaCruces();
+
+  } catch (e) {
+    console.error(e);
+    msgCruce.textContent = 'Error al publicar: ' + (e.message || e);
+    msgCruce.className = 'error';
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+async function cargarListaCruces() {
+  const cont = document.getElementById('listaCruces');
+  cont.innerHTML = 'Cargando...';
+  const { data, error } = await sb
+    .from('cruces')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    cont.innerHTML = 'No se pudo cargar la lista.';
+    return;
+  }
+  if (!data.length) {
+    cont.innerHTML = '<p style="opacity:.6">Todavía no hay cruces cargados.</p>';
+    return;
+  }
+  cont.innerHTML = '';
+  data.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `<div>${c.titulo} <span style="opacity:.5">(${c.tipo})</span></div>`;
+    const btnBorrar = document.createElement('button');
+    btnBorrar.textContent = 'Borrar';
+    btnBorrar.addEventListener('click', () => borrarCruce(c.id));
+    div.appendChild(btnBorrar);
+    cont.appendChild(div);
+  });
+}
+
+async function borrarCruce(id) {
+  if (!confirm('¿Borrar este cruce? Esta acción no se puede deshacer.')) return;
+  const { error } = await sb.from('cruces').delete().eq('id', id);
+  if (error) {
+    alert('No se pudo borrar: ' + error.message);
+  } else {
+    cargarListaCruces();
   }
 }
 
