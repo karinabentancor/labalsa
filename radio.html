@@ -1235,150 +1235,54 @@ Nacho nos trae a Gramci y una de sus frases: todos somos filósofos. Como una pr
 </div>
     <script src="script.js" defer></script>
 
-    <script>
-        const STREAM_URL = 'https://stream.zeno.fm/nfmmxqpp1v8uv';
+   <script>
+    const STREAM_URL = 'https://stream.zeno.fm/nfmmxqpp1v8uv';
 
-        const audioEl   = document.getElementById('radioAudio');
-        const dot       = document.getElementById('playerDot');
-        const estado    = document.getElementById('playerEstado');
-        const iconPlay  = document.getElementById('iconoPlay');
-        const iconPausa = document.getElementById('iconoPausa');
-        let playing = false;
+    const audioEl   = document.getElementById('radioAudio');
+    const dot       = document.getElementById('playerDot');
+    const estado    = document.getElementById('playerEstado');
+    const iconPlay  = document.getElementById('iconoPlay');
+    const iconPausa = document.getElementById('iconoPausa');
+    let playing = false;
 
-        function toggleRadio() {
-            if (!playing) {
-                document.querySelectorAll('.ep-audio-wrap .ep-audio').forEach(function (ep) { ep.pause(); });
-                audioEl.src = STREAM_URL;
-                audioEl.load();
-                audioEl.volume = parseFloat(document.getElementById('volumen').value);
-                dot.classList.add('vivo');
-                estado.textContent  = 'Conectando...';
-                iconPlay.style.display  = 'none';
-                iconPausa.style.display = 'block';
-                playing = true;
-                audioEl.play().catch(function() { resetPlayer('Sin señal'); });
-            } else {
-                audioEl.pause();
-                audioEl.src = '';
-                resetPlayer('En vivo');
-            }
+    function toggleRadio() {
+        if (!playing) {
+            document.querySelectorAll('.ep-audio-wrap .ep-audio').forEach(function (ep) { ep.pause(); });
+            audioEl.src = STREAM_URL;
+            audioEl.load();
+            audioEl.volume = parseFloat(document.getElementById('volumen').value);
+            dot.classList.add('vivo');
+            estado.textContent  = 'Conectando...';
+            iconPlay.style.display  = 'none';
+            iconPausa.style.display = 'block';
+            playing = true;
+            audioEl.play().catch(function() { resetPlayer('Sin señal'); });
+        } else {
+            audioEl.pause();
+            audioEl.src = '';
+            resetPlayer('En vivo');
         }
+    }
 
-        function resetPlayer(msg) {
-            playing = false;
-            dot.classList.remove('vivo');
-            estado.textContent      = msg;
-            iconPlay.style.display  = 'block';
-            iconPausa.style.display = 'none';
-        }
+    function resetPlayer(msg) {
+        playing = false;
+        dot.classList.remove('vivo');
+        estado.textContent      = msg;
+        iconPlay.style.display  = 'block';
+        iconPausa.style.display = 'none';
+    }
 
-        function cambiarVolumen(val) { audioEl.volume = parseFloat(val); }
+    function cambiarVolumen(val) { audioEl.volume = parseFloat(val); }
 
-        audioEl.addEventListener('playing', function() {
-            estado.textContent = 'En vivo · El Camino FM';
-        });
-        audioEl.addEventListener('error', function() {
-            if (playing) resetPlayer('Sin señal — radio fuera del aire');
-        });
-        audioEl.addEventListener('stalled', function() {
-            if (playing) estado.textContent = 'Reconectando...';
-        });
-        document.querySelectorAll('.ep-audio-wrap .ep-audio').forEach(function (audioEp) {
-            const wrap = audioEp.closest('.ep-audio-wrap');
-            if (!wrap) return;
-
-            const srcEp = audioEp.getAttribute('src');
-            audioEp.removeAttribute('controls');
-            audioEp.preload = 'metadata';
-
-            const player = document.createElement('div');
-            player.className = 'ep-player';
-            player.innerHTML =
-                '<button class="ep-play-btn" type="button" aria-label="Reproducir">' +
-                    '<svg class="ep-icono-play" width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-                        '<polygon points="4,2 14,8 4,14" fill="#0077b6"/>' +
-                    '</svg>' +
-                    '<svg class="ep-icono-pausa" width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">' +
-                        '<rect x="3" y="2" width="4" height="12" rx="1" fill="#0077b6"/>' +
-                        '<rect x="9" y="2" width="4" height="12" rx="1" fill="#0077b6"/>' +
-                    '</svg>' +
-                '</button>' +
-                '<div class="ep-progress-wrap">' +
-                    '<input type="range" class="ep-progress" min="0" max="100" value="0" step="0.1" aria-label="Progreso de reproducción">' +
-                    '<div class="ep-time"><span class="ep-time-actual">0:00</span><span class="ep-time-total">--:--</span></div>' +
-                '</div>';
-
-            wrap.insertBefore(player, audioEp);
-            audioEp.style.display = 'none';
-
-            const btnEp       = player.querySelector('.ep-play-btn');
-            const iconEpPlay  = player.querySelector('.ep-icono-play');
-            const iconEpPausa = player.querySelector('.ep-icono-pausa');
-            const progressEp  = player.querySelector('.ep-progress');
-            const tActual     = player.querySelector('.ep-time-actual');
-            const tTotal      = player.querySelector('.ep-time-total');
-            let arrastrandoEp = false;
-
-            function formatoTiempo(seg) {
-                if (!isFinite(seg) || isNaN(seg)) return '--:--';
-                const m = Math.floor(seg / 60);
-                const s = Math.floor(seg % 60).toString().padStart(2, '0');
-                return m + ':' + s;
-            }
-
-            btnEp.addEventListener('click', function () {
-                if (audioEp.paused) {
-                    if (!audioEp.src) audioEp.src = srcEp;
-                    audioEp.play();
-                } else {
-                    audioEp.pause();
-                }
-            });
-
-            audioEp.addEventListener('play', function () {
-                iconEpPlay.style.display  = 'none';
-                iconEpPausa.style.display = 'block';
-                btnEp.setAttribute('aria-label', 'Pausar');
-                if (playing) {
-                    audioEl.pause();
-                    audioEl.src = '';
-                    resetPlayer('En vivo');
-                }
-            });
-
-            audioEp.addEventListener('pause', function () {
-                iconEpPlay.style.display  = 'block';
-                iconEpPausa.style.display = 'none';
-                btnEp.setAttribute('aria-label', 'Reproducir');
-            });
-
-            audioEp.addEventListener('loadedmetadata', function () {
-                tTotal.textContent = formatoTiempo(audioEp.duration);
-                progressEp.max = audioEp.duration || 100;
-            });
-
-            audioEp.addEventListener('timeupdate', function () {
-                if (!arrastrandoEp) progressEp.value = audioEp.currentTime;
-                tActual.textContent = formatoTiempo(audioEp.currentTime);
-            });
-
-            audioEp.addEventListener('ended', function () {
-                progressEp.value = 0;
-                tActual.textContent = '0:00';
-            });
-
-            progressEp.addEventListener('input', function () {
-                arrastrandoEp = true;
-                tActual.textContent = formatoTiempo(parseFloat(progressEp.value));
-            });
-
-            progressEp.addEventListener('change', function () {
-                if (!audioEp.src) audioEp.src = srcEp;
-                audioEp.currentTime = parseFloat(progressEp.value);
-                arrastrandoEp = false;
-            });
-        });
-
-    </script>
+    audioEl.addEventListener('playing', function() {
+        estado.textContent = 'En vivo · El Camino FM';
+    });
+    audioEl.addEventListener('error', function() {
+        if (playing) resetPlayer('Sin señal — radio fuera del aire');
+    });
+    audioEl.addEventListener('stalled', function() {
+        if (playing) estado.textContent = 'Reconectando...';
+    });
+</script>
 </body>
 </html>
