@@ -409,11 +409,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const sbRevista = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        function escapeHtmlRevista(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
         sbRevista
             .from('revistas')
             .select('*')
             .order('created_at', { ascending: false })
-            .limit(1)
             .then(function (respuesta) {
                 const data = respuesta.data;
                 const error = respuesta.error;
@@ -438,6 +443,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const textoEl = document.getElementById('revista-texto');
                 if (textoEl) textoEl.textContent = r.texto;
+
+                const anteriores = data.slice(1);
+                const seccionAnteriores = document.getElementById('edicionesAnterioresSeccion');
+                const gridAnteriores = document.getElementById('edicionesAnterioresGrid');
+
+                if (anteriores.length && seccionAnteriores && gridAnteriores) {
+                    anteriores.forEach(edicion => {
+                        const card = document.createElement('a');
+                        card.className = 'edicion-anterior-card';
+                        card.href = edicion.pdf_url;
+                        card.target = '_blank';
+                        card.rel = 'noopener';
+                        card.innerHTML =
+                            '<div class="edicion-anterior-portada-wrap">' +
+                                '<img src="' + edicion.portada_url + '" alt="Revista La Balsa N°' + edicion.numero + '">' +
+                            '</div>' +
+                            '<div class="edicion-anterior-info">' +
+                                '<span class="edicion-anterior-numero">N°' + String(edicion.numero).padStart(2, '0') + '</span>' +
+                                '<span class="edicion-anterior-temporada">' + escapeHtmlRevista(edicion.temporada) + '</span>' +
+                            '</div>';
+                        gridAnteriores.appendChild(card);
+                    });
+                    seccionAnteriores.style.display = 'block';
+                }
             });
     }
 
