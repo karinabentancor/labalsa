@@ -39,6 +39,7 @@
     font-size:16px; letter-spacing:.12em; text-transform:uppercase;
     color:var(--amarillo); margin:0 0 26px; font-weight:800;
   }
+  #panelLogin h1{ text-align:center; }
   label{
     display:block; font-size:11px; letter-spacing:.08em;
     color:rgba(234,242,248,0.6); margin-bottom:8px; margin-top:20px;
@@ -53,9 +54,36 @@
     font-family:'JetBrains Mono', monospace;
     font-size:14px;
   }
+  select{ color-scheme:dark; cursor:pointer; }
+  select option{ background:#0f2038; color:#eaf2f8; }
   textarea{ min-height:140px; resize:vertical; }
   input:focus, textarea:focus, select:focus{ outline:none; border-color:var(--amarillo); }
-  input[type=file]{ padding:12px; font-size:12px; }
+  input[type=file]{
+    padding:12px; font-size:12px;
+    border-color:rgba(255,216,19,0.4);
+    cursor:pointer;
+  }
+  input[type=file]::file-selector-button,
+  input[type=file]::-webkit-file-upload-button{
+    background:transparent;
+    border:1.5px solid var(--amarillo);
+    border-radius:6px;
+    color:var(--amarillo);
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:10px 16px;
+    margin-right:14px;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  input[type=file]:hover::file-selector-button,
+  input[type=file]:hover::-webkit-file-upload-button{
+    background:var(--amarillo);
+    color:#0a1628;
+  }
   button{
     margin-top:28px;
     width:100%;
@@ -181,6 +209,50 @@
     padding:4px 10px; border-radius:20px; margin-bottom:16px;
   }
 
+  .modal-overlay{
+    display:none;
+    position:fixed; inset:0;
+    background:rgba(10,22,40,0.75);
+    align-items:center; justify-content:center;
+    z-index:999;
+    padding:24px;
+  }
+  .modal-overlay.activo{ display:flex; }
+  .modal-box{
+    background:#0f2038;
+    border:1.5px solid var(--amarillo);
+    border-radius:8px;
+    padding:32px;
+    max-width:380px;
+    width:100%;
+    text-align:center;
+  }
+  .modal-box p{
+    margin:0 0 24px;
+    font-size:14px; line-height:1.5;
+    color:#eaf2f8;
+  }
+  .modal-botones{ display:flex; gap:12px; }
+  .modal-botones button{ margin:0; flex:1; padding:14px; }
+  .modal-btn-secundario{
+    background:transparent;
+    border:1.5px solid rgba(255,216,19,0.4);
+    color:var(--amarillo);
+  }
+  .modal-btn-secundario:hover{
+    background:rgba(255,216,19,0.1);
+    transform:none; box-shadow:none;
+  }
+  .modal-btn-peligro{
+    background:transparent;
+    border:1.5px solid rgba(255,120,120,0.6);
+    color:#ff8a8a;
+  }
+  .modal-btn-peligro:hover{
+    background:rgba(255,120,120,0.15);
+    transform:none; box-shadow:none;
+  }
+
   /* Pantallas grandes: contenedor más ancho y elementos más cómodos */
   @media (min-width: 900px){
     .wrap{ max-width:980px; }
@@ -258,9 +330,6 @@
     </div>
 
     <div id="panelPrincipal">
-      <div class="top-bar">
-        <h1 style="margin:0;">Panel administrador</h1>
-      </div>
 
       <div class="tabs">
         <button class="tab-btn activo" id="tabBtnRadio">Radio</button>
@@ -297,8 +366,6 @@
       </div>
 
       <div class="tab-panel" id="tabRevista">
-        <span class="actual-badge">Esto reemplaza la edición mostrada en la web</span>
-
         <div class="fila-doble">
           <div>
             <label for="revNumero">N° de edición</label>
@@ -393,6 +460,16 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="modalConfirm">
+  <div class="modal-box">
+    <p id="modalConfirmTexto">¿Borrar este elemento?</p>
+    <div class="modal-botones">
+      <button type="button" class="modal-btn-secundario" id="modalBtnCancelar">Cancelar</button>
+      <button type="button" class="modal-btn-peligro" id="modalBtnConfirmar">Borrar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const SUPABASE_URL = "https://npqxqfxzykvpwwrrrupc.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_djOkmwydtJ-WFW3veBk3RA_-Ryqv6lw";
@@ -411,6 +488,35 @@ const msgCruce = document.getElementById('msgCruce');
 
 const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function formatFechaDDMMYYYY(fechaStr) {
+  const [y, m, d] = fechaStr.split('-');
+  return `${d}-${m}-${y}`;
+}
+
+function pedirConfirmacion(mensaje) {
+  return new Promise(resolve => {
+    const overlay = document.getElementById('modalConfirm');
+    const texto = document.getElementById('modalConfirmTexto');
+    const btnCancelar = document.getElementById('modalBtnCancelar');
+    const btnConfirmar = document.getElementById('modalBtnConfirmar');
+
+    texto.textContent = mensaje;
+    overlay.classList.add('activo');
+
+    function limpiar(resultado) {
+      overlay.classList.remove('activo');
+      btnCancelar.removeEventListener('click', onCancelar);
+      btnConfirmar.removeEventListener('click', onConfirmar);
+      resolve(resultado);
+    }
+    function onCancelar() { limpiar(false); }
+    function onConfirmar() { limpiar(true); }
+
+    btnCancelar.addEventListener('click', onCancelar);
+    btnConfirmar.addEventListener('click', onConfirmar);
+  });
+}
 
 async function checkSesion() {
   const { data } = await sb.auth.getSession();
@@ -580,7 +686,7 @@ async function cargarLista() {
   data.forEach(p => {
     const div = document.createElement('div');
     div.className = 'item';
-    div.innerHTML = `<div><span class="num">#${p.numero}</span>${p.fecha} — ${p.dia}</div>`;
+    div.innerHTML = `<div><span class="num">#${p.numero}</span>${p.dia} ${formatFechaDDMMYYYY(p.fecha)}</div>`;
     const btnBorrar = document.createElement('button');
     btnBorrar.textContent = 'Borrar';
     btnBorrar.addEventListener('click', () => borrarPrograma(p.id));
@@ -590,7 +696,8 @@ async function cargarLista() {
 }
 
 async function borrarPrograma(id) {
-  if (!confirm('¿Borrar este programa? Esta acción no se puede deshacer.')) return;
+  const confirmado = await pedirConfirmacion('¿Borrar este programa? Esta acción no se puede deshacer.');
+  if (!confirmado) return;
   const { error } = await sb.from('programas').delete().eq('id', id);
   if (error) {
     alert('No se pudo borrar: ' + error.message);
@@ -648,7 +755,7 @@ document.getElementById('btnSubirRevista').addEventListener('click', async () =>
     });
     if (errInsert) throw errInsert;
 
-    msgRev.textContent = '¡Edición publicada! Ya es la que se muestra en la web.';
+    msgRev.textContent = '¡Edición publicada! Se sumó a la revista.';
     msgRev.className = 'ok';
     document.getElementById('revNumero').value = '';
     document.getElementById('revTemporada').value = '';
@@ -687,7 +794,7 @@ async function cargarListaRevistas() {
   data.forEach((r, i) => {
     const div = document.createElement('div');
     div.className = 'item';
-    const etiqueta = i === 0 ? ' (actual en la web)' : '';
+    const etiqueta = i === 0 ? ' (más reciente)' : '';
     div.innerHTML = `<div><span class="num">N°${r.numero}</span>${r.temporada}${etiqueta}</div>`;
     const btnBorrar = document.createElement('button');
     btnBorrar.textContent = 'Borrar';
