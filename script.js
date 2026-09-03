@@ -450,19 +450,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (anteriores.length && seccionAnteriores && gridAnteriores) {
                     anteriores.forEach(edicion => {
-                        const card = document.createElement('a');
+                        const card = document.createElement('div');
                         card.className = 'edicion-anterior-card';
-                        card.href = edicion.pdf_url;
-                        card.target = '_blank';
-                        card.rel = 'noopener';
                         card.innerHTML =
-                            '<div class="edicion-anterior-portada-wrap">' +
-                                '<img src="' + edicion.portada_url + '" alt="Revista La Balsa N°' + edicion.numero + '">' +
-                            '</div>' +
-                            '<div class="edicion-anterior-info">' +
-                                '<span class="edicion-anterior-numero">N°' + String(edicion.numero).padStart(2, '0') + '</span>' +
-                                '<span class="edicion-anterior-temporada">' + escapeHtmlRevista(edicion.temporada) + '</span>' +
-                            '</div>';
+                            '<img class="edicion-anterior-img" src="' + edicion.portada_url + '" alt="Revista La Balsa N°' + edicion.numero + '">' +
+                            '<a class="edicion-anterior-btn" href="' + edicion.pdf_url + '" target="_blank" rel="noopener">Ver edición ' + escapeHtmlRevista(edicion.temporada) + '</a>';
                         gridAnteriores.appendChild(card);
                     });
                     seccionAnteriores.style.display = 'block';
