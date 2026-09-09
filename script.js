@@ -4,7 +4,66 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const EMAILJS_SERVICE  = 'service_sljumx8';
     const EMAILJS_TEMPLATE = 'template_jzi9p1j';
+    const EMAILJS_TEMPLATE_TALLER = 'template_qrad8fd'; 
 
+
+
+const btnInscribirme  = document.getElementById('btn-inscribirme');
+const modalTaller     = document.getElementById('modal-inscripcion');
+const btnCerrarTaller = document.getElementById('modal-close');
+const formTaller      = document.getElementById('form-inscripcion');
+const btnEnviarTaller = document.getElementById('btn-enviar');
+const statusTaller    = document.getElementById('form-status');
+
+function abrirModalTaller() {
+    modalTaller.hidden = false;
+    document.body.style.overflow = 'hidden';
+}
+
+function cerrarModalTaller() {
+    modalTaller.hidden = true;
+    document.body.style.overflow = '';
+    statusTaller.textContent = '';
+}
+
+if (btnInscribirme && modalTaller) {
+    btnInscribirme.addEventListener('click', abrirModalTaller);
+    btnCerrarTaller.addEventListener('click', cerrarModalTaller);
+
+    modalTaller.addEventListener('click', function (e) {
+        if (e.target === modalTaller) cerrarModalTaller();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modalTaller.hidden) cerrarModalTaller();
+    });
+}
+
+if (formTaller && btnEnviarTaller) {
+    formTaller.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (typeof emailjs === 'undefined') {
+            statusTaller.textContent = 'No se pudo conectar el servicio de envío. Probá de nuevo más tarde.';
+            return;
+        }
+
+        btnEnviarTaller.disabled = true;
+        statusTaller.textContent = 'Enviando...';
+
+        emailjs.sendForm(EMAILJS_SERVICE, EMAILJS_TEMPLATE_TALLER, formTaller)
+            .then(function () {
+                statusTaller.textContent = '¡Listo! Tu inscripción fue enviada.';
+                formTaller.reset();
+                btnEnviarTaller.disabled = false;
+                setTimeout(cerrarModalTaller, 2200);
+            }, function (error) {
+                console.error('EmailJS error (taller):', error);
+                statusTaller.textContent = 'Hubo un error al enviar. Probá de nuevo.';
+                btnEnviarTaller.disabled = false;
+            });
+    });
+}
     if (typeof emailjs !== 'undefined') {
         emailjs.init('lF8jWDUR0JrnWpPR2');
     }

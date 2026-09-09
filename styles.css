@@ -1875,3 +1875,105 @@ body.revista-page .menu-hamburguesa {
         border-radius: 12px;
     }
 }
+/* ---- Página inicio: todo en una pantalla, sin scroll ---- */
+body.inicio-page {
+    overflow: hidden;
+    height: 100vh;
+}
+
+.pagina-inicio {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+body.inicio-page .contenido {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-calma {
+    max-width: clamp(130px, 20vw, 300px);
+    max-height: 32vh;
+    width: auto;
+    height: auto;
+}
+
+.taller {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    padding: clamp(12px, 2.5vh, 24px) clamp(16px, 4vw, 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #f4f1ea;
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(20, 36, 39, 0.50);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.taller-img {
+    width: auto;
+    height: clamp(90px, 20vh, 180px);
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border: 1px solid rgba(244, 241, 234, 0.25);
+}
+
+.taller-info {
+    margin-top: clamp(8px, 1.5vh, 16px);
+    max-width: 480px;
+}
+
+.taller-titulo {
+    font-size: clamp(0.95rem, 2vw, 1.3rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.taller-nombre {
+    color: #ffd813;
+}
+
+.taller-fecha {
+    margin-top: clamp(6px, 1vh, 10px);
+    font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(244, 241, 234, 0.8);
+}
+
+.btn-inscribirme {
+    margin-top: clamp(12px, 2vh, 20px);
+    padding: clamp(10px, 1.6vh, 14px) clamp(28px, 4vw, 40px);
+    background: transparent;
+    border: 1.5px solid #ffd813;
+    color: #ffd813;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-inscribirme:hover,
+.btn-inscribirme:focus-visible {
+    background: #ffd813;
+    color: #111;
+}
