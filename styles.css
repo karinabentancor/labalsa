@@ -1956,6 +1956,22 @@ body.inicio-page .contenido {
     color: #111;
 }
 
+@media (min-width: 900px) {
+    .taller {
+        flex-direction: row;
+        justify-content: center;
+        gap: clamp(32px, 5vw, 70px);
+    }
+
+    .taller-img {
+        height: clamp(260px, 55vh, 520px);
+    }
+
+    .taller-info {
+        margin-top: 0;
+    }
+}
+
 .modal-taller-overlay {
     position: fixed;
     inset: 0;
