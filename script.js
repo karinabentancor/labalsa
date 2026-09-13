@@ -462,8 +462,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    const listadoRevistas = document.getElementById('revistasListado');
-    if (listadoRevistas && typeof supabase !== 'undefined') {
+    /* ================= REVISTA ================= */
+    const revistaPortada    = document.getElementById('revista-portada');
+    const revistaTemporada  = document.getElementById('revista-temporada');
+    const revistaBtn        = document.getElementById('revista-btn');
+    const revistaTexto      = document.getElementById('revista-texto');
+    const revistaEyebrow    = document.getElementById('revista-eyebrow');
+    const seccionAnteriores = document.getElementById('edicionesAnterioresSeccion');
+    const gridAnteriores    = document.getElementById('edicionesAnterioresGrid');
+
+    if (revistaPortada && typeof supabase !== 'undefined') {
 
         const sbRevista = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -476,29 +484,43 @@ document.addEventListener('DOMContentLoaded', function () {
         sbRevista
             .from('revistas')
             .select('*')
-            .order('created_at', { ascending: false })
+            .order('numero', { ascending: false })
             .then(function (respuesta) {
                 const data = respuesta.data;
                 const error = respuesta.error;
                 if (error || !data || !data.length) return;
 
-                listadoRevistas.innerHTML = '';
+                // La edición con el número más alto = la actual, va en el bloque grande de arriba
+                const actual = data[0];
+                revistaPortada.src = actual.portada_url;
+                revistaPortada.alt = 'Revista La Balsa N°' + actual.numero;
+                revistaTemporada.textContent = actual.temporada;
+                revistaBtn.href = actual.pdf_url;
+                revistaBtn.textContent = 'Ver edición ' + actual.temporada;
+                revistaTexto.textContent = actual.texto;
+                revistaEyebrow.textContent = 'Presentación La Balsa Revista #' + String(actual.numero).padStart(2, '0');
 
-                data.forEach(function (r) {
-                    const card = document.createElement('div');
-                    card.className = 'revista-edicion';
-                    card.innerHTML =
-                        '<div class="revista-edicion-img-wrap">' +
-                            '<img class="revista-edicion-img" src="' + r.portada_url + '" alt="Revista La Balsa N°' + r.numero + '">' +
-                        '</div>' +
-                        '<div class="revista-edicion-info">' +
-                            '<p class="revista-edicion-eyebrow">Edición N°' + String(r.numero).padStart(2, '0') + '</p>' +
-                            '<h2 class="revista-edicion-temporada">' + escapeHtmlRevista(r.temporada) + '</h2>' +
-                            '<p class="revista-edicion-texto">' + escapeHtmlRevista(r.texto).replace(/\n/g, '<br>') + '</p>' +
-                            '<a href="' + r.pdf_url + '" target="_blank" rel="noopener" class="btn-ver-edicion">Ver edición ' + escapeHtmlRevista(r.temporada) + '</a>' +
-                        '</div>';
-                    listadoRevistas.appendChild(card);
-                });
+                // El resto (todas las anteriores) se acumulan en "Otras ediciones"
+                const anteriores = data.slice(1);
+
+                if (!anteriores.length) {
+                    if (seccionAnteriores) seccionAnteriores.style.display = 'none';
+                    return;
+                }
+
+                if (gridAnteriores) {
+                    gridAnteriores.innerHTML = '';
+                    anteriores.forEach(function (r) {
+                        const card = document.createElement('div');
+                        card.className = 'edicion-anterior-card';
+                        card.innerHTML =
+                            '<img class="edicion-anterior-img" src="' + r.portada_url + '" alt="Revista La Balsa N°' + r.numero + '">' +
+                            '<a class="edicion-anterior-btn" href="' + r.pdf_url + '" target="_blank" rel="noopener">Ver edición N°' + String(r.numero).padStart(2, '0') + '</a>';
+                        gridAnteriores.appendChild(card);
+                    });
+                }
+
+                if (seccionAnteriores) seccionAnteriores.style.display = 'block';
             });
     }
 
