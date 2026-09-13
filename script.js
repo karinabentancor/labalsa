@@ -462,8 +462,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    const revPortadaEl = document.getElementById('revista-portada');
-    if (revPortadaEl && typeof supabase !== 'undefined') {
+    const listadoRevistas = document.getElementById('revistasListado');
+    if (listadoRevistas && typeof supabase !== 'undefined') {
 
         const sbRevista = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -482,41 +482,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 const error = respuesta.error;
                 if (error || !data || !data.length) return;
 
-                const r = data[0];
-                revPortadaEl.src = r.portada_url;
+                listadoRevistas.innerHTML = '';
 
-                const btnEl = document.getElementById('revista-btn');
-                if (btnEl) {
-                    btnEl.href = r.pdf_url;
-                    btnEl.textContent = 'Ver edición ' + r.temporada;
-                }
-
-                const eyebrowEl = document.getElementById('revista-eyebrow');
-                if (eyebrowEl) {
-                    eyebrowEl.textContent = 'Presentación La Balsa Revista #' + String(r.numero).padStart(2, '0');
-                }
-
-                const temporadaEl = document.getElementById('revista-temporada');
-                if (temporadaEl) temporadaEl.textContent = r.temporada;
-
-                const textoEl = document.getElementById('revista-texto');
-                if (textoEl) textoEl.textContent = r.texto;
-
-                const anteriores = data.slice(1);
-                const seccionAnteriores = document.getElementById('edicionesAnterioresSeccion');
-                const gridAnteriores = document.getElementById('edicionesAnterioresGrid');
-
-                if (anteriores.length && seccionAnteriores && gridAnteriores) {
-                    anteriores.forEach(edicion => {
-                        const card = document.createElement('div');
-                        card.className = 'edicion-anterior-card';
-                        card.innerHTML =
-                            '<img class="edicion-anterior-img" src="' + edicion.portada_url + '" alt="Revista La Balsa N°' + edicion.numero + '">' +
-                            '<a class="edicion-anterior-btn" href="' + edicion.pdf_url + '" target="_blank" rel="noopener">Ver edición ' + escapeHtmlRevista(edicion.temporada) + '</a>';
-                        gridAnteriores.appendChild(card);
-                    });
-                    seccionAnteriores.style.display = 'block';
-                }
+                data.forEach(function (r) {
+                    const card = document.createElement('div');
+                    card.className = 'revista-edicion';
+                    card.innerHTML =
+                        '<div class="revista-edicion-img-wrap">' +
+                            '<img class="revista-edicion-img" src="' + r.portada_url + '" alt="Revista La Balsa N°' + r.numero + '">' +
+                        '</div>' +
+                        '<div class="revista-edicion-info">' +
+                            '<p class="revista-edicion-eyebrow">Edición N°' + String(r.numero).padStart(2, '0') + '</p>' +
+                            '<h2 class="revista-edicion-temporada">' + escapeHtmlRevista(r.temporada) + '</h2>' +
+                            '<p class="revista-edicion-texto">' + escapeHtmlRevista(r.texto).replace(/\n/g, '<br>') + '</p>' +
+                            '<a href="' + r.pdf_url + '" target="_blank" rel="noopener" class="btn-ver-edicion">Ver edición ' + escapeHtmlRevista(r.temporada) + '</a>' +
+                        '</div>';
+                    listadoRevistas.appendChild(card);
+                });
             });
     }
 

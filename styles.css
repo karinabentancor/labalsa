@@ -867,56 +867,111 @@ body.revista-page .menu-hamburguesa {
 .revista-hero {
     position: relative;
     z-index: 2;
-    max-width: 1080px;
-    margin: 0 auto;
-    min-height: 55vh;
-    padding: 200px 80px 0;
-    display: grid;
-    grid-template-columns: 1fr auto;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    align-items: center;
-    gap: 60px;
+    justify-content: center;
+    text-align: center;
+    gap: clamp(10px, 2.2vh, 32px);
+    padding: clamp(100px, 18vh, 150px) 24px clamp(20px, 3.5vh, 48px);
 }
 
-.revista-header {
-    position: relative;
-    z-index: 2;
-    padding: 0;
-    margin: 0;
+.revista-hero-header {
+    flex-shrink: 0;
 }
 
-.revista-header h1 {
+.revista-hero-titulo {
     font-family: "JetBrains Mono", monospace;
     font-weight: 700;
-    font-size: clamp(32px, 5vw, 62px);
+    font-size: clamp(22px, 3.6vw, 40px);
     color: #0a1628;
-    line-height: 1.05;
+    line-height: 1.1;
     margin: 0;
     letter-spacing: -1px;
 }
 
-.revista-header h1 em {
+.revista-hero-titulo em {
     font-style: normal;
     color: #0077b6;
 }
 
-.portada-img {
+.revista-hero-visual {
+    flex: 1 1 auto;
+    min-height: 0;
     width: 100%;
-    max-height: 46vh;
-    object-fit: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.revista-hero-img {
+    max-width: min(420px, 78vw);
+    max-height: 100%;
+    width: auto;
+    height: auto;
     display: block;
-    filter: drop-shadow(0 16px 40px rgba(10, 22, 40, 0.28));
+    border-radius: 4px;
+    filter: drop-shadow(0 24px 60px rgba(10, 22, 40, 0.32));
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.portada-img:hover {
+.revista-hero-img:hover {
     transform: translateY(-6px) scale(1.015);
+}
+
+.revista-hero-footer {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.revista-hero-temporada {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #0a1628;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.edicion-actual-detalle {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 90px 40px 0;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+}
+
+.edicion-actual-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(16px, 2.2vw, 22px);
+    letter-spacing: 1.5px;
+    color: #0077b6;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.edicion-actual-texto {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a6070;
+    line-height: 1.8;
+    letter-spacing: 0.3px;
 }
 
 .btn-ver-edicion {
     display: inline-block;
-    margin-top: 16px;
-    padding: 13px 28px;
+    padding: 15px 34px;
     background: transparent;
     color: #0077b6;
     font-family: 'JetBrains Mono', monospace;
@@ -937,213 +992,81 @@ body.revista-page .menu-hamburguesa {
     transform: translateY(-2px);
 }
 
-.revista-grid {
+.ediciones-anteriores-seccion {
+    display: none;
     position: relative;
     z-index: 2;
-    width: 260px;
-    flex-shrink: 0;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 1200px;
+    margin: 130px auto 0;
+    padding: 56px 40px 0;
+    border-top: 1.5px solid rgba(0, 119, 182, 0.18);
 }
 
-.tomo-card {
-    background: transparent;
-    border-radius: 0;
-    overflow: visible;
-    box-shadow: none;
-    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-    animation-delay: 0.08s;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    width: 100%;
-}
-
-.tomo-card:hover {
-    transform: translateY(-6px);
-}
-
-.tomo-img-wrap {
-    width: 100%;
-    display: block;
-    background: transparent;
-    line-height: 0;
-    overflow: hidden;
-    border-radius: 0;
-    box-shadow: 0 16px 60px rgba(10, 22, 40, 0.30);
-}
-
-.tomo-img-wrap img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 46vh;
-    display: block;
-    margin: 0 auto;
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.tomo-card:hover .tomo-img-wrap img {
-    transform: scale(1.015);
-}
-
-.tomo-footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 14px 4px;
-    border-top: none;
-    flex-shrink: 0;
-}
-
-.tomo-leer {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #0077b6;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: color 0.25s ease;
-}
-
-.tomo-leer:hover { color: #005a8e; }
-
-.presentacion-seccion {
-    position: relative;
-    z-index: 2;
-    max-width: 1080px;
-    margin: 80px auto 0;
-    padding: 0 80px;
-}
-
-.presentacion-header {
-    margin-bottom: 36px;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
-}
-
-.presentacion-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(18px, 2.5vw, 28px);
-    letter-spacing: 2px;
-    color: #0077b6;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.presentacion-temporada {
+.ediciones-anteriores-titulo {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     letter-spacing: 4px;
-    color: #0a1628;
     text-transform: uppercase;
-    margin-top: 8px;
     font-weight: 700;
-}
-
-.presentacion-texto {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    font-weight: 600;
-    color: #4a6070;
-    line-height: 1.8;
-    letter-spacing: 0.3px;
-    margin-top: 22px;
-    max-width: 640px;
-}
-
-.presentacion-carousel-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.carousel-flecha {
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 2px solid #0077b6;
-    background: rgba(255,255,255,0.85);
     color: #0077b6;
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    z-index: 3;
-    line-height: 1;
+    margin: 0 0 40px;
 }
 
-.carousel-flecha:hover {
+.ediciones-anteriores-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px 40px;
+}
+
+.edicion-anterior-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.edicion-anterior-img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 16px 40px rgba(10, 22, 40, 0.22);
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.edicion-anterior-card:hover .edicion-anterior-img {
+    transform: translateY(-4px) scale(1.015);
+}
+
+.edicion-anterior-btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+    background: transparent;
+    border: 1.5px solid #0077b6;
+    border-radius: 30px;
+    color: #0077b6;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 13px 14px;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.edicion-anterior-btn:hover {
     background: #0077b6;
     color: #fff;
-    transform: scale(1.08);
-}
-
-.carousel-flecha-izq { margin-right: 12px; }
-.carousel-flecha-der { margin-left: 12px; }
-
-.presentacion-carousel {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 6px;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
-    animation-delay: 0.15s;
-    flex: 1;
-}
-
-.presentacion-carousel::-webkit-scrollbar {
-    display: none;
-}
-
-.presentacion-track {
-    display: flex;
-    gap: 12px;
-}
-
-.presentacion-foto {
-    flex: 0 0 31%;
-    scroll-snap-align: start;
-    aspect-ratio: 4 / 3;
-    border-radius: 8px;
-    overflow: hidden;
-    background: rgba(0, 119, 182, 0.08);
-    box-shadow: 0 6px 20px rgba(10, 22, 40, 0.12);
-}
-
-.presentacion-foto img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.presentacion-foto:hover img {
-    transform: scale(1.04);
 }
 
 .suscripcion-seccion {
     position: relative;
     z-index: 2;
-    margin: 80px auto 0;
+    margin: 100px auto 0;
     max-width: 900px;
     padding: 0 24px 100px;
 }
@@ -1319,6 +1242,78 @@ body.revista-page .menu-hamburguesa {
 .btn-wsp:hover {
     background: #1aab52;
     transform: translateY(-2px);
+}
+
+.galeria-lanzamiento {
+    position: relative;
+    z-index: 2;
+    max-width: 1300px;
+    margin: 110px auto 0;
+    padding: 0 40px 110px;
+}
+
+.galeria-header {
+    text-align: center;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+}
+
+.galeria-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #0077b6;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.galeria-titulo {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: clamp(24px, 3.2vw, 38px);
+    color: #0a1628;
+    letter-spacing: -0.5px;
+}
+
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 220px;
+    grid-auto-flow: dense;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+    animation-delay: 0.1s;
+}
+
+.galeria-foto {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(0, 119, 182, 0.08);
+    box-shadow: 0 6px 20px rgba(10, 22, 40, 0.12);
+}
+
+.galeria-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.galeria-foto:hover img {
+    transform: scale(1.06);
+}
+
+.galeria-foto:nth-child(1),
+.galeria-foto:nth-child(6) {
+    grid-column: span 2;
+    grid-row: span 2;
 }
 
 .suscripcion-form {
@@ -1672,84 +1667,41 @@ body.revista-page .menu-hamburguesa {
     }
 
     .revista-hero {
-        min-height: 52vh;
-        padding: 160px 20px 0;
-        grid-template-columns: 1fr;
-        gap: 12px;
-        justify-items: start;
-        align-items: center;
+        padding: clamp(90px, 16vh, 120px) 20px clamp(16px, 3vh, 32px);
     }
 
-    .portada-img {
-        width: 100%;
-        max-height: 46vh;
-        object-fit: contain;
-        display: block;
-        filter: drop-shadow(0 16px 40px rgba(10, 22, 40, 0.28));
-        transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    .revista-hero-img {
+        max-width: min(300px, 70vw);
     }
 
-    .portada-img:hover {
-        transform: translateY(-6px) scale(1.015);
+    .edicion-actual-detalle {
+        padding: 70px 24px 0;
     }
 
-    .btn-ver-edicion {
-        display: inline-block;
-        margin-top: 16px;
-        padding: 13px 28px;
-        background: transparent;
-        color: #0077b6;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: 700;
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        text-decoration: none;
-        border: 2px solid #0077b6;
-        border-radius: 6px;
-        white-space: nowrap;
-        transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    .ediciones-anteriores-seccion {
+        padding: 40px 20px 0;
+        margin-top: 90px;
     }
 
-    .btn-ver-edicion:hover {
-        background: #0077b6;
-        color: #fff;
-        transform: translateY(-2px);
+    .ediciones-anteriores-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px 24px;
     }
 
-    .revista-grid {
-        width: 160px;
-        margin: 0 auto;
-        padding: 0;
+    .galeria-lanzamiento {
+        padding: 0 20px 80px;
+        margin-top: 70px;
     }
 
-    .tomo-img-wrap img {
-        max-height: 34vh;
+    .galeria-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 160px;
     }
 
-    .carousel-flecha {
-        display: none;
-    }
-
-    .presentacion-seccion {
-        padding: 0 20px;
-        margin-top: 8px;
-    }
-
-    .presentacion-header {
-        margin-bottom: 24px;
-    }
-
-    .presentacion-eyebrow {
-        font-size: clamp(14px, 4vw, 20px);
-    }
-
-    .presentacion-texto {
-        margin-top: 16px;
-    }
-
-    .presentacion-foto {
-        flex: 0 0 78%;
+    .galeria-foto:nth-child(1),
+    .galeria-foto:nth-child(6) {
+        grid-column: span 1;
+        grid-row: span 1;
     }
 
     .suscripcion-seccion {
@@ -1869,6 +1821,19 @@ body.revista-page .menu-hamburguesa {
     .modal-caja {
         padding: 40px 20px 32px;
         border-radius: 12px;
+    }
+
+    .edicion-actual-img {
+        max-width: 260px;
+    }
+
+    .ediciones-anteriores-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .galeria-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 220px;
     }
 }
 

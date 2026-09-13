@@ -5,77 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revista – LA BALSA</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .ediciones-anteriores-seccion{
-            display:none;
-            max-width:1200px;
-            margin:0 auto 90px;
-            padding:0 24px;
-        }
-        .ediciones-anteriores-titulo{
-            font-size:14px;
-            letter-spacing:.1em;
-            text-transform:uppercase;
-            font-weight:700;
-            margin:0 0 32px;
-            opacity:.75;
-        }
-        .ediciones-anteriores-grid{
-            display:grid;
-            grid-template-columns:repeat(4, 1fr);
-            gap:32px 28px;
-        }
-        .edicion-anterior-card{
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            gap:16px;
-        }
-        .edicion-anterior-img{
-            width:100%;
-            aspect-ratio:3/4;
-            object-fit:cover;
-            border-radius:6px;
-            box-shadow:0 10px 26px rgba(0,0,0,0.18);
-            display:block;
-        }
-        .edicion-anterior-btn{
-            display:block;
-            width:100%;
-            box-sizing:border-box;
-            text-align:center;
-            text-decoration:none;
-            background:transparent;
-            border:1.5px solid #0077b6;
-            border-radius:30px;
-            color:#0077b6;
-            font-family:inherit;
-            font-weight:700;
-            font-size:11px;
-            letter-spacing:.06em;
-            text-transform:uppercase;
-            padding:13px 14px;
-            transition:background .15s ease, color .15s ease;
-        }
-        .edicion-anterior-btn:hover{
-            background:#0077b6;
-            color:#fff;
-        }
-        @media (max-width:900px){
-            .ediciones-anteriores-grid{
-                grid-template-columns:repeat(2, 1fr);
-            }
-        }
-        @media (max-width:520px){
-            .ediciones-anteriores-grid{
-                grid-template-columns:1fr;
-                max-width:280px;
-                margin:0 auto;
-            }
-        }
-    </style>
 </head>
 
 <body class="revista-page">
@@ -86,57 +16,32 @@
 
     <div id="menu-global"></div>
 
-    <div class="revista-hero">
-
-        <div class="revista-header">
-            <h1>La Balsa<br><em>Revista</em></h1>
+    <section class="revista-hero">
+        <div class="revista-hero-header">
+            <h1 class="revista-hero-titulo">La Balsa <em>Revista</em></h1>
         </div>
-
-        <div class="revista-grid">
-            <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1" class="portada-img" id="revista-portada">
-            <a href="media/revistas/labalsa01.pdf" target="_blank" class="btn-ver-edicion" id="revista-btn">Ver edición Otoño 2026</a>
+        <div class="revista-hero-visual">
+            <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1" class="revista-hero-img" id="revista-portada">
         </div>
-
-    </div>
-<br>
-<br>
-
-    <div class="presentacion-seccion">
-        <div class="presentacion-header">
-            <p class="presentacion-eyebrow" id="revista-eyebrow">Presentación La Balsa Revista #01</p>
-            <p class="presentacion-temporada" id="revista-temporada">Otoño 2026</p>
-            <p class="presentacion-texto" id="revista-texto">
-                El pasado 5 de junio presentamos el primer número de LA BALSA revista.
-            </p>
+        <div class="revista-hero-footer">
+            <p class="revista-hero-temporada" id="revista-temporada">Otoño 2026</p>
+            <a href="media/revistas/labalsa01.pdf" target="_blank" rel="noopener" class="btn-ver-edicion" id="revista-btn">Ver edición Otoño 2026</a>
         </div>
-        <div class="presentacion-carousel-wrap">
-            <button class="carousel-flecha carousel-flecha-izq" aria-label="Anterior">&#8592;</button>
-            <div class="presentacion-carousel">
-                <div class="presentacion-track">
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento1.jpeg" alt="Lanzamiento La Balsa - foto 1"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento2.jpeg" alt="Lanzamiento La Balsa - foto 2"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento3.jpeg" alt="Lanzamiento La Balsa - foto 3"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento4.jpeg" alt="Lanzamiento La Balsa - foto 4"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento5.jpeg" alt="Lanzamiento La Balsa - foto 5"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento6.jpeg" alt="Lanzamiento La Balsa - foto 6"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento7.jpeg" alt="Lanzamiento La Balsa - foto 7"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento8.jpeg" alt="Lanzamiento La Balsa - foto 8"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento9.jpeg" alt="Lanzamiento La Balsa - foto 9"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento10.jpeg" alt="Lanzamiento La Balsa - foto 10"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento11.jpeg" alt="Lanzamiento La Balsa - foto 11"></div>
-                    <div class="presentacion-foto"><img src="media/lanzamiento/lanzamiento12.jpeg" alt="Lanzamiento La Balsa - foto 12"></div>
-                </div>
-            </div>
-            <button class="carousel-flecha carousel-flecha-der" aria-label="Siguiente">&#8594;</button>
-        </div>
-    </div>
+    </section>
 
-    <div class="ediciones-anteriores-seccion" id="edicionesAnterioresSeccion">
+    <section class="edicion-actual-detalle">
+        <p class="edicion-actual-eyebrow" id="revista-eyebrow">Presentación La Balsa Revista #01</p>
+        <p class="edicion-actual-texto" id="revista-texto">
+            El pasado 5 de junio presentamos el primer número de LA BALSA revista.
+        </p>
+    </section>
+
+    <section class="ediciones-anteriores-seccion" id="edicionesAnterioresSeccion">
         <p class="ediciones-anteriores-titulo">Otras ediciones</p>
         <div class="ediciones-anteriores-grid" id="edicionesAnterioresGrid"></div>
-    </div>
+    </section>
 
-    <div class="suscripcion-seccion">
+    <section class="suscripcion-seccion">
         <div class="suscripcion-inner suscripcion-solo-texto">
             <div class="suscripcion-texto">
                 <p class="suscripcion-eyebrow">Envío a todo el país</p>
@@ -161,7 +66,28 @@
             <p class="publicidad-texto">¿Querés publicitar en la revista?</p>
             <a href="https://wa.me/59899644233" target="_blank" class="btn-wsp">Comunicate por WhatsApp</a>
         </div>
-    </div>
+    </section>
+
+    <section class="galeria-lanzamiento">
+        <div class="galeria-header">
+            <p class="galeria-eyebrow">5 de junio de 2026</p>
+            <h2 class="galeria-titulo">Así vivimos el lanzamiento</h2>
+        </div>
+        <div class="galeria-grid">
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento1.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento1.jpeg" alt="Lanzamiento La Balsa - foto 1" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento2.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento2.jpeg" alt="Lanzamiento La Balsa - foto 2" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento3.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento3.jpeg" alt="Lanzamiento La Balsa - foto 3" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento4.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento4.jpeg" alt="Lanzamiento La Balsa - foto 4" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento5.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento5.jpeg" alt="Lanzamiento La Balsa - foto 5" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento6.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento6.jpeg" alt="Lanzamiento La Balsa - foto 6" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento7.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento7.jpeg" alt="Lanzamiento La Balsa - foto 7" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento8.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento8.jpeg" alt="Lanzamiento La Balsa - foto 8" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento9.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento9.jpeg" alt="Lanzamiento La Balsa - foto 9" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento10.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento10.jpeg" alt="Lanzamiento La Balsa - foto 10" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento11.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento11.jpeg" alt="Lanzamiento La Balsa - foto 11" loading="lazy"></a>
+            <a class="galeria-foto" href="media/lanzamiento/lanzamiento12.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento12.jpeg" alt="Lanzamiento La Balsa - foto 12" loading="lazy"></a>
+        </div>
+    </section>
 
     <div class="modal-overlay" id="modalSuscripcion" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
         <div class="modal-caja">
@@ -204,27 +130,7 @@
         </div>
     </div>
 
-   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="script.js"></script>
-<script>
-    (function () {
-        const carousel = document.querySelector('.presentacion-carousel');
-        const btnIzq   = document.querySelector('.carousel-flecha-izq');
-        const btnDer   = document.querySelector('.carousel-flecha-der');
-        if (!carousel || !btnIzq || !btnDer) return;
-
-        const paso = () => {
-            const foto = carousel.querySelector('.presentacion-foto');
-            return foto ? foto.offsetWidth + 12 : 300;
-        };
-
-        btnIzq.addEventListener('click', () => {
-            carousel.scrollBy({ left: -paso(), behavior: 'smooth' });
-        });
-        btnDer.addEventListener('click', () => {
-            carousel.scrollBy({ left: paso(), behavior: 'smooth' });
-        });
-    })();
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
