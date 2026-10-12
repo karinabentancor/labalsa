@@ -290,6 +290,129 @@
             accent-color: #0077b6;
         }
 
+        .carrusel {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #0a1628;
+            touch-action: pan-y;
+        }
+
+        .carrusel-pista {
+            display: flex;
+            height: 100%;
+            transition: transform 0.4s ease;
+        }
+
+        .carrusel-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carrusel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .carrusel-slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+            display: block;
+        }
+
+        .carrusel .carrusel-flecha {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            margin: 0;
+            border: none;
+            border-radius: 50%;
+            background: rgba(10, 22, 40, 0.55);
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            -webkit-appearance: none;
+            appearance: none;
+            transition: background 0.2s;
+        }
+
+        .carrusel .carrusel-flecha:hover {
+            background: rgba(0, 119, 182, 0.9);
+        }
+
+        .carrusel .carrusel-flecha svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .carrusel .carrusel-prev { left: 10px; }
+        .carrusel .carrusel-next { right: 10px; }
+
+        .carrusel-puntos {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            padding: 12px 0;
+            background: #0a1628;
+        }
+
+        .carrusel-punto {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.45);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .carrusel-punto.activo {
+            background: #ffd813;
+            transform: scale(1.25);
+        }
+
+        .cruce-titulo {
+            text-transform: uppercase;
+        }
+
+        .cruce-bajada {
+            white-space: pre-line;
+        }
+
+        .cruce-acciones {
+            text-align: right;
+        }
+
+        .cruce-boton {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #0a1628;
+            border: 1.5px solid rgba(0, 119, 182, 0.4);
+            border-radius: 8px;
+            padding: 10px 18px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .cruce-boton:hover {
+            background: rgba(0, 119, 182, 0.10);
+        }
+
         @media (max-width: 768px) {
             .cruces-pagina {
                 padding: 0 28px 0;
@@ -358,7 +481,6 @@
 
         <div class="cruces-grid">
 
-            <!-- CARD: TODOS SOMOS -->
             <div class="ts-card">
 
                 <img src="media/todossomos.jpeg" alt="Todos Somos" class="ts-imagen">
@@ -609,7 +731,7 @@ Con linternas de exploradores entran en esta cueva, donde las palabras, las prop
                                     </div>
                                 </div>
 
-                                    <div class="ts-ep">
+                                <div class="ts-ep">
                                     <div class="ts-ep-header" onclick="tsToggle(this)">
                                         <div class="ts-ep-meta">
                                             <span class="ts-ep-num">13</span>
@@ -645,14 +767,12 @@ Con linternas de exploradores entran en esta cueva, donde las palabras, las prop
                                     </div>
                                 </div>
 
-
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-
 
             <div class="ts-card" style="display: flex; flex-direction: column;">
 
@@ -687,7 +807,6 @@ Con linternas de exploradores entran en esta cueva, donde las palabras, las prop
 
                 <div class="ts-cuerpo" style="display: flex; flex-direction: column; flex: 1;">
 
-
                     <h2 class="ts-titulo">ANDRESITO <span>BUCEA EN SUS RAÍCES</span></h2>
 
                     <p class="ts-bajada" style="flex: 1;">
@@ -700,25 +819,23 @@ Registros fotográficos, escritos, plásticos y sobre todo vivenciales se encuen
                             Visitar sitio
                         </a>
                     </div>
-                    </div></div>
-<div class="ts-card" style="display: flex; flex-direction: column;">
 
-    <img src="media/juandescresenzio.png" alt="Juan Des Crescenzio" style="width:100%; aspect-ratio: 16/9; object-fit: cover; object-position: center; display: block; flex-shrink: 0;">
+                </div>
+            </div>
 
-    <div class="ts-cuerpo" style="display: flex; flex-direction: column; flex: 1;">
+            <div class="ts-card" style="display: flex; flex-direction: column;">
 
-        <h2 class="ts-titulo">CONVERSANDO CON <span>JUAN DES CRESCENZIO</span></h2>
+                <img src="media/juandescresenzio.png" alt="Juan Des Crescenzio" style="width:100%; aspect-ratio: 16/9; object-fit: cover; object-position: center; display: block; flex-shrink: 0;">
 
-         <p class="ts-bajada" style="flex: 1;">Por Carlos Felipe Zeballos</p>
-        <audio class="ts-audio" controls preload="metadata" style="margin-bottom: 20px;">
-            <source src="media/programas/conversando-con-juan-des-crescenzio.mp3" type="audio/mpeg">
-            Tu navegador no soporta audio.
-        </audio>
+                <div class="ts-cuerpo" style="display: flex; flex-direction: column; flex: 1;">
 
-       
+                    <h2 class="ts-titulo">CONVERSANDO CON <span>JUAN DES CRESCENZIO</span></h2>
 
-    </div>
-</div>
+                    <p class="ts-bajada" style="flex: 1;">Por Carlos Felipe Zeballos</p>
+                    <audio class="ts-audio" controls preload="metadata" style="margin-bottom: 20px;">
+                        <source src="media/programas/conversando-con-juan-des-crescenzio.mp3" type="audio/mpeg">
+                        Tu navegador no soporta audio.
+                    </audio>
 
                 </div>
             </div>
@@ -726,6 +843,7 @@ Registros fotográficos, escritos, plásticos y sobre todo vivenciales se encuen
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js" defer></script>
     <script>
         function epToggle(header) {
@@ -755,6 +873,176 @@ Registros fotográficos, escritos, plásticos y sobre todo vivenciales se encuen
                 chevron.classList.add('open');
             }
         }
+    </script>
+    <script>
+        (function () {
+            const SUPABASE_URL = "https://npqxqfxzykvpwwrrrupc.supabase.co";
+            const SUPABASE_ANON_KEY = "sb_publishable_djOkmwydtJ-WFW3veBk3RA_-Ryqv6lw";
+
+            const grid = document.querySelector('.cruces-grid');
+            if (!grid || !window.supabase) return;
+
+            const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            const ICONO_PREV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>';
+            const ICONO_NEXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+
+            function el(tag, clase, texto) {
+                const e = document.createElement(tag);
+                if (clase) e.className = clase;
+                if (texto !== undefined) e.textContent = texto;
+                return e;
+            }
+
+            function crearCarrusel(slides, alt) {
+                const carrusel = el('div', 'carrusel');
+                const pista = el('div', 'carrusel-pista');
+                carrusel.appendChild(pista);
+
+                slides.forEach((m, idx) => {
+                    const slide = el('div', 'carrusel-slide');
+                    if (m.tipo === 'video') {
+                        const v = document.createElement('video');
+                        v.controls = true;
+                        v.playsInline = true;
+                        v.preload = 'metadata';
+                        v.src = m.url;
+                        slide.appendChild(v);
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = m.url;
+                        img.alt = alt || '';
+                        if (idx > 0) img.loading = 'lazy';
+                        slide.appendChild(img);
+                    }
+                    pista.appendChild(slide);
+                });
+
+                if (slides.length < 2) return carrusel;
+
+                const puntos = el('div', 'carrusel-puntos');
+                const listaPuntos = slides.map(() => {
+                    const p = el('span', 'carrusel-punto');
+                    puntos.appendChild(p);
+                    return p;
+                });
+
+                const btnPrev = el('button', 'carrusel-flecha carrusel-prev');
+                btnPrev.type = 'button';
+                btnPrev.setAttribute('aria-label', 'Anterior');
+                btnPrev.innerHTML = ICONO_PREV;
+
+                const btnNext = el('button', 'carrusel-flecha carrusel-next');
+                btnNext.type = 'button';
+                btnNext.setAttribute('aria-label', 'Siguiente');
+                btnNext.innerHTML = ICONO_NEXT;
+
+                carrusel.appendChild(btnPrev);
+                carrusel.appendChild(btnNext);
+
+                let actual = 0;
+
+                function ir(n) {
+                    actual = (n + slides.length) % slides.length;
+                    pista.style.transform = 'translateX(-' + (actual * 100) + '%)';
+                    listaPuntos.forEach((p, i) => p.classList.toggle('activo', i === actual));
+                    carrusel.querySelectorAll('video').forEach(v => v.pause());
+                }
+
+                btnPrev.addEventListener('click', () => ir(actual - 1));
+                btnNext.addEventListener('click', () => ir(actual + 1));
+
+                let inicioX = null;
+                carrusel.addEventListener('touchstart', e => {
+                    inicioX = e.touches[0].clientX;
+                }, { passive: true });
+                carrusel.addEventListener('touchend', e => {
+                    if (inicioX === null) return;
+                    const dx = e.changedTouches[0].clientX - inicioX;
+                    inicioX = null;
+                    if (Math.abs(dx) > 50) ir(actual + (dx < 0 ? 1 : -1));
+                });
+
+                ir(0);
+
+                const envoltorio = el('div', 'carrusel-envoltorio');
+                envoltorio.appendChild(carrusel);
+                envoltorio.appendChild(puntos);
+                return envoltorio;
+            }
+
+            function urlSegura(u) {
+                if (!u) return '';
+                const limpia = u.trim();
+                if (/^https?:\/\//i.test(limpia)) return limpia;
+                if (/^[a-z][a-z0-9+.-]*:/i.test(limpia)) return '';
+                return 'https://' + limpia;
+            }
+
+            function crearCard(c) {
+                const card = el('div', 'ts-card');
+
+                const slides = [];
+                if (c.imagen_url) slides.push({ tipo: 'imagen', url: c.imagen_url });
+                (Array.isArray(c.galeria) ? c.galeria : []).forEach(m => {
+                    if (m && m.url) slides.push({ tipo: m.tipo === 'video' ? 'video' : 'imagen', url: m.url });
+                });
+                if (slides.length) card.appendChild(crearCarrusel(slides, c.titulo));
+
+                const cuerpo = el('div', 'ts-cuerpo');
+
+                const h2 = el('h2', 'ts-titulo cruce-titulo');
+                const palabras = (c.titulo || '').trim().split(/\s+/);
+                if (palabras.length > 1) {
+                    h2.appendChild(document.createTextNode(palabras[0] + ' '));
+                    h2.appendChild(el('span', null, palabras.slice(1).join(' ')));
+                } else {
+                    h2.textContent = palabras[0] || '';
+                }
+                cuerpo.appendChild(h2);
+
+                if (c.descripcion) cuerpo.appendChild(el('p', 'ts-bajada cruce-bajada', c.descripcion));
+
+                if (c.tipo === 'audio' && c.contenido_url) {
+                    const audio = document.createElement('audio');
+                    audio.className = 'ts-audio';
+                    audio.controls = true;
+                    audio.preload = 'metadata';
+                    audio.src = c.contenido_url;
+                    audio.style.marginBottom = '8px';
+                    cuerpo.appendChild(audio);
+                } else if (c.tipo === 'enlace') {
+                    const href = urlSegura(c.contenido_url);
+                    if (href) {
+                        const acciones = el('div', 'cruce-acciones');
+                        const a = el('a', 'cruce-boton', 'Visitar sitio');
+                        a.href = href;
+                        a.target = '_blank';
+                        a.rel = 'noopener noreferrer';
+                        acciones.appendChild(a);
+                        cuerpo.appendChild(acciones);
+                    }
+                }
+
+                card.appendChild(cuerpo);
+                return card;
+            }
+
+            async function cargar() {
+                const { data, error } = await sb
+                    .from('cruces')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.error('No se pudieron cargar los cruces:', error);
+                    return;
+                }
+                (data || []).forEach(c => grid.appendChild(crearCard(c)));
+            }
+
+            cargar();
+        })();
     </script>
 
 </body>
