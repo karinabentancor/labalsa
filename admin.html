@@ -400,7 +400,7 @@
         <label for="cruceTipo">Tipo de contenido</label>
         <select id="cruceTipo">
           <option value="enlace">Enlace externo</option>
-          <option value="audio">Archivo de audio</option>
+          <option value="audio">Audio</option>
           <option value="imagen">Imagen</option>
           <option value="video">Video</option>
         </select>
@@ -411,9 +411,12 @@
         </div>
 
         <div id="cruceCampoAudio" style="display:none">
-          <label for="cruceAudio">Archivo de audio</label>
+          <label for="cruceAudio">Audio</label>
           <input type="file" id="cruceAudio" accept="audio/*">
         </div>
+
+        <label for="cruceImagen">Imagen de portada</label>
+        <input type="file" id="cruceImagen" accept="image/*">
 
         <label for="cruceFotos">Fotos (hasta 10)</label>
         <input type="file" id="cruceFotos" accept="image/*" multiple>
@@ -422,9 +425,6 @@
         <label for="cruceVideos">Videos (hasta 3)</label>
         <input type="file" id="cruceVideos" accept="video/*" multiple>
         <div class="info-archivos" id="cruceVideosInfo"></div>
-
-        <label for="cruceImagen">Imagen de portada</label>
-        <input type="file" id="cruceImagen" accept="image/*">
 
         <button id="btnSubirCruce">Publicar cruce</button>
         <div id="msgCruce"></div>
