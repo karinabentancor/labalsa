@@ -6,6 +6,546 @@
     <title>Revista – LA BALSA</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="styles.css">
+
+    <style>
+        
+        body.revista-page .revista-hero {
+            gap: clamp(20px, 4.5vh, 48px);
+            padding: 160px 0 clamp(20px, 3.5vh, 48px);
+        }
+
+        body.revista-page .revista-hero-header {
+            align-self: center;
+            width: 100%;
+            max-width: 900px;
+            padding: 0 48px;
+            text-align: left;
+        }
+
+        body.revista-page .revista-hero-titulo {
+            font-size: clamp(32px, 5vw, 62px);
+            letter-spacing: -1px;
+            line-height: 1.05;
+            margin: 0;
+            text-align: left;
+        }
+
+        .revista-hero-ediciones {
+            flex: 1 1 0;
+            min-height: 0;
+            width: 100%;
+            max-width: 1100px;
+            padding: 0 14px;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: clamp(12px, 3vw, 40px);
+        }
+
+        .revista-hero-edicion {
+            flex: 1 1 0;
+            min-width: 0;
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(8px, 1.6vh, 16px);
+        }
+
+        .revista-hero-edicion .revista-hero-visual {
+            flex: 1 1 0;
+            min-height: 0;
+            width: 100%;
+        }
+
+        .revista-hero-edicion .revista-hero-img {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none;
+            max-height: none;
+            object-fit: contain;
+        }
+
+        .revista-hero-edicion .revista-hero-footer {
+            width: 100%;
+            align-items: stretch;
+            gap: 0;
+        }
+
+        .revista-hero-temporada {
+            display: none;
+        }
+
+        body.revista-page .btn-ver-edicion,
+        body.revista-page .edicion-anterior-btn,
+        body.revista-page .btn-suscribirse,
+        body.revista-page .btn-modal-submit,
+        body.revista-page .btn-wsp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.3;
+            white-space: normal;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: #ffd813;
+            color: #0a1628;
+            border: 2px solid #0a1628;
+            box-shadow: 0 4px 14px rgba(10, 22, 40, 0.25);
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        body.revista-page .btn-ver-edicion:hover,
+        body.revista-page .edicion-anterior-btn:hover,
+        body.revista-page .btn-suscribirse:hover,
+        body.revista-page .btn-modal-submit:hover,
+        body.revista-page .btn-wsp:hover {
+            background: #ffe45c;
+            color: #0a1628;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(10, 22, 40, 0.32);
+        }
+
+        body.revista-page #revista-btn {
+            background: #5ec8f2;
+        }
+
+        body.revista-page #revista-btn:hover {
+            background: #8bdcf8;
+        }
+
+        body.revista-page #btnAbrirModal {
+            background: #0077b6;
+            color: #ffffff;
+        }
+
+        body.revista-page #btnAbrirModal:hover {
+            background: #005f92;
+            color: #ffffff;
+        }
+
+        body.revista-page .btn-wsp {
+            background: #25d366;
+            gap: 8px;
+        }
+
+        body.revista-page .btn-wsp:hover {
+            background: #1fbd5a;
+        }
+
+        .btn-wsp svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        body.revista-page .revista-hero-edicion .btn-ver-edicion {
+            width: 100%;
+            padding: 9px 8px;
+            font-size: 13px;
+            letter-spacing: 0;
+        }
+
+        body.revista-page .ediciones-anteriores-seccion {
+            margin-top: 50px;
+        }
+
+        body.revista-page .ediciones-anteriores-seccion.vacia {
+            display: none !important;
+        }
+
+        body.revista-page .suscripcion-seccion {
+            max-width: 900px;
+            margin-top: 60px;
+            padding: 0 24px 40px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        body.revista-page .suscripcion-texto {
+            padding: 28px 28px;
+        }
+
+        body.revista-page .suscripcion-eyebrow {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        body.revista-page .suscripcion-titulo {
+            font-size: clamp(26px, 3.2vw, 36px);
+            margin-bottom: 10px;
+        }
+
+        body.revista-page .suscripcion-bajada {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        body.revista-page .suscripcion-precios {
+            padding-top: 18px;
+            margin-bottom: 18px;
+        }
+
+        body.revista-page .precio-valor {
+            font-size: clamp(24px, 3vw, 32px);
+        }
+
+        body.revista-page .precio-label {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        body.revista-page .btn-suscribirse {
+            margin-top: 0;
+            align-self: flex-start;
+        }
+
+        body.revista-page .publicidad-seccion {
+            margin-top: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 16px;
+            padding: 24px 20px;
+            border-color: #ffd813;
+            background: rgba(255, 255, 255, 0.70);
+        }
+
+        body.revista-page .publicidad-texto {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        body.revista-page .edicion-actual-detalle {
+            position: relative;
+            max-width: 780px;
+            width: calc(100% - 32px);
+            margin: 60px auto 0;
+            padding: 30px 30px 32px 34px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.80);
+            border-left: 8px solid #ffd813;
+            border-radius: 6px 16px 16px 6px;
+            box-shadow: 0 10px 34px rgba(10, 22, 40, 0.18);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        body.revista-page .edicion-actual-detalle::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 120px;
+            line-height: 1;
+            color: #ffd813;
+            pointer-events: none;
+        }
+
+        body.revista-page .edicion-actual-eyebrow {
+            position: relative;
+            font-size: clamp(17px, 2.2vw, 24px);
+            line-height: 1.3;
+            letter-spacing: 0;
+            color: #0a1628;
+            margin: 0 0 18px;
+            padding: 0 70px 16px 0;
+            text-align: left;
+        }
+
+        body.revista-page .edicion-actual-eyebrow::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 56px;
+            height: 4px;
+            border-radius: 2px;
+            background: #0077b6;
+        }
+
+        body.revista-page .edicion-actual-texto {
+            font-size: clamp(16px, 1.8vw, 19px);
+            font-weight: 500;
+            color: #1e2f3e;
+            line-height: 1.85;
+            letter-spacing: 0;
+            text-align: left;
+            white-space: pre-line;
+        }
+
+        body.revista-page .galeria-lanzamiento {
+            max-width: 900px;
+            margin-top: 60px;
+            padding: 0 24px 90px;
+        }
+
+        .galeria-carrusel {
+            width: 100%;
+        }
+
+        .galeria-viewport {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #0a1628;
+            box-shadow: 0 10px 34px rgba(10, 22, 40, 0.28);
+            touch-action: pan-y;
+        }
+
+        .galeria-pista {
+            display: flex;
+            height: 100%;
+            transition: transform 0.4s ease;
+        }
+
+        .galeria-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .galeria-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .galeria-flecha {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border-radius: 50%;
+            background: #ffd813;
+            color: #0a1628;
+            border: 2px solid #0a1628;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            -webkit-appearance: none;
+            appearance: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+            transition: background 0.2s ease;
+        }
+
+        .galeria-flecha:hover {
+            background: #ffe45c;
+        }
+
+        .galeria-flecha svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .galeria-prev { left: 10px; }
+        .galeria-next { right: 10px; }
+
+        .galeria-puntos {
+            position: absolute;
+            left: 50%;
+            bottom: 10px;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            padding: 3px 8px;
+            border-radius: 20px;
+            background: rgba(10, 22, 40, 0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .galeria-punto {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .galeria-punto span {
+            width: 12px;
+            height: 12px;
+            box-sizing: border-box;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.75);
+            background: transparent;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .galeria-punto.activo span {
+            background: #ffd813;
+            border-color: #ffd813;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            body.revista-page .revista-hero {
+                padding-top: 120px;
+            }
+
+            body.revista-page .revista-hero-header {
+                padding: 0 20px;
+            }
+
+            .revista-hero-ediciones {
+                gap: 12px;
+                padding: 0 12px;
+            }
+
+            body.revista-page .revista-hero-edicion .btn-ver-edicion {
+                font-size: 12px;
+                padding: 6px 4px;
+                min-height: 44px;
+                letter-spacing: 0;
+            }
+
+            body.revista-page .btn-ver-edicion,
+            body.revista-page .edicion-anterior-btn,
+            body.revista-page .btn-suscribirse,
+            body.revista-page .btn-modal-submit,
+            body.revista-page .btn-wsp {
+                font-size: 13px;
+                letter-spacing: 0.5px;
+            }
+
+            body.revista-page .suscripcion-seccion {
+                margin-top: 40px;
+                padding: 0 12px 40px;
+                gap: 10px;
+            }
+
+            body.revista-page .suscripcion-texto {
+                padding: 18px 14px;
+            }
+
+            body.revista-page .suscripcion-eyebrow {
+                font-size: 10px;
+                margin-bottom: 8px;
+            }
+
+            body.revista-page .suscripcion-titulo {
+                font-size: 22px;
+            }
+
+            body.revista-page .suscripcion-bajada {
+                font-size: 13px;
+                line-height: 1.55;
+                margin-bottom: 14px;
+            }
+
+            body.revista-page .suscripcion-precios {
+                flex-direction: column;
+                gap: 12px;
+                padding-top: 12px;
+                margin-bottom: 14px;
+            }
+
+            body.revista-page .precio-item,
+            body.revista-page .precio-item:last-child {
+                padding: 0;
+            }
+
+            body.revista-page .precio-divider {
+                width: 100%;
+                height: 1.5px;
+                align-self: auto;
+            }
+
+            body.revista-page .precio-label {
+                font-size: 10px;
+            }
+
+            body.revista-page .precio-valor {
+                font-size: 26px;
+            }
+
+            body.revista-page .btn-suscribirse {
+                align-self: stretch;
+                padding: 10px 8px;
+            }
+
+            body.revista-page .publicidad-seccion {
+                padding: 16px 12px;
+                gap: 12px;
+            }
+
+            body.revista-page .publicidad-texto {
+                font-size: 14px;
+            }
+
+            body.revista-page .btn-wsp {
+                align-self: stretch;
+                padding: 10px 8px;
+            }
+
+            body.revista-page .edicion-actual-detalle {
+                width: calc(100% - 24px);
+                margin-top: 40px;
+                padding: 22px 18px 24px 20px;
+                border-left-width: 6px;
+            }
+
+            body.revista-page .edicion-actual-detalle::before {
+                font-size: 90px;
+                right: 14px;
+            }
+
+            body.revista-page .edicion-actual-eyebrow {
+                padding-right: 50px;
+            }
+
+            body.revista-page .galeria-lanzamiento {
+                margin-top: 44px;
+                padding: 0 16px 70px;
+            }
+
+            .galeria-flecha {
+                width: 36px;
+                height: 36px;
+            }
+
+            .galeria-flecha svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .galeria-prev { left: 8px; }
+            .galeria-next { right: 8px; }
+        }
+
+        @media (max-width: 480px) {
+            body.revista-page .revista-hero {
+                padding-top: 100px;
+            }
+        }
+    </style>
 </head>
 
 <body class="revista-page">
@@ -20,20 +560,18 @@
         <div class="revista-hero-header">
             <h1 class="revista-hero-titulo">La Balsa <em>Revista</em></h1>
         </div>
-        <div class="revista-hero-visual">
-            <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1" class="revista-hero-img" id="revista-portada">
-        </div>
-        <div class="revista-hero-footer">
-            <p class="revista-hero-temporada" id="revista-temporada">Otoño 2026</p>
-            <a href="media/revistas/labalsa01.pdf" target="_blank" rel="noopener" class="btn-ver-edicion" id="revista-btn">Ver edición Otoño 2026</a>
-        </div>
-    </section>
 
-    <section class="edicion-actual-detalle">
-        <p class="edicion-actual-eyebrow" id="revista-eyebrow">Presentación La Balsa Revista #01</p>
-        <p class="edicion-actual-texto" id="revista-texto">
-            El pasado 5 de junio presentamos el primer número de LA BALSA revista.
-        </p>
+        <div class="revista-hero-ediciones" id="heroEdiciones">
+            <div class="revista-hero-edicion">
+                <div class="revista-hero-visual">
+                    <img src="media/revistas/portadaN1.jpg" alt="Revista La Balsa N°1" class="revista-hero-img" id="revista-portada">
+                </div>
+                <div class="revista-hero-footer">
+                    <p class="revista-hero-temporada" id="revista-temporada">Otoño 2026</p>
+                    <a href="media/revistas/labalsa01.pdf" target="_blank" rel="noopener" class="btn-ver-edicion" id="revista-btn">Ver edición Otoño 2026</a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section class="ediciones-anteriores-seccion" id="edicionesAnterioresSeccion">
@@ -64,8 +602,16 @@
 
         <div class="publicidad-seccion">
             <p class="publicidad-texto">¿Querés publicitar en la revista?</p>
-            <a href="https://wa.me/59899644233" target="_blank" class="btn-wsp">Comunicate por WhatsApp</a>
+            <a href="https://wa.me/59899644233" target="_blank" rel="noopener" class="btn-wsp">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                <span>Comunicate por WhatsApp</span>
+            </a>
         </div>
+    </section>
+
+    <section class="edicion-actual-detalle">
+        <p class="edicion-actual-eyebrow" id="revista-eyebrow">Presentación La Balsa Revista #01</p>
+        <p class="edicion-actual-texto" id="revista-texto">El pasado 5 de junio presentamos el primer número de LA BALSA revista.</p>
     </section>
 
     <section class="galeria-lanzamiento">
@@ -73,19 +619,33 @@
             <p class="galeria-eyebrow">5 de junio de 2026</p>
             <h2 class="galeria-titulo">Así vivimos el lanzamiento</h2>
         </div>
-        <div class="galeria-grid">
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento1.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento1.jpeg" alt="Lanzamiento La Balsa - foto 1" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento2.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento2.jpeg" alt="Lanzamiento La Balsa - foto 2" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento3.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento3.jpeg" alt="Lanzamiento La Balsa - foto 3" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento4.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento4.jpeg" alt="Lanzamiento La Balsa - foto 4" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento5.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento5.jpeg" alt="Lanzamiento La Balsa - foto 5" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento6.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento6.jpeg" alt="Lanzamiento La Balsa - foto 6" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento7.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento7.jpeg" alt="Lanzamiento La Balsa - foto 7" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento8.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento8.jpeg" alt="Lanzamiento La Balsa - foto 8" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento9.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento9.jpeg" alt="Lanzamiento La Balsa - foto 9" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento10.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento10.jpeg" alt="Lanzamiento La Balsa - foto 10" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento11.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento11.jpeg" alt="Lanzamiento La Balsa - foto 11" loading="lazy"></a>
-            <a class="galeria-foto" href="media/lanzamiento/lanzamiento12.jpeg" target="_blank" rel="noopener"><img src="media/lanzamiento/lanzamiento12.jpeg" alt="Lanzamiento La Balsa - foto 12" loading="lazy"></a>
+
+        <div class="galeria-carrusel" id="galeriaCarrusel">
+            <div class="galeria-viewport">
+                <div class="galeria-pista">
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento1.jpeg" alt="Lanzamiento La Balsa - foto 1"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento2.jpeg" alt="Lanzamiento La Balsa - foto 2" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento3.jpeg" alt="Lanzamiento La Balsa - foto 3" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento4.jpeg" alt="Lanzamiento La Balsa - foto 4" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento5.jpeg" alt="Lanzamiento La Balsa - foto 5" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento6.jpeg" alt="Lanzamiento La Balsa - foto 6" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento7.jpeg" alt="Lanzamiento La Balsa - foto 7" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento8.jpeg" alt="Lanzamiento La Balsa - foto 8" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento9.jpeg" alt="Lanzamiento La Balsa - foto 9" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento10.jpeg" alt="Lanzamiento La Balsa - foto 10" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento11.jpeg" alt="Lanzamiento La Balsa - foto 11" loading="lazy"></div>
+                    <div class="galeria-slide"><img src="media/lanzamiento/lanzamiento12.jpeg" alt="Lanzamiento La Balsa - foto 12" loading="lazy"></div>
+                </div>
+
+                <button type="button" class="galeria-flecha galeria-prev" aria-label="Foto anterior">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button type="button" class="galeria-flecha galeria-next" aria-label="Foto siguiente">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+
+                <div class="galeria-puntos" id="galeriaPuntos"></div>
+            </div>
         </div>
     </section>
 
@@ -132,5 +692,93 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
+
+    <script>
+        (function () {
+            const hero = document.getElementById('heroEdiciones');
+            const grid = document.getElementById('edicionesAnterioresGrid');
+            const seccion = document.getElementById('edicionesAnterioresSeccion');
+            if (!hero || !grid) return;
+
+            function revisar() {
+                if (hero.children.length < 2) {
+                    const card = grid.firstElementChild;
+                    const img = card && card.querySelector('img');
+                    const btn = card && card.querySelector('a, button');
+
+                    if (card && img && btn) {
+                        const col = document.createElement('div');
+                        col.className = 'revista-hero-edicion';
+
+                        const visual = document.createElement('div');
+                        visual.className = 'revista-hero-visual';
+                        img.className = 'revista-hero-img';
+                        visual.appendChild(img);
+
+                        const footer = document.createElement('div');
+                        footer.className = 'revista-hero-footer';
+                        btn.className = 'btn-ver-edicion';
+                        footer.appendChild(btn);
+
+                        col.appendChild(visual);
+                        col.appendChild(footer);
+                        hero.appendChild(col);
+                        card.remove();
+                    }
+                }
+
+                if (seccion) seccion.classList.toggle('vacia', grid.children.length === 0);
+            }
+
+            new MutationObserver(revisar).observe(grid, { childList: true });
+            revisar();
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const carrusel = document.getElementById('galeriaCarrusel');
+            if (!carrusel) return;
+
+            const pista = carrusel.querySelector('.galeria-pista');
+            const slides = Array.from(pista.children);
+            const contPuntos = document.getElementById('galeriaPuntos');
+            const viewport = carrusel.querySelector('.galeria-viewport');
+            let actual = 0;
+
+            const puntos = slides.map((_, i) => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'galeria-punto';
+                b.setAttribute('aria-label', 'Ir a la foto ' + (i + 1));
+                b.appendChild(document.createElement('span'));
+                b.addEventListener('click', () => ir(i));
+                contPuntos.appendChild(b);
+                return b;
+            });
+
+            function ir(n) {
+                actual = (n + slides.length) % slides.length;
+                pista.style.transform = 'translateX(-' + (actual * 100) + '%)';
+                puntos.forEach((p, i) => p.classList.toggle('activo', i === actual));
+            }
+
+            carrusel.querySelector('.galeria-prev').addEventListener('click', () => ir(actual - 1));
+            carrusel.querySelector('.galeria-next').addEventListener('click', () => ir(actual + 1));
+
+            let inicioX = null;
+            viewport.addEventListener('touchstart', e => {
+                inicioX = e.touches[0].clientX;
+            }, { passive: true });
+            viewport.addEventListener('touchend', e => {
+                if (inicioX === null) return;
+                const dx = e.changedTouches[0].clientX - inicioX;
+                inicioX = null;
+                if (Math.abs(dx) > 50) ir(actual + (dx < 0 ? 1 : -1));
+            });
+
+            ir(0);
+        })();
+    </script>
 </body>
 </html>
