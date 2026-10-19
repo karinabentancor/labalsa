@@ -182,55 +182,8 @@
             <div class="card-linea"></div>
         </div>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(async () => {
-  const sb = supabase.createClient(
-    "https://npqxqfxzykvpwwrrrupc.supabase.co",
-    "sb_publishable_djOkmwydtJ-WFW3veBk3RA_-Ryqv6lw"
-  );
 
-  const grid = document.querySelector('.grid-tripulantes');
-  const { data, error } = await sb
-    .from('tripulantes')
-    .select('*')
-    .order('created_at', { ascending: true });
-
-  if (error) { console.error('Tripulantes:', error); return; }
-
-  data.forEach(t => {
-    const card = document.createElement('div');
-    card.className = 'card';
-
-    const fotoWrap = document.createElement('div');
-    fotoWrap.className = 'card-foto-wrap';
-    const img = document.createElement('img');
-    img.src = t.foto_url;
-    img.alt = t.nombre;
-    img.loading = 'lazy';
-    fotoWrap.appendChild(img);
-
-    const info = document.createElement('div');
-    info.className = 'card-info';
-    const nombre = document.createElement('p');
-    nombre.className = 'card-nombre';
-    nombre.textContent = t.nombre;
-    const desc = document.createElement('p');
-    desc.className = 'card-descripcion';
-    desc.style.whiteSpace = 'pre-line'; // respeta los saltos de línea del panel
-    desc.textContent = t.descripcion;
-    info.append(nombre, desc);
-
-    const linea = document.createElement('div');
-    linea.className = 'card-linea';
-
-    card.append(fotoWrap, info, linea);
-    grid.appendChild(card);
-  });
-})();
-</script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js" defer></script>
 </body>
 </html>

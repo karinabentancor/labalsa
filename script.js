@@ -525,9 +525,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const gridTripulantes = document.querySelector('.grid-tripulantes');
-    if (gridTripulantes && typeof supabase !== 'undefined') {
-
-        const sbTripulantes = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if (gridTripulantes) {
 
         function escapeHtmlTrip(str) {
             const d = document.createElement('div');
@@ -535,30 +533,110 @@ document.addEventListener('DOMContentLoaded', function () {
             return d.innerHTML;
         }
 
-        sbTripulantes
-            .from('tripulantes')
-            .select('*')
-            .order('created_at', { ascending: true })
-            .then(function (respuesta) {
-                const data = respuesta.data;
-                const error = respuesta.error;
-                if (error || !data || !data.length) return;
+        function mezclarTarjetas(lista) {
+            for (let i = lista.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const tmp = lista[i];
+                lista[i] = lista[j];
+                lista[j] = tmp;
+            }
+            return lista;
+        }
 
-                data.forEach(t => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML =
-                        '<div class="card-foto-wrap">' +
-                            '<img src="' + t.foto_url + '" alt="' + escapeHtmlTrip(t.nombre) + '">' +
-                        '</div>' +
-                        '<div class="card-info">' +
-                            '<p class="card-nombre">' + escapeHtmlTrip(t.nombre) + '</p>' +
-                            '<p class="card-descripcion">' + escapeHtmlTrip(t.descripcion).replace(/\n/g, '<br>') + '</p>' +
-                        '</div>' +
-                        '<div class="card-linea"></div>';
-                    gridTripulantes.appendChild(card);
-                });
+        function prepararLeerMas(card) {
+            if (card.dataset.leerMas === '1') return;
+            const info = card.querySelector('.card-info');
+            const desc = card.querySelector('.card-descripcion');
+            if (!info || !desc) return;
+            card.dataset.leerMas = '1';
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'card-leer-mas';
+            btn.innerHTML =
+                '<span class="card-leer-mas-texto">Leer</span>' +
+                '<svg class="card-leer-mas-icono" viewBox="0 0 24 24" width="12" height="12" fill="none" aria-hidden="true">' +
+                    '<path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>' +
+                '</svg>';
+            btn.setAttribute('aria-label', 'Leer más');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.addEventListener('click', function () {
+                const abierta = card.classList.toggle('expandida');
+                btn.setAttribute('aria-label', abierta ? 'Leer menos' : 'Leer más');
+                btn.setAttribute('aria-expanded', abierta ? 'true' : 'false');
             });
+            info.appendChild(btn);
+        }
+
+        function evaluarRecorte() {
+            gridTripulantes.querySelectorAll('.card:not(.card-vos)').forEach(function (card) {
+                if (card.classList.contains('expandida')) return;
+                const desc = card.querySelector('.card-descripcion');
+                if (!desc) return;
+                card.classList.toggle('con-leer-mas', desc.scrollHeight > desc.clientHeight + 1);
+            });
+        }
+
+        function iniciarTripulantes() {
+            const tarjetas = Array.from(gridTripulantes.querySelectorAll('.card:not(.card-vos)'));
+            mezclarTarjetas(tarjetas).forEach(function (card) {
+                prepararLeerMas(card);
+                gridTripulantes.appendChild(card);
+            });
+            gridTripulantes.classList.add('lista');
+            evaluarRecorte();
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(evaluarRecorte);
+            }
+        }
+
+        let temporizadorRecorte = null;
+        window.addEventListener('resize', function () {
+            clearTimeout(temporizadorRecorte);
+            temporizadorRecorte = setTimeout(evaluarRecorte, 150);
+        });
+
+        setTimeout(function () {
+            gridTripulantes.classList.add('lista');
+        }, 3000);
+
+        if (typeof supabase === 'undefined') {
+            iniciarTripulantes();
+        } else {
+            const sbTripulantes = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            sbTripulantes
+                .from('tripulantes')
+                .select('*')
+                .order('created_at', { ascending: true })
+                .then(function (respuesta) {
+                    const data = respuesta.data;
+                    const error = respuesta.error;
+
+                    if (!error && data && data.length) {
+                        data.forEach(t => {
+                            const card = document.createElement('div');
+                            card.className = 'card';
+                            card.innerHTML =
+                                '<div class="card-foto-wrap">' +
+                                    '<img src="' + escapeHtmlTrip(t.foto_url) + '" alt="' + escapeHtmlTrip(t.nombre) + '">' +
+                                '</div>' +
+                                '<div class="card-info">' +
+                                    '<p class="card-nombre">' + escapeHtmlTrip(t.nombre) + '</p>' +
+                                    '<p class="card-descripcion">' + escapeHtmlTrip(t.descripcion).replace(/\n/g, '<br>') + '</p>' +
+                                '</div>' +
+                                '<div class="card-linea"></div>';
+                            gridTripulantes.appendChild(card);
+                        });
+                    }
+
+                    iniciarTripulantes();
+                })
+                .catch(function (err) {
+                    console.error('Tripulantes:', err);
+                    iniciarTripulantes();
+                });
+        }
     }
 
 });
